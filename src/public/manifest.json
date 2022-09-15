@@ -1,0 +1,74 @@
+{
+    "name": "aluay",
+    "short_name": "aluay",
+    "description": "A modern and simple social media web application",
+    "id": "/",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "orientation": "portrait-primary",
+    "dir": "ltr",
+    "lang": "en-US",
+    "theme_color": "#6060ff",
+    "background_color": "#000000",
+    "categories": [
+        "social",
+        "entertainment"
+    ],
+    "icons": [
+        {
+            "src": "/img/pwa/icon-192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "/img/pwa/icon-512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        },
+        {
+            "src": "/img/pwa/icon-m-192.png",
+            "type": "image/png",
+            "sizes": "192x192",
+            "purpose": "maskable"
+        },
+        {
+            "src": "/img/pwa/icon-m-512.png",
+            "type": "image/png",
+            "sizes": "512x512",
+            "purpose": "maskable"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Home",
+            "short_name": "Home",
+            "url": "/home",
+            "icons": [{
+                "src": "/img/pwa/home-192.png",
+                "type": "image/png",
+                "sizes": "192x192"
+            }]
+        },
+        {
+            "name": "New",
+            "short_name": "New",
+            "url": "/new",
+            "icons": [{
+                "src": "/img/pwa/new-192.png",
+                "type": "image/png",
+                "sizes": "192x192"
+            }]
+        },
+        {
+            "name": "Inbox",
+            "short_name": "Inbox",
+            "url": "/inbox",
+            "icons": [{
+                "src": "/img/pwa/inbox-192.png",
+                "type": "image/png",
+                "sizes": "192x192"
+            }]
+        }
+    ]
+}
