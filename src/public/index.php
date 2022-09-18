@@ -11,7 +11,7 @@ $rx = '/(?<=\/[@&])[a-z-]{2,20}|(?<=\/[a-z])\d{1,20}/';
 
 // Remove usernames and IDs
 if (preg_match_all($rx, $uri, $q)) {
-    preg_replace($rx, '', $uri);
+    $uri = preg_replace($rx, '', $uri);
     $q = $q[0];
 }
 
@@ -23,10 +23,10 @@ if (/*preg_match('/\.{2,}/', $uri) || */!file_exists('../pages'.$uri)) {
 }
 
 if (substr($uri, 0, 5) === '/api/') {
-    exit('api');
+    require '../pages'.$uri;
 }
 
-// --- Get script and language file ---
+// ----- Get script and language file -----
 if (!isset($_SESSION['lang'])) {
     $_SESSION['lang'] = require '../include/auth.php';
 }

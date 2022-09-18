@@ -2,5 +2,5 @@
 /**
  * Shows the error page.
  */
-exit('error XXX');
+exit('Error: <code>'.$uri.'</code> does not exist.'); // TODO: use $l[0] as title
 ?>

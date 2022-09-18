@@ -2,7 +2,7 @@
 /**
  * HTML boilerplate.
  */
-function html(...$files) {
+function html(...$files) { // TODO: Lang
     global $l;
     global $url;
     global $uid;
@@ -14,7 +14,7 @@ function html(...$files) {
     $nonce = base64_encode(random_bytes(18));
     header('Content-Type: text/html; charset=utf-8');
     header('Cache-Control: max-age=31536000'); // TODO
-    header('Content-Security-Policy: default-src \'none\'; manifest-src \'self\'; img-src \'self\'; style-src \'nonce-'.$nonce.'\' \'strict-dynamic\' \'unsafe-inline\' https: http:; script-src \'nonce-'.$nonce.'\' \'strict-dynamic\' \'unsafe-inline\' \'unsafe-eval\' https: http:;');
+    header('Content-Security-Policy: default-src \'none\'; connect-src \'self\'; manifest-src \'self\'; img-src \'self\'; font-src \'self\'; style-src \'self\'; script-src \'nonce-'.$nonce.'\' \'unsafe-inline\' \'unsafe-eval\' https: http:;');
     header('X-XSS-Protection: 1; mode=block');
 
     // --- Create HTML document ---
@@ -56,7 +56,7 @@ function html(...$files) {
             <svg viewBox="0 0 8 8"><path d="M8 3.5H1.91L4.71.7 4 0 0 4l4 4 .7-.7-2.79-2.8H8v-1z"/></svg>
             <svg viewBox="0 0 8 8"><path d="M6.35 2.35 8 .71 7.29 0 5.65 1.65 4 3.29 2.35 1.65.71 0 0 .71l1.65 1.64L3.29 4 0 7.29.71 8 4 4.71 7.29 8 8 7.29 4.71 4l1.64-1.65z"/></svg>
         </button>
-        <h1>Title</h1>
+        <h1>'.$l[0].'</h1>
         <input type="text" placeholder="Search">
         <button data-f="_B" aria-label="Search"><svg viewBox="0 0 8 8"><path d="M8 7.29 5.44 4.73C5.79 4.24 6 3.64 6 3c0-1.66-1.34-3-3-3S0 1.34 0 3s1.34 3 3 3c.65 0 1.24-.21 1.73-.56L7.29 8 8 7.29zM1 3c0-1.1.9-2 2-2s2 .9 2 2a2.012 2.012 0 0 1-.99 1.72C3.71 4.9 3.37 5 3 5c-1.1 0-2-.9-2-2z"/></svg></button>
         <div id="bnav">
@@ -72,10 +72,11 @@ function html(...$files) {
             <div>
                 <h2>Title</h2>
                 <p>Text</p>
-                <button class="btn red">Cancel</button>
-                <button class="btn">Okay</button>
+                <button class="btn red" data-f="_E">Cancel</button>
+                <button class="btn" data-f="_D">Okay</button>
             </div>
         </div>
+        <noscript class="center">Please enable JavaScript in your browser.</noscript>
     </nav>
     <div id="side" class="hidden">
         <menu></menu>

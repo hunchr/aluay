@@ -6,6 +6,7 @@ urls = [
     "/js/main.js",
     "/js/social.js",
     "/sw.js",
+    "/font/roboto-latin.woff2",
     "/img/apple-touch-icon.png"
 ];
 

@@ -2,5 +2,8 @@
 /**
  * Destroys the user's session.
  */
-exit('<code>'.$_SERVER['REQUEST_URI'].'</code> is coming soon');
+setrawcookie('auth', '', time() - 3600, "/");
+session_destroy();
+
+header('Location: /login');
 ?>

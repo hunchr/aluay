@@ -1,7 +1,11 @@
 "use strict";
-// eval("alert('damn.');");
+HTMLElement.prototype.$ = function(e) {
+    return this.querySelector(e);
+}
+
 let self,
-    layer = document.body;
+    layer = document.querySelector("#main main"),
+    popupCancel = () => {};
 
 const __todo__ = msg => console.warn(msg),
       wait = async ms => await new Promise(res => setTimeout(res, ms)),
@@ -12,7 +16,7 @@ const __todo__ = msg => console.warn(msg),
       side = $("#side"),
       popup = $("#popup"),
       search = $("nav input"),
-      layers = [$("#main main")],
+      layers = [layer],
 
 popupElems = [
     $("#popup h2"),
@@ -53,7 +57,7 @@ find = () => {
 // Posts data to database
 set = (fileName, data) => {
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", "/post/" + fileName, true);
+    xhr.open("POST", "/api/" + fileName, true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = () => {
         if (xhr.readyState === 4 && xhr.status === 200) {
@@ -64,21 +68,19 @@ set = (fileName, data) => {
 },
 
 // Fetches data from database
-get = async (path, isExtension) => {
+get = async (path, data) => {
     return await new Promise(res => {
         const xhr = new XMLHttpRequest();
         xhr.open("POST", "/" + path, true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                console.log(xhr.response); // TODO: remove
-
-                if (isExtension) {
+                if (data) {
                     return res(xhr.response);
                 }
 
                 // --- Hide old layer ---
-                layer.classList.remove("vis");
+                layer?.classList.remove("vis");
                 
                 // --- Create new layer ---
                 layer = document.createElement("div");
@@ -94,9 +96,14 @@ get = async (path, isExtension) => {
                 res();
             }
         };
-        xhr.send("is_fetch=1");
+        xhr.send("is_fetch=1&" + (data || ""));
     });
 },
+
+// Get form data
+getData = e => (
+    [...layer.querySelectorAll(e)].map((e, i) => `${i}=${e.value}&`).join("")
+),
 
 // Global functions
 fn = {
@@ -105,6 +112,7 @@ fn = {
         _: () => {
             get(self.dataset.n);
         },
+        // ----- Nav -----
         // Logo button
         A: () => {
             // Cancel search
@@ -134,6 +142,58 @@ fn = {
         // Menu
         C: () => {
             side.classList.toggle("hidden");
+        },
+        // ----- Popup -----
+        // Continue (Okay)
+        D: () => {
+            popup.classList.add("hidden");
+
+        },
+        // Cancel
+        E: () => {
+            popupCancel();
+            popup.classList.add("hidden");
+        },
+        // ----- Auth -----
+        // Log in
+        a: () => {
+            get("login", getData("input")).then(res => {
+                if (res) {
+                    showPopup(...res.split("|"));
+                }
+                else {
+                    layers.pop().remove();
+                    fn._._("home");
+                }
+            });
+        },
+        // Sign up
+        b: () => {
+            get("signup", getData(".form>:first-child input")).then(res => {
+                if (res) {
+                    showPopup(...res.split("|"));
+                }
+                else {
+                    layer.$(".form>:first-child").remove();
+                    layer.$(".form>:last-child").classList.remove("hidden");
+                }
+            });
+        },
+        // Verify email
+        c: () => {
+            get("signup", getData(".form input")).then(res => {
+                if (res) {
+                    showPopup(...res.split("|"));
+                }
+                else {
+                    layers.pop().remove();
+                    fn._._("login");
+                }
+            });
+        },
+        // Send verification code again
+        d: () => {
+            __todo__("Send verification code again");
         }
     }
 };

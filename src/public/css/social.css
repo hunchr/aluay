@@ -1,0 +1,138 @@
+/* ----- Profile ----- */
+.end,
+.post,
+.profile {
+    flex-direction: column;
+    align-items: center;
+    color: var(--gray2);
+    border-bottom: var(--border);
+    width: 100%;
+    padding-top: .375rem;
+}
+
+.post,
+.profile {
+    padding-bottom: .375rem;
+}
+
+/* Description */
+.post p,
+.profile p {
+    text-align: justify;
+    color: var(--gray1);
+    margin: .25rem 0 .125rem 0;
+}
+
+/* --- Top --- */
+.profile-t {
+    align-items: center;
+}
+
+.profile-t div {
+    flex-direction: column;
+    overflow: hidden;
+    margin: 0 .25rem;
+}
+
+/* Profile picture */
+.profile img {
+    width: 2.5rem;
+}
+
+/* (User)name */
+[data-f="pa"],
+.profile-t span {
+    display: block;
+    white-space: pre;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Display name */
+.profile-t div :first-child {
+    color: var(--gray1);
+}
+
+/* Follow button */
+.profile .btn {
+    width: fit-content;
+    height: 2rem;
+    margin-left: auto;
+}
+
+/* --- Icons --- */
+.profile svg {
+    width: .875rem;
+    margin: 0;
+}
+
+.profile > :last-child span {
+    margin: 0 .5rem 0 .125rem;
+}
+
+/* ----- Posts ----- */
+.post > *,
+.media img,
+.profile > * {
+    width: 100%;
+}
+
+.post p {
+    margin-top: 0;
+}
+
+/* --- Media --- */
+.media {
+    margin: .125rem 0;
+}
+
+/* --- Buttons --- */
+.post > :last-child {
+    justify-content: space-between;
+}
+
+.post button {
+    align-items: center;
+}
+
+/* Date */
+[data-f="pb"],
+.post > :first-child > svg:last-of-type {
+    margin-right: .25rem;
+}
+
+/* --- Icons --- */
+.post svg {
+    width: .875rem;
+    min-width: .875rem;
+    margin: 0 .125rem 0 0;
+}
+
+/* --- More button --- */
+[data-f="pc"],
+[data-f="pB"] {
+    margin-left: auto;
+}
+
+[data-f="pc"] svg {
+    margin: 0;
+}
+
+/* --- Liked post --- */
+.liked {
+    color: var(--blue);
+}
+
+.liked:hover,
+.liked:focus-visible {
+    color: var(--blue-hover);
+}
+
+.liked svg {
+    fill: var(--blue);
+}
+
+.liked:hover svg,
+.liked:focus-visible svg {
+    fill: var(--blue-hover);
+}
