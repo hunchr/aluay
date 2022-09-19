@@ -30,7 +30,8 @@
     --border: .0625rem solid var(--gray4);
     --radius: .5rem;
     --menu-width: 12.8125rem;
-    --main-width: 33.75rem;
+    --main-width: 34.75rem;
+    /* --main-width: 33.75rem; */
 }
 
 ::selection {
@@ -269,11 +270,12 @@ main.center {
 }
 
 #main {
-    padding: 2.75rem .5rem 0 .5rem;
+    padding-top: 2.75rem;
 }
 
 #main main {
     max-width: var(--main-width);
+    padding: 0 .5rem;
 }
 
 /* ----- Footer ----- */
@@ -415,6 +417,16 @@ menu button > span {
 .end {
     border: none;
     padding-bottom: calc(100vh - 7rem);
+}
+
+/* ----- Error page ----- */
+.error {
+    color: #fff;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url(../img/bg/waves-1.svg);
+    background-size: cover;
+    max-width: none !important;
 }
 
 /* ----- Mobile layout ----- */

@@ -2,5 +2,5 @@
 /**
  * Shows the API start page.
  */
-exit('<code>'.$_SERVER['REQUEST_URI'].'</code> is coming soon');
+exit('{"message":"Coming Soon","status":200}');
 ?>

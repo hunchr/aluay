@@ -2,5 +2,16 @@
 /**
  * Shows the error page.
  */
-exit('Error: <code>'.$uri.'</code> does not exist.'); // TODO: use $l[0] as title
+if (isset($conn)) {
+    $conn -> close();
+}
+
+$main =
+'<main class="center error vis" data-title="'.$l[0].'">
+    '.$l[1].'
+</main>';
+
+// Generate HTML
+$is_fetch ? exit($main) : require '../include/html.php';
+html('main', 'social');
 ?>

@@ -18,12 +18,12 @@ if (preg_match_all($rx, $uri, $q)) {
 // Add file extension
 $uri .= substr($uri, -1) === '/' ? 'index.php' : '.php';
 
-if (/*preg_match('/\.{2,}/', $uri) || */!file_exists('../pages'.$uri)) {
-    require '../include/error.php';
-}
-
+// Application programming interface
 if (substr($uri, 0, 5) === '/api/') {
-    require '../pages'.$uri;
+    header('Content-Type: application/json; charset=utf-8');
+    file_exists('../pages'.$uri) ?
+        require '../pages'.$uri :
+        exit('{"message":"Not Found","status":404}');
 }
 
 // ----- Get script and language file -----
@@ -33,6 +33,11 @@ if (!isset($_SESSION['lang'])) {
 
 $lang = $_SESSION['lang'];
 $is_fetch = isset($_POST['is_fetch']);
+
+if (/*preg_match('/\.{2,}/', $uri) || */!file_exists('../pages'.$uri)) {
+    require '../lang/'.$lang.'/include/404.php';
+    require '../include/error.php';
+}
 
 if (file_exists('../lang/'.$lang.$uri)) {
     require '../lang/'.$lang.$uri;
