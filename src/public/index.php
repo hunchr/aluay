@@ -25,23 +25,33 @@ if (substr($uri, 0, 5) === '/api/') {
         require '../pages'.$uri :
         exit('{"message":"Not Found","status":404}');
 }
+// Normal page
+else {
+    // Use SVG icons
+    function svg($id) {
+        return '<svg viewBox="0 0 8 8"><use href="#svg-'.$id.'"></use></svg>';
+    };
 
-// ----- Get script and language file -----
-if (!isset($_SESSION['lang'])) {
-    $_SESSION['lang'] = require '../include/auth.php';
+    // Get browser language
+    if (!isset($_SESSION['lang'])) {
+        $_SESSION['lang'] = require '../include/auth.php';
+    }
+    
+    $lang = $_SESSION['lang'];
+    $is_fetch = isset($_POST['is_fetch']);
+    
+    // Check if page exists
+    if (/*preg_match('/\.{2,}/', $uri) || */!file_exists('../pages'.$uri)) {
+        require '../lang/'.$lang.'/include/404.php';
+        require '../include/error.php';
+    }
+    
+    // Get language file
+    if (file_exists('../lang/'.$lang.$uri)) {
+        require '../lang/'.$lang.$uri;
+    }
+    
+    // Get file
+    require '../pages'.$uri;
 }
-
-$lang = $_SESSION['lang'];
-$is_fetch = isset($_POST['is_fetch']);
-
-if (/*preg_match('/\.{2,}/', $uri) || */!file_exists('../pages'.$uri)) {
-    require '../lang/'.$lang.'/include/404.php';
-    require '../include/error.php';
-}
-
-if (file_exists('../lang/'.$lang.$uri)) {
-    require '../lang/'.$lang.$uri;
-}
-
-require '../pages'.$uri;
 ?>
