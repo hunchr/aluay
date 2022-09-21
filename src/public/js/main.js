@@ -141,7 +141,7 @@ fn = {
         },
         // Menu
         C: () => {
-            side.classList.toggle("hidden");
+            body.classList.toggle("side");
         },
         // ----- Popup -----
         // Continue (Okay)
