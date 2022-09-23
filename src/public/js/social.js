@@ -35,8 +35,10 @@ fn.p = {
     d: () => {
         self.classList.toggle("liked");
 
-        __todo__("Like/Unlike");
-        console.log(self.parentNode.dataset.id);
+        // __todo__("Like/Unlike");
+        get("like/p", "pid=" + self.parentNode.dataset.id).then(data => {
+            console.log(data);
+        });
     },
     // Show replies
     e: () => {

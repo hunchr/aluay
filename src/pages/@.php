@@ -41,7 +41,7 @@ if (query(
                 $data['description'];
             $l[2] = 'user';
             $main =
-            '<main class="vis" data-title="'.$l[0].'">
+            '<main class="vis" data-title="'.$l[0].'" data-url="'.$l[0].'">
             <div class="profile">
                 <div class="profile-t">
                     <img src="/'.$og_uri.'.webp" alt="'.$l[3].'" loading="lazy" width="40">

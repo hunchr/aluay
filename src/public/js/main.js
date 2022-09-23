@@ -3,14 +3,14 @@ HTMLElement.prototype.$ = function(e) {
     return this.querySelector(e);
 }
 
-let self,
+let self = document.body,
     layer = document.querySelector("#main main"),
     popupCancel = () => {};
 
 const __todo__ = msg => console.warn(msg),
       wait = async ms => await new Promise(res => setTimeout(res, ms)),
       $ = e => document.querySelector(e),
-      body = document.body,
+      body = self,
       main = $("#main"),
       title = $("h1"),
       side = $("#side"),
@@ -45,26 +45,20 @@ showPopup = (...msg) => {
 
 // Search
 find = () => {
-    const q = search.value.trim();
+    const q = search.value.trim().replace(/^(https:\/\/)?aluay/, "");
 
     if (q) {
         body.classList.remove("search");
         search.value = "";
+
+        // Get URI
+        if (q[0] === "/") {
+            return get(q.substring(1));
+        }
+
+        // Search
         __todo__("search: " + q);
     }
-},
-
-// Posts data to database
-set = (fileName, data) => {
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "/api/" + fileName, true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = () => {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            console.log(xhr.response); // TODO: remove
-        }
-    };
-    xhr.send(data);
 },
 
 // Fetches data from database
@@ -90,6 +84,7 @@ get = async (path, data) => {
 
                 // Change title
                 document.title = title.innerHTML = layer.dataset.title;
+                history.pushState(null, "", "https://aluay" + layer.dataset.url);
 
                 main.appendChild(layer);
                 layers.push(layer);
@@ -147,12 +142,28 @@ fn = {
         // Continue (Okay)
         D: () => {
             popup.classList.add("hidden");
-
         },
         // Cancel
         E: () => {
             popupCancel();
             popup.classList.add("hidden");
+        },
+        // ----- Select -----
+        // Choose option
+        F: () => {
+            const parent = self.parentNode;
+
+            // Hide options
+            if (parent.classList.contains("expanded")) {
+                parent.$(".selected").classList.remove("selected", "btn");
+                self.classList.add("selected");
+                parent.classList.remove("expanded");
+            }
+            // Show options
+            else {
+                parent.$(".selected").classList.add("btn");
+                parent.classList.add("expanded");
+            }
         },
         // ----- Auth -----
         // Log in

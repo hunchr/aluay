@@ -47,8 +47,7 @@ html,
 body,
 menu,
 input,
-button,
-textarea {
+button {
     all: unset;
 }
 
@@ -87,12 +86,6 @@ textarea {
     padding: 0 .75rem;
 }
 
-textarea {
-    word-wrap: break-word;
-    height: 8.75rem;
-    padding: .75rem;
-}
-
 .lower {
     text-transform: lowercase;
 }
@@ -112,10 +105,6 @@ textarea:focus {
     color: #fff !important;
     background-color: var(--blue);
     padding: 0 .5rem;
-}
-
-.select .btn {
-    padding: 0;
 }
 
 .btn.red {
@@ -167,10 +156,6 @@ button img {
     margin: .5rem;
 }
 
-.btn svg {
-    fill: #fff !important;
-}
-
 button svg {
     width: 1.25rem;
     margin: .625rem;
@@ -189,10 +174,8 @@ button:focus-visible svg {
 ::-webkit-scrollbar,
 body:not(.side) #side,
 body:not(.search) nav input,
-.expanded button > :last-child,
 .search #back > :not(:last-child),
 body:not(.back, .search) #back svg,
-.select:not(.expanded) > :not(.selected),
 .back:not(.search) #back > :not(:nth-child(2)) {
     display: none;
 }
@@ -204,15 +187,10 @@ body:not(.back, .search) #back svg,
 nav,
 .btn,
 #bnav,
-.popup,
 .center,
 nav button {
     justify-content: center;
     align-items: center;
-}
-
-.freeze {
-    overflow: hidden;
 }
 
 /* ----- Nav ----- */
@@ -312,7 +290,7 @@ footer * {
 
 /* ----- Menu ----- */
 menu,
-.popup > div {
+#popup div {
     background-color: var(--gray6);
     border: var(--border);
     border-radius: var(--radius);
@@ -372,14 +350,8 @@ menu button > span {
     padding-left: calc(var(--menu-width) + .5rem);
 }
 
-/* ----- Select ----- */
-.select {
-    overflow: hidden auto;
-    max-height: 14.125rem;
-}
-
 /* ----- Popup ----- */
-.popup {
+#popup {
     position: fixed;
     background-color: #000a;
     width: 100%;
@@ -388,11 +360,10 @@ menu button > span {
     top: 0;
 }
 
-.popup div {
+#popup div {
     flex-wrap: wrap;
     justify-content: flex-end;
     max-width: var(--main-width);
-    width: 100%;
     padding: .5rem;
 }
 
