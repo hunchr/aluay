@@ -64,11 +64,11 @@ if (isset($_POST['0'], $_POST['1'])) {
 // Show login form
 else {
     $main = 
-    '<main class="center form vis" data-title="'.$l[0].'" data-url="login">
-        <div>
+    '<main class="form center vis" data-title="'.$l[0].'" data-url="login">
+        <div class="space center">
             <input class="lower" type="text" placeholder="'.$l[3].'" maxlength="20" spellcheck="false" autocomplete="username" autofocus>
             <input type="password" placeholder="'.$l[4].'" maxlength="1000" autocomplete="current-password">
-            <button class="btn" data-f="_a">'.$l[5].'</button>
+            <button class="blue" data-f="Aa">'.$l[5].'</button>
             <span>'.$l[6].'&nbsp;<button class="a" data-f="__" data-n="signup">'.$l[7].'</button></span>
         </div>
     </main>';

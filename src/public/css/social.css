@@ -4,22 +4,18 @@
 .profile {
     flex-direction: column;
     align-items: center;
-    color: var(--gray2);
+    color: var(--gray);
     border-bottom: var(--border);
     width: 100%;
-    padding-top: .375rem;
-}
-
-.post,
-.profile {
-    padding-bottom: .375rem;
+    padding: .375rem 0;
 }
 
 /* Description */
 .post p,
 .profile p {
     text-align: justify;
-    color: var(--gray1);
+    user-select: text;
+    color: var(--fg);
     margin: .25rem 0 .125rem 0;
 }
 
@@ -40,7 +36,7 @@
 }
 
 /* (User)name */
-[data-f="pa"],
+[data-f="sc"],
 .profile-t span {
     display: block;
     white-space: pre;
@@ -49,25 +45,32 @@
 }
 
 /* Display name */
-.profile-t div :first-child {
-    color: var(--gray1);
+.profile-t span:first-child {
+    color: var(--fg);
 }
 
 /* Follow button */
-.profile .btn {
-    width: fit-content;
-    height: 2rem;
+[data-f="se"],
+.profile button {
     margin-left: auto;
 }
 
-/* --- Icons --- */
-.profile svg {
-    width: .875rem;
+/* More button */
+[data-f="sb"] svg,
+[data-f="se"] svg {
     margin: 0;
 }
 
+/* --- Icons --- */
+.post svg,
+.profile svg {
+    width: .875rem;
+    min-width: .875rem;
+    margin: 0 .125rem 0 0;
+}
+
 .profile > :last-child span {
-    margin: 0 .5rem 0 .125rem;
+    margin-right: .5rem;
 }
 
 /* ----- Posts ----- */
@@ -83,7 +86,7 @@
 
 /* --- Media --- */
 .media {
-    margin: .125rem 0;
+    margin: .1875rem 0 .125rem 0;
 }
 
 /* --- Buttons --- */
@@ -91,31 +94,10 @@
     justify-content: space-between;
 }
 
-.post button {
-    align-items: center;
-}
-
 /* Date */
-[data-f="pb"],
+[data-f="sd"],
 .post > :first-child > svg:last-of-type {
     margin-right: .25rem;
-}
-
-/* --- Icons --- */
-.post svg {
-    width: .875rem;
-    min-width: .875rem;
-    margin: 0 .125rem 0 0;
-}
-
-/* --- More button --- */
-[data-f="pc"],
-[data-f="pB"] {
-    margin-left: auto;
-}
-
-[data-f="pc"] svg {
-    margin: 0;
 }
 
 /* --- Liked post --- */
@@ -135,4 +117,10 @@
 .liked:hover svg,
 .liked:focus-visible svg {
     fill: var(--blue-hover);
+}
+
+/* ----- End of feed ----- */
+.end {
+    border: none;
+    padding-bottom: calc(100vh - 4.125rem);
 }

@@ -49,17 +49,17 @@ if (query(
                         <span>'.$data['name'].'</span>
                         <span>@'.$l[0].'</span>
                     </div>
-                    <button data-f="pA" class="btn'.($liked_type[0] ? ' liked">'.$l[4].'' : '">'.$l[5].'').'</button>
+                    <button data-f="sa" class="blue fit min'.($liked_type[0] ? ' liked">'.$l[4] : '">'.$l[5]).'</button>
                 </div>
                 <p>'.fstring($data['description']).'</p>
                 <div>
-                    '.svg('like').'
+                    '.svg('community').'
                     <span aria-label="'.$l[6].'">'.fnumber($data['likes']).'</span>
                     '.svg('post').'
                     <span aria-label="'.$l[7].'">'.fnumber($data['posts']).'</span>
                     '.svg('created').'
                     <span aria-label="'.$l[8].'">'.fdate($data['created']).'</span>
-                    '.svg('more-h').'
+                    <button data-f="sb" aria-label="'.$l[9].'">'.svg('more-h').'</button>
                 </div>
             </div>
             ';
@@ -85,9 +85,6 @@ else {
         global $id;
 
         switch ($cat) {
-            // Text
-            case '1':
-                return '';
             // Image // TODO
             case '2':
                 $cat = '<img src="/uc/s/'.$id.'/'.$pid.'.webp" alt="Image" loading="lazy" width="540">';
@@ -128,17 +125,17 @@ else {
             $main .=
             '<article class="post">
                 <div>
-                    <button data-f="pa">'.$data['name'].'</button>&nbsp;•&nbsp;
-                    <button data-f="pb" data-unix="'.$data['created'].'">'.fdate($data['created']).'</button>
-                    <button data-f="pc" aria-label="'.$l[9].'">'.svg('more-h').'</button>
+                    <button data-f="sc">'.$data['name'].'</button>&nbsp;•&nbsp;
+                    <button data-f="sd" data-unix="'.$data['created'].'">'.fdate($data['created']).'</button>
+                    <button data-f="se" aria-label="'.$l[9].'">'.svg('more-h').'</button>
                 </div>
                 <p>'.fstring($data['description']).'</p>
-                '.media($data['category'], $data['pid']).'
+                '.($data['pid'] === '1' ? '' : media($data['category'], $data['pid'])).'
                 <div data-id="'.$data['id'].'">
-                    <button'.$data['liked'].' data-f="pd" aria-label="'.$l[10].'">'.svg('like').fnumber($data['likes']).'</button>
-                    <button data-f="pe" aria-label="'.$l[11].'">'.svg('post').fnumber($data['replies']).'</button>
-                    <button data-f="pf">'.svg('save').$l[12].'</button>
-                    <button data-f="pg">'.svg('reply').$l[13].'</button>
+                    <button'.$data['liked'].' data-f="sf" aria-label="'.$l[10].'">'.svg('like').fnumber($data['likes']).'</button>
+                    <button data-f="sg" aria-label="'.$l[11].'">'.svg('post').fnumber($data['replies']).'</button>
+                    <button data-f="sh">'.svg('save').$l[12].'</button>
+                    <button data-f="psig">'.svg('reply').$l[13].'</button>
                 </div>
             </article>';
         }

@@ -74,17 +74,19 @@ function html(...$files) {
             <button data-f="__" data-n="home" aria-label="'.$L[3].'">'.svg('home').'</button>
             '.(isset($bnav) ? $bnav :
             '<button data-f="__" data-n="explore" aria-label="'.$L[4].'">'.svg('explore').'</button>
-            <button aria-label="'.$L[5].'">'.svg('new').'</button>
+            <button data-f="sA" aria-label="'.$L[5].'">'.svg('new').'</button>
             <button data-f="__" data-n="inbox" aria-label="'.$L[6].'">'.svg('inbox').'</button>'
             ).'
-            <button data-f="_C" aria-label="'.$L[7].'"><img src="/uc/s/'.$uid.'/0.webp" alt="'.$L[8].'" loading="lazy" width="24"></button>
+            <button data-f="_C" aria-label="'.$L[7].'">
+                <img src="/uc/s/'.$uid.'/0.webp" alt="'.$L[8].'" loading="lazy" width="24">
+            </button>
         </div>
-        <div id="popup" class="center hidden">
+        <div id="popup" class="popup hidden">
             <div>
                 <h2>'.$L[9].'</h2>
                 <p>'.$L[9].'</p>
-                <button class="btn red" data-f="_E">'.$L[9].'</button>
-                <button class="btn" data-f="_D">'.$L[9].'</button>
+                <button class="red fit min" data-f="_E">'.$L[9].'</button>
+                <button class="blue fit min" data-f="_D">'.$L[9].'</button>
             </div>
         </div>
         <noscript class="center">'.$L[10].'</noscript>
@@ -102,17 +104,12 @@ function html(...$files) {
     <div id="main">
         '.$main.'
     </div>
-    <footer class="center">
-        <span>aluay © 2022</span>
-        <button class="a" data-f="__" data-n="privacy-policy">'.$L[12].'</button>
-        <button class="a" data-f="__" data-n="terms">'.$L[13].'</button>
-    </footer>
     <div id="tmp" class="hidden">
         <span>'.$L[11].'</span>
         <svg viewBox="0 0 8 8">
             <path id="svg-arrow-back" d="M8 3.5H1.9L4.7.7 4 0 0 4l4 4 .7-.7-2.8-2.8H8v-1Z"/>
             <path id="svg-close" d="M6.4 2.4 8 .7 7.3 0 5.6 1.6 4 3.3 2.4 1.6.7 0 0 .7l1.6 1.7L3.3 4 0 7.3l.7.7L4 4.7 7.3 8l.7-.7L4.7 4l1.7-1.6z"/>
-            <path id="svg-search" d="M8 7.3 5.4 4.7c.3-.5.6-1.1.6-1.7 0-1.7-1.3-3-3-3S0 1.3 0 3s1.3 3 3 3 1.2-.2 1.7-.6L7.3 8l.7-.7ZM1 3c0-1.1.9-2 2-2s2 .9 2 2-.1.7-.3 1c-.2.3-.4.5-.7.7-.3.2-.6.3-1 .3-1.1 0-2-.9-2-2Z"/>
+            <path id="svg-search" d="M8 7.3 5.44 4.74c.35-.49.56-1.09.56-1.73C6 1.35 4.66 0 3 0S0 1.35 0 3s1.34 3 3 3c.65 0 1.24-.21 1.73-.56L7.29 8 8 7.29ZM1 3c0-1.1.9-2 2-2s2 .9 2 2a2.012 2.012 0 0 1-.99 1.72C3.71 4.9 3.37 5 3 5c-1.1 0-2-.9-2-2Z"/>
             <path id="svg-home" d="M4 0 0 4v4h3V5h2v3h3V4L4 0z"/>
             <g id="svg-explore"><circle cx="4" cy="4" r=".5"/><path d="M4 0C1.8 0 0 1.8 0 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4Zm1 5L2 6l1-3 3-1-1 3Z"/></g>
             <path id="svg-new" d="M8 3.5H4.5V0h-1v3.5H0v1h3.5V8h1V4.5H8v-1z"/>
@@ -129,7 +126,6 @@ function html(...$files) {
             <path id="svg-apps" d="M0 6h2v2H0zM0 0h2v2H0zM0 3h2v2H0zM6 6h2v2H6zM6 0h2v2H6zM6 3h2v2H6zM3 6h2v2H3zM3 0h2v2H3zM3 3h2v2H3z"/>
             <path id="svg-expand-right" d="M1.6.7 4.9 4 1.6 7.3l.7.7 4-4-3.9-4-.7.7Z"/>
             <path id="svg-expand" d="m2.4 5-.7.7L4 8l2.3-2.3-.7-.7L4 6.6 2.4 5ZM2.4 3l-.7-.7L4 0l2.3 2.3-.7.7L4 1.4 2.4 3Z"/>
-            <path id="svg-contract" d="m2.4 8-.7-.7L4 5l2.3 2.3-.7.7L4 6.4 2.4 8ZM2.4 0l-.7.7L4 3 6.3.7 5.6 0 4 1.6 2.4 0Z"/>
             <path id="svg-like" d="m4 7.8 3.6-3.9c.7-.9.6-2.2-.3-3C6.4 0 4.9 0 4.1 1v.1V1C3.1 0 1.7 0 .7.8c-.8.8-.9 2.1-.3 3"/>
             <path id="svg-post" d="M0 0v8l3-2h5V0H0Z"/>
             <path id="svg-save" d="M4 6.5 1.5 7.8 2 5.1l-2-2 2.8-.4L4 .2l1.2 2.5 2.8.4-2 2 .5 2.7L4 6.5z"/>
@@ -140,6 +136,9 @@ function html(...$files) {
             <path id="svg-sparkle" d="M6.9 6.1 6.5 5l-.4 1.1-1.1.4 1.1.4.4 1.1.4-1.1L8 6.5l-1.1-.4zM6 3l.4-1.1 1.1-.4-1.1-.4L6 0l-.4 1.1-1.1.4 1.1.4L6 3zM3.6 3.2l-.8-1.9-.9 1.9L0 4l1.9.8.9 2 .8-2L5.5 4l-1.9-.8z"/>
             <g id="svg-created"><path d="M6.5 1V0h-1v1h-3V0h-1v1H0v7h8V1M1 7V2.5h6V7H1Z"/><path d="M2 3.5h4v1H2zM2 5h3v1H2z"/></g>
             <g id="svg-more-h"><circle cx="1" cy="4" r="1"/><circle cx="7" cy="4" r="1"/><circle cx="4" cy="4" r="1"/></g>
+            <g id="svg-interests"><circle cx="1.8" cy="6.3" r="1.7"/><path d="M4.5 4.5H8V8H4.5zM2 0 0 3.5h4L2 0zM7.6.2c-.4-.3-1-.3-1.4.1-.3-.4-1-.5-1.4-.1s-.5 1-.1 1.4l.3.3 1.2 1.6 1.2-1.6.3-.3c.3-.4.3-1-.1-1.4Z"/></g>
+            <g id="svg-upload"><path d="M7 3 4 0 1 3l.7.7 1.8-1.8V6h1V1.9l1.8 1.8L7 3z"/><path d="M7 5v2H1V5H0v3h8V5H7Z"/></g>
+            <path id="svg-poll" d="M0 3h2v5H0zM6 4h2v4H6zM3 1h2v7H3z"/>
         </svg>
     </div>
     </body>

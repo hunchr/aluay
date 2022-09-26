@@ -1,24 +1,69 @@
 "use strict";
-const postDate = $("#tmp :first-child").innerText;
+const create = $("#new"),
+      createCat = create.querySelector("textarea"),
+      postDate = $("#tmp :first-child").innerText;
 
 // Social media functions
-fn.p = {
+fn.s = {
+    // ----- New -----
+    // Popup
+    A: () => {
+        __todo__("Popup");
+    },
+    // Upload files
+    B: () => {
+        __todo__("Upload files");
+    },
+    // Poll
+    C: () => {
+        __todo__("Poll");
+    },
+    // Create
+    D: () => {
+        const category = create.querySelector(".list").dataset.v;
+
+        // Create post
+        if (category === "0") {
+            const desc = createCat.value.trim();
+
+            if (desc < 0) {
+                return __todo__("popup invalid length");
+            }
+
+            console.log(
+                desc,
+                ...[...create.querySelectorAll("#new .toggle")].map(e => {
+                    return !e.classList.contains("false");
+                })
+            );
+
+            return __todo__("Create post");
+        }
+        // Create list
+        if (category === "1") {
+            return __todo__("Create list");
+        }
+        // Create community
+        if (category === "2") {
+            return __todo__("Create community");
+        }
+    },
     // ----- Profile -----
     // Follow/Unfollow
-    A: () => {
+    a: () => {
         __todo__("Follow/Unfollow");
     },
     // More
-    B: () => {
+    b: () => {
         __todo__("More");
     },
     // ----- Posts -----
     // Username/Community
-    a: () => {
+    c: () => {
         __todo__(self.innerText);
     },
     // Date
-    b: () => {
+    d: () => {
         let date = self.dataset.unix;
         date = {
             "$1": date,
@@ -28,28 +73,27 @@ fn.p = {
         showPopup(...postDate.replace(/\$\d/g, v => date[v]).split("|"));
     },
     // More
-    c: () => {
+    e: () => {
         __todo__("More");
     },
     // Like/Unlike
-    d: () => {
+    f: () => {
         self.classList.toggle("liked");
 
-        // __todo__("Like/Unlike");
         get("like/p", "pid=" + self.parentNode.dataset.id).then(data => {
             console.log(data);
         });
     },
     // Show replies
-    e: () => {
+    g: () => {
         __todo__("Show replies");
     },
     // Save
-    f: () => {
+    h: () => {
         __todo__("Save");
     },
     // Reply
-    g: () => {
+    i: () => {
         __todo__("Reply");
-    }
+    },
 };

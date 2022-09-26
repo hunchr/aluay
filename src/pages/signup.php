@@ -95,19 +95,19 @@ if (isset($_POST['0'])) {
 // Show signup form
 else {
     $main = 
-    '<main class="center form vis" data-title="'.$l[0].'">
-        <div>
+    '<main class="form center vis" data-title="'.$l[0].'">
+        <div class="space center">
             <input class="lower" type="text" placeholder="'.$l[3].'" maxlength="20" spellcheck="false" autocomplete="off" autofocus>
             <input class="lower" type="email" placeholder="'.$l[4].'" maxlength="100" spellcheck="false" autocomplete="off">
             <input type="password" placeholder="'.$l[5].'" maxlength="1000" autocomplete="new-password">
             <input type="password" placeholder="'.$l[6].'" maxlength="1000" autocomplete="new-password">
-            <button class="btn" data-f="_b">'.$l[7].'</button>
+            <button class="blue" data-f="Ab">'.$l[7].'</button>
             <span>'.$l[8].'&nbsp;<button class="a" data-f="__" data-n="login">'.$l[9].'</button></span>
         </div>
-        <div class="hidden">
+        <div class="space center hidden">
             <input class="lower" type="text" placeholder="'.$l[10].'" maxlength="12" spellcheck="false" autocomplete="off">
-            <button class="btn" data-f="_c">'.$l[11].'</button>
-            <span>'.$l[12].'&nbsp;<button class="a" data-f="_d">'.$l[13].'</button></span>
+            <button class="blue" data-f="Ac">'.$l[11].'</button>
+            <span>'.$l[12].'&nbsp;<button class="a" data-f="Ad">'.$l[13].'</button></span>
         </div>
     </main>';
     

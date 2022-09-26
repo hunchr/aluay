@@ -1,8 +1,4 @@
 "use strict";
-HTMLElement.prototype.$ = function(e) {
-    return this.querySelector(e);
-}
-
 let self = document.body,
     layer = document.querySelector("#main main"),
     popupCancel = () => {};
@@ -13,7 +9,7 @@ const __todo__ = msg => console.warn(msg),
       body = self,
       main = $("#main"),
       title = $("h1"),
-      side = $("#side"),
+    //   side = $("#side"),
       popup = $("#popup"),
       search = $("nav input"),
       layers = [layer],
@@ -63,36 +59,37 @@ find = () => {
 
 // Fetches data from database
 get = async (path, data) => {
-    return await new Promise(res => {
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", "/" + path, true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                if (data) {
-                    return res(xhr.response);
-                }
+    console.log("POST: /" + path);
+    // return await new Promise(res => {
+    //     const xhr = new XMLHttpRequest();
+    //     xhr.open("POST", "/" + path, true);
+    //     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    //     xhr.onreadystatechange = () => {
+    //         if (xhr.readyState === 4 && xhr.status === 200) {
+    //             if (data) {
+    //                 return res(xhr.response);
+    //             }
 
-                // --- Hide old layer ---
-                layer?.classList.remove("vis");
+    //             // --- Hide old layer ---
+    //             layer?.classList.remove("vis");
                 
-                // --- Create new layer ---
-                layer = document.createElement("div");
-                layer.innerHTML = xhr.response;
-                layer = layer.firstElementChild;
-                layer.classList.add("vis");
+    //             // --- Create new layer ---
+    //             layer = document.createElement("div");
+    //             layer.innerHTML = xhr.response;
+    //             layer = layer.firstElementChild;
+    //             layer.classList.add("vis");
 
-                // Change title
-                document.title = title.innerHTML = layer.dataset.title;
-                history.pushState(null, "", "https://aluay" + layer.dataset.url);
+    //             // Change title
+    //             document.title = title.innerHTML = layer.dataset.title;
+    //             history.pushState(null, "", "https://aluay" + layer.dataset.url);
 
-                main.appendChild(layer);
-                layers.push(layer);
-                res();
-            }
-        };
-        xhr.send("is_fetch=1&" + (data || ""));
-    });
+    //             main.appendChild(layer);
+    //             layers.push(layer);
+    //             res();
+    //         }
+    //     };
+    //     xhr.send("is_fetch=1&" + (data || ""));
+    // });
 },
 
 // Get form data
@@ -102,6 +99,7 @@ getData = e => (
 
 // Global functions
 fn = {
+    // General
     _: {
         // Fetch data
         _: () => {
@@ -138,34 +136,26 @@ fn = {
         C: () => {
             body.classList.toggle("side");
         },
-        // ----- Popup -----
-        // Continue (Okay)
-        D: () => {
-            popup.classList.add("hidden");
+        // ----- Buttons -----
+        // Toggle
+        a: () => {
+            self.classList.toggle("false");
         },
-        // Cancel
-        E: () => {
-            popupCancel();
-            popup.classList.add("hidden");
+        // List select
+        b: () => {
+            self.parentNode.classList.remove("false");
         },
-        // ----- Select -----
-        // Choose option
-        F: () => {
-            const parent = self.parentNode;
+        // List option
+        c: () => {
+            const parent = self.parentNode.parentNode;
 
-            // Hide options
-            if (parent.classList.contains("expanded")) {
-                parent.$(".selected").classList.remove("selected", "btn");
-                self.classList.add("selected");
-                parent.classList.remove("expanded");
-            }
-            // Show options
-            else {
-                parent.$(".selected").classList.add("btn");
-                parent.classList.add("expanded");
-            }
-        },
-        // ----- Auth -----
+            parent.querySelector("button :nth-child(3)").innerHTML = self.innerText;
+            parent.classList.add("false");
+            parent.setAttribute("data-v", self.dataset.v);
+        }
+    },
+    // Auth
+    A: {
         // Log in
         a: () => {
             get("login", getData("input")).then(res => {
@@ -185,8 +175,8 @@ fn = {
                     showPopup(...res.split("|"));
                 }
                 else {
-                    layer.$(".form>:first-child").remove();
-                    layer.$(".form>:last-child").classList.remove("hidden");
+                    layer.querySelector(".form>:first-child").remove();
+                    layer.querySelector(".form>:last-child").classList.remove("hidden");
                 }
             });
         },
