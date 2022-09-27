@@ -58,38 +58,39 @@ find = () => {
 },
 
 // Fetches data from database
-get = async (path, data) => {
+get = async (path, data = "") => {
     console.log("POST: /" + path);
-    // return await new Promise(res => {
-    //     const xhr = new XMLHttpRequest();
-    //     xhr.open("POST", "/" + path, true);
-    //     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    //     xhr.onreadystatechange = () => {
-    //         if (xhr.readyState === 4 && xhr.status === 200) {
-    //             if (data) {
-    //                 return res(xhr.response);
-    //             }
+    return await new Promise(res => {
+        const xhr = new XMLHttpRequest();
 
-    //             // --- Hide old layer ---
-    //             layer?.classList.remove("vis");
+        xhr.open("POST", "/" + path, true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                if (data) {
+                    return res(xhr.response);
+                }
+
+                // --- Hide old layer ---
+                layer?.classList.remove("vis");
                 
-    //             // --- Create new layer ---
-    //             layer = document.createElement("div");
-    //             layer.innerHTML = xhr.response;
-    //             layer = layer.firstElementChild;
-    //             layer.classList.add("vis");
+                // --- Create new layer ---
+                layer = document.createElement("div");
+                layer.innerHTML = xhr.response;
+                layer = layer.firstElementChild;
+                layer.classList.add("vis");
 
-    //             // Change title
-    //             document.title = title.innerHTML = layer.dataset.title;
-    //             history.pushState(null, "", "https://aluay" + layer.dataset.url);
+                // Change title
+                document.title = title.innerHTML = layer.dataset.title;
+                history.pushState(null, "", "https://aluay" + layer.dataset.url);
 
-    //             main.appendChild(layer);
-    //             layers.push(layer);
-    //             res();
-    //         }
-    //     };
-    //     xhr.send("is_fetch=1&" + (data || ""));
-    // });
+                main.appendChild(layer);
+                layers.push(layer);
+                res();
+            }
+        };
+        xhr.send("is_fetch=1&" + data);
+    });
 },
 
 // Get form data

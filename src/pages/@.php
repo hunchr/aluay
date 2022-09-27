@@ -130,7 +130,7 @@ else {
                     <button data-f="se" aria-label="'.$l[9].'">'.svg('more-h').'</button>
                 </div>
                 <p>'.fstring($data['description']).'</p>
-                '.($data['pid'] === '1' ? '' : media($data['category'], $data['pid'])).'
+                '.($data['category'] === '1' ? '' : media($data['category'], $data['pid'])).'
                 <div data-id="'.$data['id'].'">
                     <button'.$data['liked'].' data-f="sf" aria-label="'.$l[10].'">'.svg('like').fnumber($data['likes']).'</button>
                     <button data-f="sg" aria-label="'.$l[11].'">'.svg('post').fnumber($data['replies']).'</button>

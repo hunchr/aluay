@@ -3,7 +3,7 @@ $l = [
     // Form
     'Signup',
     'Sign up for aluay',
-    'register,create account',
+    ',register,create account',
     'Username',
     'Email',
     'Password',

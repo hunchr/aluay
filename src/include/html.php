@@ -34,7 +34,7 @@ function html(...$files) {
         <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
         <title>'.$l[0].'</title>
         <meta name="description" content="'.$l[1].'">
-        <meta name="keywords" content="aluay'.($is_error ? '' : ','.$l[0].','.$l[2]).'">
+        <meta name="keywords" content="aluay'.($is_error ? '' : ','.$l[0].$l[2]).'">
         <meta name="theme-color" content="#000000">
         <meta name="referrer" content="no-referrer">
         <meta name="robots" content="'.($is_error ? 'no' : '').'index,follow">
@@ -90,6 +90,77 @@ function html(...$files) {
             </div>
         </div>
         <noscript class="center">'.$L[10].'</noscript>
+
+
+
+
+
+
+
+
+
+
+
+        <div id="new" class="popup hidden">
+        <div class="space">
+            <div class="btn">
+                <div class="list false" data-v="0">
+                    <button data-f="_b">
+                        <svg viewBox="0 0 8 8"><use href="#svg-interests"></use></svg>
+                        <span>Category</span>
+                        <span>Post</span>
+                        <svg viewBox="0 0 8 8"><use href="#svg-expand"></use></svg>
+                    </button>
+                    <div>
+                        <button data-f="_c" data-v="2">
+                            <svg viewBox="0 0 8 8"><use href="#svg-community"></use></svg>
+                            <span>Community</span>
+                        </button>
+                        <button data-f="_c" data-v="1">
+                            <svg viewBox="0 0 8 8"><use href="#svg-list"></use></svg>
+                            <span>List</span>
+                        </button>
+                        <button data-f="_c" data-v="0">
+                            <svg viewBox="0 0 8 8"><use href="#svg-post"></use></svg>
+                            <span>Post</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <textarea placeholder="Write something interesting.."></textarea>
+            <div class="btn">
+                <button class="toggle false" data-f="_a">
+                    <span>Mark as Spoiler</span>
+                    <div></div>
+                </button>
+                <button class="toggle false" data-f="_a">
+                    <span>Mark as NSFW</span>
+                    <div></div>
+                </button>
+            </div>
+            <button class="blue" data-f="sB" aria-label="Upload files"><svg viewBox="0 0 8 8"><use href="#svg-upload"></use></svg></button>
+            <button class="blue" data-f="sC" aria-label="Create poll"><svg viewBox="0 0 8 8"><use href="#svg-poll"></use></svg></button>
+            <button class="blue fit" data-f="sD">Create</button>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </nav>
     <div id="side" class="hidden">
         <menu></menu>

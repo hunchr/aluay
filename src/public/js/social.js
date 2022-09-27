@@ -8,7 +8,9 @@ fn.s = {
     // ----- New -----
     // Popup
     A: () => {
-        __todo__("Popup");
+        create.classList.remove("hidden");
+        body.classList.add("freeze");
+        createCat.focus();
     },
     // Upload files
     B: () => {
@@ -30,14 +32,21 @@ fn.s = {
                 return __todo__("popup invalid length");
             }
 
-            console.log(
-                desc,
+            get("api/new", "new="+JSON.stringify([
+                "null",
                 ...[...create.querySelectorAll("#new .toggle")].map(e => {
                     return !e.classList.contains("false");
-                })
-            );
-
-            return __todo__("Create post");
+                }),
+                desc
+            ])).then(res => {
+                if (res) {
+                    showPopup(...res.split("|"));
+                }
+                else {
+                    create.classList.add("hidden");
+                    body.classList.remove("freeze");
+                }
+            });
         }
         // Create list
         if (category === "1") {
@@ -83,6 +92,26 @@ fn.s = {
         get("like/p", "pid=" + self.parentNode.dataset.id).then(data => {
             console.log(data);
         });
+
+
+
+
+        // const btn = ev.target,
+        //       likes = Number(btn.innerText);
+
+        // btn.classList.toggle("a");
+
+        // if (!isNaN(likes)) {
+        //     btn.innerHTML = btn.innerHTML.replace(/\d+$/, () => likes + (btn.classList == "a" ? 1 : -1));
+        // }
+
+
+
+
+
+
+
+
     },
     // Show replies
     g: () => {

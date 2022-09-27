@@ -3,7 +3,7 @@ $l = [
     // Form
     'Login',
     'Log into your account',
-    'sign in',
+    ',sign in',
     'Username',
     'Password',
     'Log In',
