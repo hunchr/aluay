@@ -50,11 +50,12 @@ function html(...$files) {
         <link rel="canonical" href="https://aluay'.$url.'">'.
         implode('', array_map(function($path) {
             global $nonce;
+            $version = 1;
             // TODO: <link rel="preload" href="/css/'.$path.'.css" as="style"
                 // nonce="'.$nonce.'" onload="this.onload=null;this.rel=\'stylesheet\'">
             return
-                '<link rel="stylesheet" href="/css/'.$path.'.css">
-                <script src="/js/'.$path.'.js" defer nonce="'.$nonce.'"></script>';
+                '<link rel="stylesheet" href="/css/'.$path.'.css?v='.$version.'">
+                <script src="/js/'.$path.'.js?v='.$version.'" defer nonce="'.$nonce.'"></script>';
         }, $files)).
         '<link rel="icon" type="image/svg+xml" href="/img/favicon.svg">
         <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
@@ -127,6 +128,7 @@ function html(...$files) {
                     </div>
                 </div>
             </div>
+            <input class="hidden" type="file" accept=".png,.jpg,.jpeg" multiple>
             <textarea placeholder="Write something interesting.."></textarea>
             <div class="btn">
                 <button class="toggle false" data-f="_a">

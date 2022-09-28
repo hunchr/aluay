@@ -58,23 +58,22 @@ find = () => {
 },
 
 // Fetches data from database
-get = async (path, data = "") => {
+get = async (path, data = "", isFormData) => {
     console.log("POST: /" + path);
     return await new Promise(res => {
         const xhr = new XMLHttpRequest();
 
         xhr.open("POST", "/" + path, true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 if (data) {
                     return res(xhr.response);
                 }
 
-                // --- Hide old layer ---
+                // Hide old layer
                 layer?.classList.remove("vis");
                 
-                // --- Create new layer ---
+                // Create new layer
                 layer = document.createElement("div");
                 layer.innerHTML = xhr.response;
                 layer = layer.firstElementChild;
@@ -89,7 +88,16 @@ get = async (path, data = "") => {
                 res();
             }
         };
-        xhr.send("is_fetch=1&" + data);
+
+        // Send data
+        if (isFormData) {
+            // xhr.setRequestHeader("Content-Type", "multipart/form-data");
+            xhr.send(data);
+        }
+        else {
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.send("is_fetch=1&" + data);
+        }
     });
 },
 
