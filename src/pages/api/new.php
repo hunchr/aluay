@@ -31,8 +31,7 @@ $badges = substr(
 $fileCount = count($_FILES);
 
 if ($fileCount) {
-    preg_match('/\w+/', $_FILES[0]['type'], $fileType);
-    $fileType = $fileType[0];
+    $fileType = substr($_FILES[0]['type'], 0, -strpos($_FILES[0]['type'], '/'));
     $files = [];
 
     // --- Validate files ---
@@ -40,8 +39,8 @@ if ($fileCount) {
         if ($file['error'] !== 0) {
             exit('ERR_CORRUPTED_FILE');
         }
-        if (substr($file['type'], "indexOf('/')") !== $fileType) {
-            echo $file['type'].' instead of '.$fileType.'\n';
+        if (substr($file['type'], 0, -strpos($file['type'], '/')) !== $fileType) {
+            echo $file['type'].' instead of '.$fileType;
             exit('ERR_INCONSISTENT_FILE_TYPE');
         }
         if ($file['size'] > 1.25e6) {
@@ -60,12 +59,6 @@ if ($fileCount) {
             if (!$im -> valid()) {
                 exit('ERR_CORRUPTED_FILE');
             }
-
-            $format = $im -> getImageFormat();
-
-            // if (!preg_match('/PNG|JPEG/', $format)) {
-            //     exit('ERR_UNSUPPORTED_FILE_TYPE');
-            // }
             
             // --- Resize (LANCZOS) ---
             $width = $im -> getImageWidth();
@@ -75,20 +68,19 @@ if ($fileCount) {
                 exit('ERR_ASPECT_RATIO');
             }
 
-            if ($width > 1280) {
-                $im -> resizeImage(1280, 0, 22, 0);
+            if ($width > 1080) {
+                $im -> resizeImage(1080, 0, 22, 0);
                 $height = $im -> getImageHeight();
             }
 
-            if ($height > 1280) {
-                $im -> resizeImage(0, 1280, 22, 0);
+            if ($height > 1080) {
+                $im -> resizeImage(0, 1080, 22, 0);
             }
 
             // --- Convert to WEBP ---
             $im -> setImageFormat('webp');
             $im -> setImageCompression(21);
-            $im -> setImageCompressionQuality(40);
-            // $im -> setImageCompressionQuality(65);
+            $im -> setImageCompressionQuality(35);
             $im -> stripImage();
 
             // --- Save ---
@@ -96,6 +88,7 @@ if ($fileCount) {
         }
     }
     else {
+        echo $fileType;
         exit('ERR_FILE_TYPE_NOT_SUPPORTED');
     }
 }
@@ -115,23 +108,11 @@ if (!$conn -> multi_query(
     exit('ERR_DB_REFUSED');
 }
 
+$pid = 'uc/s/'.($conn -> insert_id).'/'.$pid.'-';
+$conn -> close();
+
 // ----- Upload files -----
 if ($fileCount) {
-    // --- Get post ID ---
-    $pid = $conn -> query(
-        'SELECT id
-        FROM posts
-        WHERE uid = '.$uid.'
-        ORDER BY created DESC
-        LIMIT 1;'
-    );
-
-    $pid = $pid -> fetch_assoc()['id'];
-    $conn -> close();
-
-    // --- Save files in directory ---
-    $pid = 'uc/s/'.$uid.'/'.$pid.'-';
-
     for ($i=0; $i<$fileCount; $i++) {
         file_put_contents($pid.$i.'.webp', $im);
     }

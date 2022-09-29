@@ -62,31 +62,16 @@ if (isset($_POST['0'])) {
 
         // Create account
         $conn = conn();
-        $conn -> query(
+        $conn -> query( // TODO?: htmlspecialchars
             'INSERT INTO subs (name)
-            VALUES ("@'.$data[1].'");' // TODO?: htmlspecialchars
-        );
-        $uid = $conn -> query(
-            'SELECT id
-            from subs
-            WHERE type = 0
-            AND name = "@'.$data[1].'"
-            LIMIT 1;'
-        );
-
-        if ($uid -> num_rows === 0) {
-            exit($l[20]); // TODO
-        }
-
-        $uid = $uid -> fetch_assoc()['id'];
-        $conn -> query(
-            'INSERT INTO users (id, uname, email, password, language)
+            VALUES ("'.$data[1].'"); 
+            INSERT INTO users (SELECT LAST_INSERT_ID(), uname, email, password, language)
             VALUES ('.$uid.',"'.$data[1].'","'.$data[2].'","'.pwd($data[3], false).'", "'.$lang.'");'
         );
+        $uid = 'uc/s/'.($conn -> insert_id);
         $conn -> close();
 
         // Create directory
-        $uid = 'uc/s/'.$uid;
         mkdir($uid, 0666, true);
         copy('uc/s/0/0.webp', $uid.'/0.webp');
         session_destroy();

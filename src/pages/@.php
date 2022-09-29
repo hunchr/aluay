@@ -87,7 +87,7 @@ else {
         switch ($cat) {
             // Image // TODO
             case '2':
-                $cat = '<img src="/uc/s/'.$id.'/'.$pid.'.webp" alt="Image" loading="lazy" width="540">';
+                $cat = '<img src="/uc/s/'.$id.'/'.$pid.'-0.webp" alt="Image" loading="lazy" width="540">';
                 break;
             // Video // TODO
             case '3':
@@ -130,7 +130,7 @@ else {
                     <button data-f="se" aria-label="'.$l[9].'">'.svg('more-h').'</button>
                 </div>
                 <p>'.fstring($data['description']).'</p>
-                '.($data['category'] === '1' ? '' : media($data['category'], $data['pid'])).'
+                '.($data['category'] === '1' ? '' : media($data['category'], $data['id'])).'
                 <div data-id="'.$data['id'].'">
                     <button'.$data['liked'].' data-f="sf" aria-label="'.$l[10].'">'.svg('like').fnumber($data['likes']).'</button>
                     <button data-f="sg" aria-label="'.$l[11].'">'.svg('post').fnumber($data['replies']).'</button>
