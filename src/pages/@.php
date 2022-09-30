@@ -3,10 +3,10 @@
  * Shows a specific user profile.
  * @param array $q username
  */
-require '../include/sql/social-query.php';
+require '../include/sql-social.php';
 
 // ----- Profile -----
-if (query(
+if (squery(
     'SELECT s.*, UNIX_TIMESTAMP(s.created) AS created, u.badges, u.language,'
     .($uid ?
         'IF ((SELECT uid FROM liked_subs l WHERE l.uid = '.$uid.' AND l.sid = s.id), TRUE, FALSE) AS liked ':
@@ -106,7 +106,7 @@ else {
         return '<div class="media">'.$cat.'</div>';
     };
 
-    $rows = query(
+    $rows = squery(
         'SELECT p.*, UNIX_TIMESTAMP(p.created) AS created,
         IF (p.pid, CONCAT("&", (SELECT c.cname FROM communities c WHERE c.id = p.pid)), "@'.$q[0].'") as name,'
         .($uid ?
@@ -141,8 +141,6 @@ else {
         }
     );
     
-    $conn -> close();
-    
     if ($rows < 5) {
         $main .=
         '<span class="end center">
@@ -151,6 +149,7 @@ else {
     }
 }
 
+$conn -> close();
 $main .= '</main>';
 
 // ----- Generate HTML -----

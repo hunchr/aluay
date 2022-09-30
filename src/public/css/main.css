@@ -60,6 +60,7 @@ textarea {
 input,
 textarea {
     cursor: default;
+    color: var(--fg);
     background-color: var(--hover);
     padding: 0 .75rem;
 }

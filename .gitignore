@@ -6,4 +6,4 @@ src/.test
 src/public/uc
 
 # Database password
-src/include/sql
+src/include/sql*

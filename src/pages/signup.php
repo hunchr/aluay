@@ -36,20 +36,28 @@ if (isset($_POST['0'])) {
             exit($l[17]);
         }
         
-        require '../include/sql/single-query.php';
+        require '../include/sql.php';
 
         // Check if username is available
-        if (query('SELECT uname FROM users WHERE uname = "'.$name.'";')) {
-            $pin = preg_replace('/[\/+l]/', 'a', strtolower(base64_encode(random_bytes(9))));
-            $_SESSION['signup'] = [$pin, $name, $mail, $pwd];
+        [$data] = query(
+            'SELECT uname
+            FROM users
+            WHERE uname = "'.$name.'";',
+            false,
+            function() {
+                global $l;
+                exit($l[15]);
+            }
+        );
 
-            // TODO: Send verification email with pin
-            exit();
-        }
-        else {
-            exit($l[15]);
-        }
+        // Create verification pin
+        $pin = preg_replace('/[\/+l]/', 'a', strtolower(base64_encode(random_bytes(9))));
+        $_SESSION['signup'] = [$pin, $name, $mail, $pwd];
+
+        // TODO: Send verification email with pin
+        exit();
     }
+
     // Verify email
     if (isset($_SESSION['signup'])) {
         $data = $_SESSION['signup'];
@@ -58,29 +66,30 @@ if (isset($_POST['0'])) {
             exit($data[0]); // TODO: exit($l[19]);
         }
         
-        require '../include/sql/pwd-query.php';
+        require '../include/sql.php';
 
         // Create account
-        $conn = conn();
-        $conn -> query( // TODO?: htmlspecialchars
+        [$data, $uid] = query(
             'INSERT INTO subs (name)
-            VALUES ("'.$data[1].'"); 
-            INSERT INTO users (SELECT LAST_INSERT_ID(), uname, email, password, language)
-            VALUES ('.$uid.',"'.$data[1].'","'.$data[2].'","'.pwd($data[3], false).'", "'.$lang.'");'
+            VALUES ("'.substr($data[1], 1).'");
+            INSERT INTO users (id, uname, email, password, language)
+            VALUES (SELECT LAST_INSERT_ID(),"'.$data[1].'","'.$data[2].'","'.pwd($data[3], false).'", "'.$lang.'");',
+            false,
+            null
         );
-        $uid = 'uc/s/'.($conn -> insert_id);
-        $conn -> close();
 
         // Create directory
+        $uid = 'uc/s/'.$uid;
         mkdir($uid, 0666, true);
         copy('uc/s/0/0.webp', $uid.'/0.webp');
         session_destroy();
+        exit();
     }
 }
 // Show signup form
 else {
     $main = 
-    '<main class="form center vis" data-title="'.$l[0].'">
+    '<main class="form center vis" data-title="'.$l[0].'" data-url="signup">
         <div class="space center">
             <input class="lower" type="text" placeholder="'.$l[3].'" maxlength="20" spellcheck="false" autocomplete="off" autofocus>
             <input class="lower" type="email" placeholder="'.$l[4].'" maxlength="100" spellcheck="false" autocomplete="off">

@@ -35,6 +35,7 @@ showPopup = (...msg) => {
         popupElems[3].classList.add("hidden");
     }
     
+    body.classList.add("freeze");
     popup.classList.remove("hidden");
     popup.focus();
 },
@@ -81,17 +82,17 @@ get = async (path, data = "", isFormData) => {
 
                 // Change title
                 document.title = title.innerHTML = layer.dataset.title;
-                history.pushState(null, "", "https://aluay" + layer.dataset.url);
+                history.pushState(null, "", "https://aluay/" + layer.dataset.url);
 
                 main.appendChild(layer);
                 layers.push(layer);
+                console.log("layer", layer);
                 res();
             }
         };
 
         // Send data
         if (isFormData) {
-            // xhr.setRequestHeader("Content-Type", "multipart/form-data");
             xhr.send(data);
         }
         else {
@@ -146,6 +147,16 @@ fn = {
             body.classList.toggle("side");
         },
         // ----- Buttons -----
+        // Continue
+        D: () => {
+            body.classList.remove("freeze");
+            popup.classList.add("hidden");
+        },
+        // Cancel
+        E: () => {
+            fn._.D();
+        },
+        // ----- Buttons -----
         // Toggle
         a: () => {
             self.classList.toggle("false");
@@ -173,7 +184,8 @@ fn = {
                 }
                 else {
                     layers.pop().remove();
-                    fn._._("home");
+                    console.log(JSON.stringify(layers));
+                    get("home");
                 }
             });
         },
@@ -197,7 +209,7 @@ fn = {
                 }
                 else {
                     layers.pop().remove();
-                    fn._._("login");
+                    get("login");
                 }
             });
         },

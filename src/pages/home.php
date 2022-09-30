@@ -2,7 +2,10 @@
 /**
  * Shows posts from liked users and communities.
  */
-// exit('<code>'.$_SERVER['REQUEST_URI'].'</code> is coming soon');
+$main = // TODO
+'<main class="center vis" data-title="'.$l[0].'" data-url="home">
+    HOME - COMING SOON
+</main>';
 
 // ----- Generate HTML -----
 $is_fetch ? exit($main) : require '../include/html.php';

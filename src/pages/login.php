@@ -7,7 +7,7 @@ if ($uid) {
     header('Location: /home'); // TODO?: /accounts
     exit();
 }
-// Create new account
+// Log in
 if (isset($_POST['0'], $_POST['1'])) {
     $name = strtolower($_POST['0']);
     $pwd = htmlspecialchars($_POST['1']);
@@ -26,21 +26,19 @@ if (isset($_POST['0'], $_POST['1'])) {
         exit($l[9]);
     }
 
-    require '../include/sql/pwd-query.php';
+    require '../include/sql.php';
 
     // Get user data
-    $conn = conn();
-    $data = $conn -> query(
+    [$data, $row_cnt, $conn] = query(
         'SELECT id, uname, password, language, preferences
         FROM users
-        WHERE uname = "'.$name.'";'
+        WHERE uname = "'.$name.'";',
+        true,
+        function() {
+            global $l;
+            exit($l[8]);
+        }
     );
-
-    if ($data -> num_rows === 0) {
-        exit($l[8]);
-    }
-
-    $data = $data -> fetch_assoc();
 
     // Compare passwords // TODO: Implement three strikes rule
     if (!pwd($pwd, $data['password'])) {

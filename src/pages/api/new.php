@@ -28,11 +28,11 @@ $badges = substr(
 );
 
 // ----- Get files -----
+$files = [];
 $fileCount = count($_FILES);
 
 if ($fileCount) {
     $fileType = substr($_FILES[0]['type'], 0, -strpos($_FILES[0]['type'], '/'));
-    $files = [];
 
     // --- Validate files ---
     foreach ($_FILES as $file) {
@@ -94,27 +94,22 @@ if ($fileCount) {
 }
 
 // ----- Create post -----
-require '../include/sql/self-query.php';
+require '../include/sql.php';
 
-$conn = conn();
-
-if (!$conn -> multi_query(
+$pid = 'uc/s/'.$uid.'/'.query(
     'INSERT INTO posts (uid, pid, category, badges, description)
     VALUES ('.$uid.','.$new[0].','.$cat.',"'.$badges.'","'.$desc.'");
     UPDATE subs
     SET posts = posts + 1
-    WHERE id = '.$uid.';'
-)) {
-    exit('ERR_DB_REFUSED');
-}
-
-$pid = 'uc/s/'.($conn -> insert_id).'/'.$pid.'-';
-$conn -> close();
+    WHERE id = '.$uid.';',
+    false,
+    null
+).'-';
 
 // ----- Upload files -----
 if ($fileCount) {
     for ($i=0; $i<$fileCount; $i++) {
-        file_put_contents($pid.$i.'.webp', $im);
+        file_put_contents($pid.$i.'.webp', $files[$i]);
     }
 }
 ?>
