@@ -60,7 +60,6 @@ find = () => {
 
 // Fetches data from database
 get = async (path, data = "", isFormData) => {
-    console.log("POST: /" + path);
     return await new Promise(res => {
         const xhr = new XMLHttpRequest();
 

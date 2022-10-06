@@ -9,6 +9,13 @@ if ($uid) {
 }
 // Log in
 if (isset($_POST['0'], $_POST['1'])) {
+    $_SESSION['strikes'] = isset($_SESSION['strikes']) ? $_SESSION['strikes'] + 1 : 0;
+
+    // 5 strikes rule // TODO: Implement better rule with sql logging and ip ban
+    if ($_SESSION['strikes'] >= 5) {
+        exit($l[10]);
+    }
+
     $name = strtolower($_POST['0']);
     $pwd = htmlspecialchars($_POST['1']);
 
@@ -40,7 +47,7 @@ if (isset($_POST['0'], $_POST['1'])) {
         }
     );
 
-    // Compare passwords // TODO: Implement three strikes rule
+    // Compare passwords
     if (!pwd($pwd, $data['password'])) {
         exit($l[9]);
     }
@@ -58,6 +65,7 @@ if (isset($_POST['0'], $_POST['1'])) {
 
     // Set cookie to remember user (expires after 2 years)
     setrawcookie('auth', $token, time() + 6.307e7, "/");
+    unset($_SESSION['strikes']);
 }
 // Show login form
 else {

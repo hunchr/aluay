@@ -39,41 +39,45 @@ if (isset($_POST['0'])) {
         require '../include/sql.php';
 
         // Check if username is available
-        [$data] = query(
+        query(
             'SELECT uname
             FROM users
             WHERE uname = "'.$name.'";',
             false,
             function() {
-                global $l;
-                exit($l[15]);
+                global $name;
+                global $mail;
+                global $pwd;
+
+                // Create verification pin
+                $pin = substr(str_shuffle('BCDFGHJKLMNPQRSTVWXZbcdfghjkmnpqrstvwxz256789'), 29);
+                // $pin = preg_replace('/[\/+l]/', 'a', strtolower(base64_encode(random_bytes(9))));
+                $_SESSION['signup'] = [$pin, $name, $mail, $pwd];
+
+                // TODO: Send verification email with pin
+                exit();
             }
         );
-
-        // Create verification pin
-        $pin = preg_replace('/[\/+l]/', 'a', strtolower(base64_encode(random_bytes(9))));
-        $_SESSION['signup'] = [$pin, $name, $mail, $pwd];
-
-        // TODO: Send verification email with pin
-        exit();
+                
+        exit($l[15]);
     }
 
     // Verify email
     if (isset($_SESSION['signup'])) {
         $data = $_SESSION['signup'];
 
-        if ($data[0] !== strtolower($_POST['0'])) {
+        if ($data[0] !== $_POST['0']) {
             exit($data[0]); // TODO: exit($l[19]);
         }
         
         require '../include/sql.php';
 
         // Create account
-        [$data, $uid] = query(
+        [$uid] = query(
             'INSERT INTO subs (name)
-            VALUES ("'.substr($data[1], 1).'");
+            VALUES ("'.$data[1].'");
             INSERT INTO users (id, uname, email, password, language)
-            VALUES (SELECT LAST_INSERT_ID(),"'.$data[1].'","'.$data[2].'","'.pwd($data[3], false).'", "'.$lang.'");',
+            VALUES (LAST_INSERT_ID(),"'.$data[1].'","'.$data[2].'","'.pwd($data[3], false).'", "'.$lang.'");',
             false,
             null
         );
@@ -99,7 +103,7 @@ else {
             <span>'.$l[8].'&nbsp;<button class="a" data-f="__" data-n="login">'.$l[9].'</button></span>
         </div>
         <div class="space center hidden">
-            <input class="lower" type="text" placeholder="'.$l[10].'" maxlength="12" spellcheck="false" autocomplete="off">
+            <input type="text" placeholder="'.$l[10].'" maxlength="16" spellcheck="false" autocomplete="off">
             <button class="blue" data-f="Ac">'.$l[11].'</button>
             <span>'.$l[12].'&nbsp;<button class="a" data-f="Ad">'.$l[13].'</button></span>
         </div>

@@ -7,7 +7,7 @@ require '../include/sql-social.php';
 
 // ----- Profile -----
 if (squery(
-    'SELECT s.*, UNIX_TIMESTAMP(s.created) AS created, u.badges, u.language,'
+    'SELECT s.*, UNIX_TIMESTAMP(s.created) AS created,'
     .($uid ?
         'IF ((SELECT uid FROM liked_subs l WHERE l.uid = '.$uid.' AND l.sid = s.id), TRUE, FALSE) AS liked ':
         'NULL AS liked '
@@ -20,20 +20,42 @@ if (squery(
         global $q;
         global $l;
         global $id;
+        global $cat;
         global $main;
         global $og_uri;
-        global $liked_type;
+        global $is_liked;
 
         $id = $data['id'];
         $og_uri = 'uc/s/'.$data['id'].'/0';
-        $liked_type = [$data['liked'], $data['type']];
-        
-        // Archived/Banned
-        if ($liked_type[1] > 2) {
-            $l[1] = $liked_type[1] === 3 ? $l[17] : $l[18];
+        $is_liked = $data['liked'];
+        [$badges, $cat] = str_split(str_pad($data['info'], 2, '0', 0));
+        $badges = implode('', array_map(function($badge) {
+            return svg($badge);
+        }, [
+            [],
+            ['mod'],
+            ['bot'],
+            ['verified'],
+            ['premium'],
+            ['verified','premium'],
+            ['nsfw'],
+            ['verified','nsfw'],
+            ['premium','nsfw'],
+            ['verified','premium','nsfw'],
+        ][$badges]));
+
+        // Hidden profile
+        if ($cat > 2) {
+            // Moved
+            if ($cat === 4) {
+                exit('todo: moved to @'.$data['name']);
+            }
+
+            // Archived/Banned
+            $l[1] = $cat === 3 ? $l[17] : $l[18];
             require '../include/error.php';
         }
-        // Public/Unlisted/Private // TODO: badges
+        // Public profile
         else {
             $l[0] = $q[0];
             $l[1] = strlen($data['description']) > 149 ?
@@ -46,10 +68,15 @@ if (squery(
                 <div class="profile-t">
                     <img src="/'.$og_uri.'.webp" alt="'.$l[3].'" loading="lazy" width="40">
                     <div>
-                        <span>'.$data['name'].'</span>
-                        <span>@'.$l[0].'</span>
+                        <div>
+                            <span>'.$data['name'].'</span>
+                            '.$badges.'
+                        </div>
+                        <div>
+                            <span>@'.$l[0].'</span>
+                        </div>
                     </div>
-                    <button data-f="sa" class="blue fit min'.($liked_type[0] ? ' liked">'.$l[4] : '">'.$l[5]).'</button>
+                    <button data-f="sa" class="blue fit min'.($is_liked ? ' liked">'.$l[4] : '">'.$l[5]).'</button>
                 </div>
                 <p>'.fstring($data['description']).'</p>
                 <div>
@@ -71,14 +98,14 @@ if (squery(
 }
 
 // ----- Posts -----
-// Private
-if ($liked_type[1] === 2 && !$liked_type[0]) {
+// Private profile
+if ($cat === 2 && !$is_liked) {
     $main .=
     '<span class="end center">
         '.$l[16].'
     </span>';
 }
-// Public/Unlisted
+// Public profile
 else {
     // Set media for post category
     function media($cat, $pid) {
