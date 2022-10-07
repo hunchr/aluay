@@ -108,24 +108,29 @@ if ($cat === 2 && !$is_liked) {
 // Public profile
 else {
     // Set media for post category
-    function media($cat, $pid) {
+    function media($pid, $cat, $cnt) {
         global $id;
 
         switch ($cat) {
             // Image // TODO
             case '2':
+            case '3': // TODO: pixelate, multiple
                 $cat = '<img src="/uc/s/'.$id.'/'.$pid.'-0.webp" alt="Image" loading="lazy" width="540">';
                 break;
             // Video // TODO
-            case '3':
+            case '4':
                 $cat = '[todo-video]';
                 break;
             // Audio // TODO
-            case '4':
+            case '5':
                 $cat = '[todo-audio]';
                 break;
+            // Live // TODO
+            case '6':
+                $cat = '[todo-live]';
+                break;
             // Poll // TODO
-            case '5':
+            case '7':
                 $cat = '[todo-poll]';
                 break;
         }
@@ -141,24 +146,27 @@ else {
             'NULL AS liked '
         ).
         'FROM posts p
-        WHERE p.uid = (SELECT id FROM users u WHERE u.uname = "'.$q[0].'")
-        AND NOT p.category = 0
+        WHERE p.uid = '.$id.'
         ORDER BY p.created DESC
         LIMIT 5;',
         function($data) {
             global $l;
+            global $id;
             global $main;
+
+            [$badges, $media_1, $media_2, $media_3, $cat] = str_split(str_pad($data['info'], 5, '0', 0));
+            $media_cnt = $media_1.$media_2.$media_3;
     
             $main .=
-            '<article class="post">
+            '<article class="post" data-badges="'.$badges.'">
                 <div>
                     <button data-f="sc">'.$data['name'].'</button>&nbsp;•&nbsp;
                     <button data-f="sd" data-unix="'.$data['created'].'">'.fdate($data['created']).'</button>
                     <button data-f="se" aria-label="'.$l[9].'">'.svg('more-h').'</button>
                 </div>
                 <p>'.fstring($data['description']).'</p>
-                '.($data['category'] === '1' ? '' : media($data['category'], $data['id'])).'
-                <div data-id="'.$data['id'].'">
+                '.(!$media_cnt ? '' : media($data['id'], $cat, $media_cnt)).'
+                <div data-id="'.$id.'|'.$data['id'].'">
                     <button'.$data['liked'].' data-f="sf" aria-label="'.$l[10].'">'.svg('like').fnumber($data['likes']).'</button>
                     <button data-f="sg" aria-label="'.$l[11].'">'.svg('post').fnumber($data['replies']).'</button>
                     <button data-f="sh">'.svg('save').$l[12].'</button>
