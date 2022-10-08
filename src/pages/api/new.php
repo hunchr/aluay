@@ -1,46 +1,40 @@
 <?php
 /**
- * Created a post.
+ * Creates a post.
+ * @param array $_POST['new'] parent_id, badges, text
  */
 // ----- Get JSON -----
 $new = isset($_POST['new']) ? json_decode($_POST['new']) : [];
 
-if (count($new) !== 4 || !preg_match('/^null|\d+$/', $new[0])) {
+if (count($new) !== 3 || !preg_match('/^null|\d+$/', $new[0])) {
     exit('Invalid Arguments|Please do not try to edit the HTML or JavaScript code.|Okay'); // TODO: lang
 }
 
 // --- Description ---
-$desc = preg_replace('/\n\n+/', '\n', htmlspecialchars(trim($new[3])));
-$len = strlen($desc);
+$text = preg_replace('/\n\n+/', '\n', htmlspecialchars(trim($new[2])));
+$text_len = strlen($text);
 
-if ($len === 0 || $len > 1e4) {
-    exit('Invalid Post Length|The post length must be between 1 and 10,000 characters long, but this post is '.$len.' characters long.|Okay'); // TODO: lang
+if ($text_len === 0 || $text_len > 1e4) {
+    exit('Invalid Post Length|The post length must be between 1 and 10,000 characters long, but this post is '.$text_len.' characters long.|Okay'); // TODO: lang
 }
 
 // --- Category ---
 $cat = 1;
 
-// --- Badges ---
-$badges = substr(
-    ($new[1] == 1 ? 'spoiler,' : '').
-    ($new[2] == 1 ? 'nsfw,' : ''),
-    0, -1
-);
-
 // ----- Get files -----
 $files = [];
-$fileCount = count($_FILES);
+$media_cnt = count($_FILES);
 
-if ($fileCount) {
-    $fileType = substr($_FILES[0]['type'], 0, -strpos($_FILES[0]['type'], '/'));
+if ($media_cnt) {
+    $file_type = substr($_FILES[0]['type'], 0, -strpos($_FILES[0]['type'], '/'));
 
     // --- Validate files ---
     foreach ($_FILES as $file) {
         if ($file['error'] !== 0) {
             exit('ERR_CORRUPTED_FILE');
         }
-        if (substr($file['type'], 0, -strpos($file['type'], '/')) !== $fileType) {
-            echo $file['type'].' instead of '.$fileType;
+        if (substr($file['type'], 0, -strpos($file['type'], '/')) !== $file_type) {
+            echo $file['type'].' instead of '.$file_type;
             exit('ERR_INCONSISTENT_FILE_TYPE');
         }
         if ($file['size'] > 1.25e6) {
@@ -49,10 +43,10 @@ if ($fileCount) {
     }
 
     // Images
-    if ($fileType === 'image') {
+    if ($file_type === 'image') {
         $cat = 2;
 
-        for ($i=0; $i<$fileCount; $i++) {
+        for ($i=0; $i<$media_cnt; $i++) {
             $im = new Imagick();
             $im -> readImage($_FILES[$i]['tmp_name']);
 
@@ -88,7 +82,7 @@ if ($fileCount) {
         }
     }
     else {
-        echo $fileType;
+        echo $file_type; // TODO: remove
         exit('ERR_FILE_TYPE_NOT_SUPPORTED');
     }
 }
@@ -96,19 +90,21 @@ if ($fileCount) {
 // ----- Create post -----
 require '../include/sql.php';
 
-$pid = 'uc/s/'.$uid.'/'.query(
-    'INSERT INTO posts (uid, pid, category, badges, description)
-    VALUES ('.$uid.','.$new[0].','.$cat.',"'.$badges.'","'.$desc.'");
+[$pid] = query(
+    'INSERT INTO posts (uid, pid, info, text)
+    VALUES ('.$uid.','.$new[0].','.($new[1] ? '2' : '')
+        .($media_cnt ? str_pad($media_cnt, 3, '0', 0) : '000').$cat.',"'.$text.'");
     UPDATE subs
     SET posts = posts + 1
     WHERE id = '.$uid.';',
     false,
     null
-).'-';
+);
+$pid = 'uc/s/'.$uid.'/'.$pid.'-';
 
 // ----- Upload files -----
-if ($fileCount) {
-    for ($i=0; $i<$fileCount; $i++) {
+if ($media_cnt) {
+    for ($i=0; $i<$media_cnt; $i++) {
         file_put_contents($pid.$i.'.webp', $files[$i]);
     }
 }

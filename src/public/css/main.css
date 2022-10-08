@@ -223,6 +223,11 @@ button img {
     margin-right: .5rem;
 }
 
+/* ----- Paragraphs ----- */
+p {
+    user-select: text;
+}
+
 /* ----- Classes ----- */
 .space {
     flex-wrap: wrap;
@@ -320,6 +325,10 @@ main,
 }
 
 /* ----- Popup ----- */
+#popup {
+    z-index: 1;
+}
+
 .popup {
     position: fixed;
     background-color: #000a;

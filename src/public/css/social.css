@@ -14,7 +14,6 @@
 .post p,
 .profile p {
     text-align: justify;
-    user-select: text;
     color: var(--fg);
     margin: .25rem 0 .125rem 0;
 }
@@ -70,6 +69,7 @@
 }
 
 .profile-t svg {
+    fill: var(--fg);
     margin: 0 0 0 .1875rem;
 }
 

@@ -132,10 +132,6 @@ function html(...$files) {
             <textarea placeholder="Write something interesting.."></textarea>
             <div class="btn">
                 <button class="toggle false" data-f="_a">
-                    <span>Mark as Spoiler</span>
-                    <div></div>
-                </button>
-                <button class="toggle false" data-f="_a">
                     <span>Mark as NSFW</span>
                     <div></div>
                 </button>

@@ -29,11 +29,11 @@ fn.s = {
 
         // Create post
         if (category === "0") {
-            const desc = createCat.value.trim(),
+            const text = createCat.value.trim(),
                   hasMedia = !!createFormData;
 
             // Validate description
-            if (desc < 0) {
+            if (text < 0) {
                 return __todo__("popup invalid length"); // TODO: lang
             }
 
@@ -87,23 +87,20 @@ fn.s = {
             // Append data
             createFormData.append("new", JSON.stringify([
                 "null",
-                ...[...create.querySelectorAll("#new .toggle")].map(e => {
-                    return !e.classList.contains("false");
-                }),
-                desc
+                !create.querySelector("#new .toggle").classList.contains("false"),
+                text
             ]));
 
             // Send post and files to database
             get("api/new", createFormData, hasMedia).then(res => {
-                console.log(res);
-                // if (res) {
-                //     showPopup(...res.split("|"));
-                // }
-                // else {
-                //     create.classList.add("hidden");
-                //     body.classList.remove("freeze");
-                //     createFormData = false;
-                // }
+                if (res) {
+                    showPopup(...res.split("|"));
+                }
+                else {
+                    create.classList.add("hidden");
+                    body.classList.remove("freeze");
+                    createFormData = false;
+                }
             });
         }
         // Create list
@@ -147,16 +144,24 @@ fn.s = {
     f: () => {
         self.classList.toggle("liked");
 
-        get("like/p", "pid=" + self.parentNode.dataset.id).then(data => {
+        const likes = Number(self.innerText);
+
+        if (!isNaN(likes)) {
+            self.innerHTML = self.innerHTML
+                .replace(/\d+$/, () => likes + (self.classList.contains("liked") ? 1 : -1));
+        }
+
+        get("api/like/p", "id=" + self.parentNode.dataset.id).then(data => {
             console.log(data);
+            if (data) {
+                if (data === "1") {
+                    showPopup("Couldn't Like Post", "Check your internet connection.", "Okay"); // TODO: Lang
+                }
+                else {
+                    get("login");
+                }
+            }
         });
-
-        // const btn = ev.target,
-        //       likes = Number(btn.innerText);
-
-        // if (!isNaN(likes)) {
-        //     btn.innerHTML = btn.innerHTML.replace(/\d+$/, () => likes + (btn.classList == "a" ? 1 : -1));
-        // }
     },
     // Show replies
     g: () => {
@@ -169,6 +174,7 @@ fn.s = {
     // Reply
     i: () => {
         __todo__("Reply");
+        fn.s.A();
     },
 };
 

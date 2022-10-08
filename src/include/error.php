@@ -7,7 +7,7 @@ if (isset($conn)) {
 }
 
 $main =
-'<main class="error center vis" data-title="'.$l[0].'" data-url="'.$url.'">
+'<main class="error center vis" data-title="'.$l[0].'" data-url="'.substr($url, 1).'">
     '.$l[1].'
 </main>';
 

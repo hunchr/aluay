@@ -151,11 +151,10 @@ else {
         LIMIT 5;',
         function($data) {
             global $l;
-            global $id;
             global $main;
 
-            [$badges, $media_1, $media_2, $media_3, $cat] = str_split(str_pad($data['info'], 5, '0', 0));
-            $media_cnt = $media_1.$media_2.$media_3;
+            [$badges, $media_cnt, $tmp1, $tmp2, $cat] = str_split(str_pad($data['info'], 5, '0', 0));
+            $media_cnt .= $tmp1.$tmp2;
     
             $main .=
             '<article class="post" data-badges="'.$badges.'">
@@ -164,13 +163,13 @@ else {
                     <button data-f="sd" data-unix="'.$data['created'].'">'.fdate($data['created']).'</button>
                     <button data-f="se" aria-label="'.$l[9].'">'.svg('more-h').'</button>
                 </div>
-                <p>'.fstring($data['description']).'</p>
-                '.(!$media_cnt ? '' : media($data['id'], $cat, $media_cnt)).'
-                <div data-id="'.$id.'|'.$data['id'].'">
+                <p>'.fstring($data['text']).'</p>
+                '.($cat === '1' ? '' : media($data['id'], $cat, $media_cnt)).'
+                <div data-id="'.$data['id'].'">
                     <button'.$data['liked'].' data-f="sf" aria-label="'.$l[10].'">'.svg('like').fnumber($data['likes']).'</button>
                     <button data-f="sg" aria-label="'.$l[11].'">'.svg('post').fnumber($data['replies']).'</button>
                     <button data-f="sh">'.svg('save').$l[12].'</button>
-                    <button data-f="psig">'.svg('reply').$l[13].'</button>
+                    <button data-f="si">'.svg('reply').$l[13].'</button>
                 </div>
             </article>';
         }
