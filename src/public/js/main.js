@@ -1,238 +1,39 @@
 "use strict";
+/**
+ * Main script (used everywhere).
+ */
 let self = document.body,
-    layer = document.querySelector("#main main"),
-    popupCancel = () => {};
-
-const __todo__ = msg => console.warn(msg),
+    f; // Last used function
+    
+const TODO = msg => console.log(msg),
       wait = async ms => await new Promise(res => setTimeout(res, ms)),
       $ = e => document.querySelector(e),
+      head = document.head,
+      nonce = head.querySelector("script").nonce,
       body = self,
-      main = $("#main"),
-      title = $("h1"),
-    //   side = $("#side"),
-      popup = $("#popup"),
-      search = $("nav input"),
-      layers = [layer],
+      scripts = [],
+      fn = {},
 
-popupElems = [
-    $("#popup h2"),
-    $("#popup p"),
-    $("#popup div :last-child"),
-    $("#popup .red")
-],
+// Include JavaScript file
+include = path => {
+    if (!scripts.includes(path)) {
+        const script = document.createElement("script");
 
-// Shows a popup for warnings or info
-showPopup = (...msg) => {
-    popupElems.forEach((e, i) => {
-        e.innerHTML = msg[i];
-    });
-
-    // Show/hide cancel button
-    if (msg[3]) {
-        popupElems[3].classList.remove("hidden");
-    }
-    else {
-        popupElems[3].classList.add("hidden");
-    }
+        script.setAttribute("nonce", nonce);
+        script.setAttribute("src", `js/${path}.js`);
     
-    body.classList.add("freeze");
-    popup.classList.remove("hidden");
-    popup.focus();
-},
-
-// Search
-find = () => {
-    const q = search.value.trim().replace(/^(https:\/\/)?aluay/, "");
-
-    if (q) {
-        body.classList.remove("search");
-        search.value = "";
-
-        // Get URI
-        if (q[0] === "/") {
-            return get(q.substring(1));
-        }
-
-        // Search
-        __todo__("search: " + q);
-    }
-},
-
-// Fetches data from database
-get = async (path, data = "", isFormData) => {
-    return await new Promise(res => {
-        const xhr = new XMLHttpRequest();
-
-        xhr.open("POST", "/" + path, true);
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                if (data) {
-                    return res(xhr.response);
-                }
-
-                // Hide old layer
-                layer?.classList.remove("vis");
-                
-                // Create new layer
-                layer = document.createElement("div");
-                layer.innerHTML = xhr.response;
-                layer = layer.firstElementChild;
-                layer.classList.add("vis");
-
-                // Change title
-                document.title = title.innerHTML = layer.dataset.title;
-                history.pushState(null, "", "https://aluay/" + layer.dataset.url);
-
-                main.appendChild(layer);
-                layers.push(layer);
-                console.log("layer", layer);
-                res();
-            }
-        };
-
-        // Send data
-        if (isFormData) {
-            xhr.send(data);
-        }
-        else {
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhr.send("is_fetch=1&" + data);
-        }
-    });
-},
-
-// Get form data
-getData = e => (
-    [...layer.querySelectorAll(e)].map((e, i) => `${i}=${e.value}&`).join("")
-),
-
-// Global functions
-fn = {
-    // General
-    _: {
-        // Fetch data
-        _: () => {
-            get(self.dataset.n);
-        },
-        // ----- Nav -----
-        // Logo button
-        A: () => {
-            // Cancel search
-            if (body.classList.contains("search")) {
-                body.classList.remove("search");
-                search.value = "";
-            }
-            // Back
-            else if (body.classList.contains("back")) {
-                __todo__("Back");
-            }
-            // Start page
-            else {
-                get("");
-            }
-        },
-        // Search
-        B: () => {
-            if (body.classList.contains("search")) {
-                find();
-            }
-            else {
-                body.classList.add("search");
-                search.focus();
-            }
-        },
-        // Menu
-        C: () => {
-            body.classList.toggle("side");
-        },
-        // ----- Buttons -----
-        // Continue
-        D: () => {
-            body.classList.remove("freeze");
-            popup.classList.add("hidden");
-        },
-        // Cancel
-        E: () => {
-            fn._.D();
-        },
-        // ----- Buttons -----
-        // Toggle
-        a: () => {
-            self.classList.toggle("false");
-        },
-        // List select
-        b: () => {
-            self.parentNode.classList.remove("false");
-        },
-        // List option
-        c: () => {
-            const parent = self.parentNode.parentNode;
-
-            parent.querySelector("button :nth-child(3)").innerHTML = self.innerText;
-            parent.classList.add("false");
-            parent.setAttribute("data-v", self.dataset.v);
-        }
-    },
-    // Auth
-    A: {
-        // Log in
-        a: () => {
-            get("login", getData("input")).then(res => {
-                if (res) {
-                    showPopup(...res.split("|"));
-                }
-                else {
-                    layers.pop().remove();
-                    console.log(JSON.stringify(layers));
-                    get("home");
-                }
-            });
-        },
-        // Sign up
-        b: () => {
-            get("signup", getData(".form>:first-child input")).then(res => {
-                if (res) {
-                    showPopup(...res.split("|"));
-                }
-                else {
-                    layer.querySelector(".form>:first-child").remove();
-                    layer.querySelector(".form>:last-child").classList.remove("hidden");
-                }
-            });
-        },
-        // Verify email
-        c: () => {
-            get("signup", getData(".form input")).then(res => {
-                if (res) {
-                    showPopup(...res.split("|"));
-                }
-                else {
-                    layers.pop().remove();
-                    get("login");
-                }
-            });
-        },
-        // Send verification code again
-        d: () => {
-            __todo__("Send verification code again");
-        }
+        head.appendChild(script);
+        scripts.push(script);
     }
 };
 
-// Event listener
+// Event listener for executing functions
 document.addEventListener("click", ev => {
-    const f = ev.target?.dataset.f;
+    f = ev.target?.dataset.f;
 
     if (f) {
         self = ev.target;
-        fn[f[0]][f[1]]();
-    }
-});
-
-// Search
-search?.addEventListener("keyup", ev => {
-    if (ev.key === "Enter") {
-        find();
+        fn[f] ? fn[f]() : include(f);
     }
 });
 

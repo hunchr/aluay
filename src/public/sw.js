@@ -4,10 +4,8 @@ urls = [
     "/css/main.css",
     "/css/social.css",
     "/js/main.js",
-    "/js/social.js",
     "/sw.js",
-    "/font/roboto-latin.woff2",
-    "/img/apple-touch-icon.png"
+    "/font/roboto-latin.woff2"
 ];
 
 self.addEventListener("install", ev => {

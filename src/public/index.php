@@ -3,10 +3,26 @@
  * Handles all requested PHP files.
  */
 session_start();
-header('X-Content-Type-Options: nosniff');
+header('Content-Type: text/html; charset=utf-8');
 
-$uid = isset($_SESSION['uid']) ? $_SESSION['uid'] : 0;
-$uri = $url = $_SERVER['REQUEST_URI'];
+// Use SVG icons
+function svg($id) {
+    return '<svg viewBox="0 0 8 8"><use href="#i-'.$id.'"></use></svg>';
+};
+
+// Send HTML to frondend
+function send($class) {
+    global $l;
+    global $url;
+    global $main;
+
+    $main = '<main class="'.$class.'" data-meta="'.$url.'|'.$l[0].'">'.$main.'</main>';
+
+    isset($_POST['fetch']) ? exit($main) : require '../include/html.php';    
+    html();
+};
+
+$url = $uri = $_SERVER['REQUEST_URI'].'.php';
 $rx = '/(?<=\/[@&])[a-z-]{2,20}|(?<=\/[a-z])\d{1,20}/';
 
 // Remove usernames and IDs
@@ -15,43 +31,25 @@ if (preg_match_all($rx, $uri, $q)) {
     $q = $q[0];
 }
 
-// Add file extension
-$uri .= substr($uri, -1) === '/' ? 'index.php' : '.php';
-
-// Application programming interface
-if (substr($uri, 0, 5) === '/api/') {
-    header('Content-Type: application/json; charset=utf-8');
-    file_exists('../pages'.$uri) ?
-        require '../pages'.$uri :
-        exit('{"message":"Not Found","status":404}');
+// Get browser language
+if (!isset($_SESSION['lang'])) {
+    $_SESSION['lang'] = require '../include/auth.php';
 }
-// Normal page
-else {
-    // Use SVG icons
-    function svg($id) {
-        return '<svg viewBox="0 0 8 8"><use href="#svg-'.$id.'"></use></svg>';
-    };
 
-    // Get browser language
-    if (!isset($_SESSION['lang'])) {
-        $_SESSION['lang'] = require '../include/auth.php';
-    }
-    
-    $lang = $_SESSION['lang'];
-    $is_fetch = isset($_POST['is_fetch']);
-    
-    // Check if page exists
-    if (/*preg_match('/\.{2,}/', $uri) || */!file_exists('../pages'.$uri)) {
-        require '../lang/'.$lang.'/include/404.php';
-        require '../include/error.php';
-    }
-    
-    // Get language file
-    if (file_exists('../lang/'.$lang.$uri)) {
-        require '../lang/'.$lang.$uri;
-    }
-    
-    // Get file
-    require '../pages'.$uri;
+$uid = isset($_SESSION['uid']) ? $_SESSION['uid'] : 0;
+$lang = $_SESSION['lang'];
+
+// Check if page exists
+if (!file_exists('../pages'.$uri)) {
+    require '../lang/'.$lang.'/include/404.php';
+    require '../include/error.php';
 }
+
+// Get language file
+if (file_exists('../lang/'.$lang.$uri)) {
+    require '../lang/'.$lang.$uri;
+}
+
+// Get file
+require '../pages'.$uri;
 ?>

@@ -11,7 +11,7 @@ if ($uid) {
 if (isset($_POST['0'], $_POST['1'])) {
     $_SESSION['strikes'] = isset($_SESSION['strikes']) ? $_SESSION['strikes'] + 1 : 0;
 
-    // 5 strikes rule // TODO: Implement better rule with sql logging and ip ban
+    // 5 strikes rule // TODO: Implement better rule with SQL logging and ip ban
     if ($_SESSION['strikes'] >= 5) {
         exit($l[10]);
     }
@@ -56,7 +56,7 @@ if (isset($_POST['0'], $_POST['1'])) {
     $uid = $_SESSION['uid'] = $data['id'];
     $lang = $_SESSION['lang'] = $data['language'];
     $time = date('Y-m-d H:i:s');
-    $token = base64_encode($name.'|'.$lang.'|'.$data['preferences'].'|'.$time.'|'.base64_encode(random_bytes(96)));
+    $token = base64_encode($name.'|'.$lang.'|'.$data['preferences'].'|'.$time.'|'.base64_encode(random_bytes(96))); // TODO: new
     $conn -> query(
         'INSERT INTO auth
         VALUES ('.$uid.',"'.pwd($token, false).'","'.$time.'");'
@@ -70,17 +70,13 @@ if (isset($_POST['0'], $_POST['1'])) {
 // Show login form
 else {
     $main = 
-    '<main class="form center vis" data-title="'.$l[0].'" data-url="login">
-        <div class="space center">
-            <input class="lower" type="text" placeholder="'.$l[3].'" maxlength="20" spellcheck="false" autocomplete="username" autofocus>
-            <input type="password" placeholder="'.$l[4].'" maxlength="1000" autocomplete="current-password">
-            <button class="blue" data-f="Aa">'.$l[5].'</button>
-            <span>'.$l[6].'&nbsp;<button class="a" data-f="__" data-n="signup">'.$l[7].'</button></span>
-        </div>
-    </main>';
-    
-    // Generate HTML
-    $is_fetch ? exit($main) : require '../include/html.php';
-    html('main', 'social');
+    '<div class="btns space">
+        <input class="lower" type="text" placeholder="'.$l[3].'" maxlength="20" spellcheck="false" autocomplete="username" autofocus>
+        <input type="password" placeholder="'.$l[4].'" maxlength="1000" autocomplete="current-password">
+        <button class="btn" data-f="login">'.$l[5].'</button>
+        <span>'.$l[6].'&nbsp;<button class="a" data-f="get" data-n="signup">'.$l[7].'</button></span>
+    </div>';
+
+    send('gray center');
 }
 ?>

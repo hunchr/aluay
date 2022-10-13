@@ -1,6 +1,5 @@
 <?php
 $l = [
-    // Form
     'Signup',
     'Sign up for aluay',
     ',register,create account',
@@ -15,7 +14,6 @@ $l = [
     'Verify',
     'Didn\'t receive an email?',
     'Send Again',
-    // Errors
     'Invalid Username|The username must be between 2 and 20 characters long and can only contain letters (a-z), numbers (0-9), and hyphens (-). It must start with a letter and cannot end with a hyphen|Okay',
     'Username Taken|This username is already taken by another user.|Okay',
     'Invalid Email|The email address is not valid.|Okay',

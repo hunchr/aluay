@@ -61,10 +61,9 @@ if (squery(
             $l[1] = strlen($data['description']) > 149 ?
                 substr($data['description'], 0, 149).'…' :
                 $data['description'];
-            $l[2] = 'user';
+            $l[2] = ',user';
             $main =
-            '<main class="vis" data-title="'.$l[0].'" data-url="'.$l[0].'">
-            <div class="profile">
+            '<div class="profile">
                 <div class="profile-t">
                     <img src="/'.$og_uri.'.webp" alt="'.$l[3].'" loading="lazy" width="40">
                     <div>
@@ -76,7 +75,7 @@ if (squery(
                             <span>@'.$l[0].'</span>
                         </div>
                     </div>
-                    <button data-f="sa" class="blue fit min'.($is_liked ? ' liked">'.$l[4] : '">'.$l[5]).'</button>
+                    <button data-f="sa" class="a upper'.($is_liked ? ' liked">'.$l[4] : '">'.$l[5]).'</button>
                 </div>
                 <p>'.fstring($data['description']).'</p>
                 <div>
@@ -112,6 +111,10 @@ else {
         global $id;
 
         switch ($cat) {
+            // Text
+            case '1':
+                $cat = '';
+                break;
             // Image // TODO
             case '2':
             case '3': // TODO: pixelate, multiple
@@ -164,7 +167,7 @@ else {
                     <button data-f="se" aria-label="'.$l[9].'">'.svg('more-h').'</button>
                 </div>
                 <p>'.fstring($data['text']).'</p>
-                '.($cat === '1' ? '' : media($data['id'], $cat, $media_cnt)).'
+                '.media($data['id'], $cat, $media_cnt).'
                 <div data-id="'.$data['id'].'">
                     <button'.$data['liked'].' data-f="sf" aria-label="'.$l[10].'">'.svg('like').fnumber($data['likes']).'</button>
                     <button data-f="sg" aria-label="'.$l[11].'">'.svg('post').fnumber($data['replies']).'</button>
@@ -184,9 +187,6 @@ else {
 }
 
 $conn -> close();
-$main .= '</main>';
 
-// ----- Generate HTML -----
-$is_fetch ? exit($main) : require '../include/html.php';
-html('main', 'social');
+send('');
 ?>

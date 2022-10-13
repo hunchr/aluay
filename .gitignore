@@ -1,6 +1,7 @@
 # Test files
 .private
 src/.test
+index.html
 
 # User content/media
 src/public/uc

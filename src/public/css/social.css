@@ -19,7 +19,8 @@
 }
 
 /* --- Top --- */
-.profile-t {
+.profile-t,
+.profile-t div div {
     align-items: center;
 }
 
@@ -31,7 +32,7 @@
 
 /* Profile picture */
 .profile img {
-    width: 2.5rem;
+    height: 2.75rem;
 }
 
 /* (User)name */
@@ -46,6 +47,7 @@
 /* Display name */
 .profile-t > div > :first-child {
     color: var(--fg);
+    font-size: 17px;
 }
 
 /* Follow button */
@@ -66,20 +68,28 @@
     width: .875rem;
     min-width: .875rem;
     margin: 0 .1875rem 0 0;
+    /* margin: .0625rem .1875rem 0 0; */
 }
 
 .profile-t svg {
     fill: var(--fg);
     margin: 0 0 0 .1875rem;
+    /* margin: .125rem 0 0 .1875rem; */
 }
 
 .profile > :last-child span {
     margin-right: .5rem;
 }
 
+.post > :first-child > :last-child svg,
+.profile > :last-child > :last-child svg {
+    margin: 0;
+}
+
 /* ----- Posts ----- */
 .post > *,
-.media img,
+.post img,
+.post video,
 .profile > * {
     width: 100%;
 }
@@ -89,9 +99,6 @@
 }
 
 /* --- Media --- */
-.media {
-    margin: .1875rem 0 .125rem 0;
-}
 
 /* --- Buttons --- */
 .post > :last-child {

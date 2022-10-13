@@ -1,3 +1,12 @@
+/* Latin */
+@font-face {
+    font-family: 'Roboto';
+    font-display: swap;
+    font-style: normal;
+    font-weight: 400;
+    src: url(../font/roboto-latin.woff2) format('woff2');
+}
+
 :root {
     /** WCAG color contrast on #000 (hue)/(RGB diff) */
     --fg: #e1e0e6;         /* 16.00 (+1,+0,+6) */
@@ -8,8 +17,10 @@
     --blue-hover: #7274FB; /* 06.40 (239°) */
     --red: #ED0000;        /* 04.60 (000°) */
     --red-hover: #FF4D49;  /* 06.40 (001°) */
+    --transparent: #000a;
     --border: .0625rem solid var(--hover);
     --radius: .5rem;
+    --menu-width: 15rem;
     --main-width: 34.75rem;
 }
 
@@ -36,7 +47,8 @@ body {
     flex-direction: column;
     touch-action: manipulation;
     user-select: none;
-    font: 400 16px system-ui, -apple-system, BlinkMacSystemFont, Roboto, 'Segoe UI', Helvetica, Arial, sans-serif;
+    font: 400 16px Roboto, 'Roboto', -apple-system, BlinkMacSystemFont, system-ui, Helvetica, Arial, sans-serif;
+    /* font: 400 16px system-ui, -apple-system, BlinkMacSystemFont, Roboto, 'Segoe UI', Helvetica, Arial, sans-serif; */
     color: var(--fg);
     background-color: var(--bg);
     width: 100%;
@@ -51,14 +63,17 @@ body * {
 
 /* ----- Inputs ----- */
 input,
-textarea {
-    flex-grow: 1;
+textarea,
+.btns button:not(.a) {
     border-radius: var(--radius);
+    min-width: 2.5rem;
     height: 2.5rem;
+    /* min-height: 2.5rem; */
 }
 
 input,
 textarea {
+    flex-grow: 1;
     cursor: default;
     color: var(--fg);
     background-color: var(--hover);
@@ -76,6 +91,10 @@ textarea {
     text-transform: lowercase;
 }
 
+.upper {
+    text-transform: uppercase;
+}
+
 input:focus,
 textarea:focus {
     cursor: text;
@@ -87,7 +106,51 @@ textarea:focus {
 }
 
 /* ----- Buttons ----- */
-.btn {
+.btns {
+    flex-wrap: wrap;
+    align-content: flex-start;
+    background-color: var(--bg);
+    width: 100%;
+}
+
+.btns:not(nav) input,
+.btns:not(.square) button {
+    width: 100%;
+}
+
+.square button {
+    width: 2.5rem;
+}
+
+button > * {
+    pointer-events: none;
+}
+
+button:hover,
+button:focus-visible {
+    color: var(--fg);
+}
+
+.btns button:not(.a):hover,
+.btns button:not(.a):focus-visible {
+    background-color: var(--hover);
+}
+
+/* --- Label --- */
+h1,
+.btns button span {
+    flex-grow: 1;
+    display: block;
+    white-space: pre;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.btns button span:last-child {
+    margin-right: .5rem;
+}
+
+/* .btn {
     flex-direction: column;
     border: var(--border);
     border-radius: var(--radius);
@@ -103,11 +166,6 @@ textarea:focus {
     margin: 0 -.0625rem;
 }
 
-.btn button {
-    align-items: center;
-    height: 2.5rem;
-}
-
 .list > div,
 .btn button:first-child {
     margin-top: -.0625rem;
@@ -115,31 +173,26 @@ textarea:focus {
 
 .btn button:last-child {
     margin-bottom: -.0625rem;
+}*/
+
+/* --- Blue buttons --- */
+.btn {
+    color: #fff;
+    background-color: var(--blue);
+    /* border-radius: var(--radius); */
+    /* height: 2.5rem; */
 }
 
-button:hover,
-button:focus-visible {
-    color: var(--fg);
+.btn:hover,
+.btn:focus-visible {
+    background-color: var(--blue-hover) !important;
 }
 
-nav button:hover,
-.btn button:hover,
-nav button:focus-visible,
-.btn button:focus-visible {
-    background-color: var(--hover);
-}
-
-button > * {
-    pointer-events: none;
-}
-
-/* --- Blue/Red buttons --- */
-.red,
+/* .red,
 .blue {
     color: #fff;
     background-color: var(--blue);
     border-radius: var(--radius);
-    /* width: 100%; */
     height: 2.5rem;
 }
 
@@ -155,53 +208,35 @@ button > * {
 .red:hover,
 .red:focus-visible {
     background-color: var(--red-hover) !important;
+} */
+
+/* --- Text buttons --- */
+.a {
+    color: var(--blue);
+    width: fit-content !important;
+    height: fit-content;
 }
 
-/* --- Link buttons --- */
-.a {
-    color: var(--blue) !important;
+.red {
+    color: var(--red);
 }
 
 .a:hover,
 .a:focus-visible {
-    text-decoration: underline;
+    color: var(--blue-hover);
 }
 
-/* --- Text --- */
-h1,
-.btn button span {
-    flex-grow: 1;
-    display: block;
-    white-space: pre;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-right: .25rem;
-}
-
-.btn button > span:first-child {
-    margin-left: .625rem;
+.red:hover,
+.red:focus-visible {
+    color: var(--red-hover);
 }
 
 /* ----- Icons ----- */
 svg {
-    aspect-ratio: 1/1;
     fill: var(--gray);
-}
-
-nav svg,
-.btn svg {
+    aspect-ratio: 1/1;
     height: 1.25rem;
-    min-width: 1.25rem;
     margin: .625rem;
-}
-
-.btn button > svg:last-child {
-    margin-left: 0;
-}
-
-.red svg,
-.blue svg {
-    fill: #fff !important;
 }
 
 button:hover svg,
@@ -209,18 +244,15 @@ button:focus-visible svg {
     fill: var(--fg);
 }
 
-img {
+img,
+video {
     border-radius: var(--radius);
 }
 
-button img {
-    width: 1.5rem;
-    min-width: 1.5rem;
+button img,
+#back > :first-child {
+    height: 1.5rem;
     margin: .5rem;
-}
-
-.btn img {
-    margin-right: .5rem;
 }
 
 /* ----- Paragraphs ----- */
@@ -229,15 +261,16 @@ p {
 }
 
 /* ----- Classes ----- */
-.space {
+/* .space {
     flex-wrap: wrap;
     width: 100%;
 }
 
-.space > * {
-    margin: .125rem 0;
-}
+.space input {
+    width: 100%;
+}*/
 
+/* 
 .fit {
     width: fit-content;
     padding: 0 .5rem;
@@ -245,61 +278,71 @@ p {
 
 .min {
     height: 2rem;
+} */
+
+.hidden,
+.search h1,
+.search #bnav,
+::-webkit-scrollbar,
+body:not(.search) nav input,
+.search #back > :not(:last-child),
+.back:not(.search) #back > :not(:nth-child(2)),
+body:not(.back, .search) #back > :not(:first-child) {
+    display: none;
+}
+
+.btns,
+.popup,
+.center,
+.btns button {
+    justify-content: center;
+    align-items: center;
 }
 
 .freeze {
     overflow: hidden;
 }
 
-.red,
-.blue,
-.popup,
-.center {
-    justify-content: center;
-    align-items: center;
+.gray {
+    color: var(--gray);
 }
 
-.hidden,
-.search h1,
-.search #bnav,
-::-webkit-scrollbar,
-#main main:not(.vis),
-body:not(.search) nav input,
-.search #back > :not(:last-child),
-body:not(.back, .search) #back svg,
-.back:not(.search) #back > :not(:nth-child(2)) {
-    display: none;
+.space > * {
+    margin: .125rem 0;
 }
 
 /* ----- Nav ----- */
 nav {
     position: fixed;
-    align-items: center;
-    background-color: var(--bg);
     border-bottom: var(--border);
-    width: 100%;
     height: 2.5rem;
-}
-
-nav button {
-    border-radius: var(--radius);
-    width: 2.5rem;
-    height: 2.5rem;
+    z-index: 1;
 }
 
 h1 {
     font-size: 18px;
     height: fit-content;
+    margin-right: .125rem;
 }
 
-/* --- Noscript --- */
-noscript {
+nav input {
+    margin: 0 .125rem;
+}
+
+/* --- Info banner --- */
+#bnav,
+.banner {
+    height: 2.5rem;
+    bottom: 0;
+    left: 0;
+}
+
+.banner {
     position: fixed;
     color: #fff;
-    background-color: var(--red);
+    background-color: var(--blue);
+    border-top: var(--border);
     width: 100%;
-    height: 2.5rem;
-    top: 0;
 }
 
 /* ----- Main ----- */
@@ -307,12 +350,8 @@ main,
 #main {
     flex-direction: column;
     align-items: center;
-    width: 100%;
-}
-
-main,
-#main {
     flex-grow: 1;
+    width: 100%;
 }
 
 #main {
@@ -324,14 +363,34 @@ main,
     padding: 0 .5rem;
 }
 
+/* ----- Side nav ---- */
+#side {
+    position: fixed;
+    align-items: flex-start;
+    border-right: var(--border);
+    width: var(--menu-width);
+    height: 100%;
+    padding-top: 2.5rem;
+}
+
+#side > :first-child {
+    overflow: hidden auto;
+    border-bottom: var(--border);
+    height: calc(100% - 2.5rem);
+}
+
+#side:not(.hidden) + #main {
+    padding-left: var(--menu-width);
+}
+
 /* ----- Popup ----- */
 #popup {
-    z-index: 1;
+    z-index: 2;
 }
 
 .popup {
     position: fixed;
-    background-color: #000a;
+    background-color: var(--transparent);
     width: 100%;
     height: 100%;
     padding: .5rem;
@@ -339,22 +398,19 @@ main,
 }
 
 .popup > div {
-    flex-wrap: wrap;
     justify-content: flex-end;
-    background-color: var(--bg);
     border: var(--border);
     border-radius: var(--radius);
     max-width: var(--main-width);
-    width: 100%;
     padding: .375rem .5rem;
+}
+
+#popup div > * {
+    width: 100%;
 }
 
 #popup h2 {
     font-size: 1.125rem;
-}
-
-#popup :not(button) {
-    width: 100%;
 }
 
 #popup button {
@@ -362,26 +418,16 @@ main,
 }
 
 /* --- New --- */
-#new > div > :last-child {
+/* #new > div > :last-child {
     margin-left: auto;
 }
 
 [data-f="sB"] {
     margin-right: .25rem;
-}
-
-/* ----- Form ----- */
-.form {
-    color: var(--gray);
-}
-
-.form input,
-.form button.blue {
-   width: 100%;
-}
+} */
 
 /* ----- Toggle ----- */
-.toggle div {
+/* .toggle div {
     background-color: var(--blue);
     border-radius: var(--radius);
     min-width: 2.5rem;
@@ -399,10 +445,10 @@ main,
 .toggle.false div {
     justify-content: flex-end;
     background-color: var(--gray);
-}
+} */
 
 /* ----- List/Select ----- */
-.list.false > div,
+/* .list.false > div,
 .list:not(.false) > button {
     display: none;
 }
@@ -430,7 +476,7 @@ main,
 .list svg:nth-child(4) {
     width: 1rem;
     min-width: 1rem;
-}
+} */
 
 /* ----- Error page ----- */
 .error {
@@ -454,9 +500,6 @@ main,
         background-color: var(--bg);
         border-top: var(--border);
         width: 100%;
-        height: 2.5rem;
-        bottom: 0;
-        left: 0;
     }
 
     .search #bnav {
@@ -464,24 +507,11 @@ main,
     }
 
     #bnav button {
-        justify-content: center;
         width: 20%;
     }
-
-    /* --- Main --- */
-    /* .side #main,
-    .side footer {
-        padding-left: .5rem;
-    } */
-
-    /* --- Footer --- */
-    /* footer {
-        min-height: 5.5rem;
-        padding-bottom: 2.75rem;
-    } */
-
-    /* --- Side menu --- */
-    /* #side {
-        height: calc(100% - 5.5rem);
-    } */
+    
+    #side,
+    #main {
+        padding: 2.5rem 0;
+    }
 }
