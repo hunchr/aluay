@@ -1,9 +1,9 @@
-const v = 1,
+const v = 2,
 urls = [
     "/manifest.json",
     "/css/main.css",
     "/css/social.css",
-    "/js/main.js",
+    "/main.js",
     "/sw.js",
     "/font/roboto-latin.woff2"
 ];

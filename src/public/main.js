@@ -3,6 +3,7 @@
  * Main script (used everywhere).
  */
 let self = document.body,
+    uri,
     f; // Last used function
     
 const TODO = msg => console.log(msg),
@@ -11,19 +12,23 @@ const TODO = msg => console.log(msg),
       head = document.head,
       nonce = head.querySelector("script").nonce,
       body = self,
+      nav = $("nav"),
       scripts = [],
       fn = {},
 
 // Include JavaScript file
 include = path => {
-    if (!scripts.includes(path)) {
+    uri = path;
+    f = path.replace(/\..+/, "");
+
+    if (!scripts.includes(f)) {
         const script = document.createElement("script");
 
         script.setAttribute("nonce", nonce);
-        script.setAttribute("src", `js/${path}.js`);
+        script.setAttribute("src", `js/${f}.js`);
     
         head.appendChild(script);
-        scripts.push(script);
+        scripts.push(f);
     }
 };
 
@@ -39,5 +44,5 @@ document.addEventListener("click", ev => {
 
 // Register service worker
 if (location.protocol === "https:" && "serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/sw.js");
+    //* navigator.serviceWorker.register("/sw.js");
 }

@@ -9,7 +9,12 @@ require '../include/sql-social.php';
 if (squery(
     'SELECT s.*, UNIX_TIMESTAMP(s.created) AS created,'
     .($uid ?
-        'IF ((SELECT uid FROM liked_subs l WHERE l.uid = '.$uid.' AND l.sid = s.id), TRUE, FALSE) AS liked ':
+        'IF ((
+            SELECT uid
+            FROM liked_subs l
+            WHERE l.uid = '.$uid.'
+            AND l.sid = s.id
+        ), TRUE, FALSE) AS liked ':
         'NULL AS liked '
     ).
     'FROM users u
@@ -26,7 +31,7 @@ if (squery(
         global $is_liked;
 
         $id = $data['id'];
-        $og_uri = 'uc/s/'.$data['id'].'/0';
+        $og_uri = 'uc/s/'.$id.'/0';
         $is_liked = $data['liked'];
         [$badges, $cat] = str_split(str_pad($data['info'], 2, '0', 0));
         $badges = implode('', array_map(function($badge) {
@@ -67,15 +72,15 @@ if (squery(
                 <div class="profile-t">
                     <img src="/'.$og_uri.'.webp" alt="'.$l[3].'" loading="lazy" width="40">
                     <div>
-                        <div>
-                            <span>'.$data['name'].'</span>
-                            '.$badges.'
-                        </div>
-                        <div>
-                            <span>@'.$l[0].'</span>
-                        </div>
+                        <div><span>'.$data['name'].'</span>'.$badges.'</div>
+                        <div><span>@'.$l[0].'</span></div>
                     </div>
-                    <button data-f="sa" class="a upper'.($is_liked ? ' liked">'.$l[4] : '">'.$l[5]).'</button>
+                    <button data-f="sa" class="a upper'
+                    .($is_liked ?
+                        ' liked" data-change="'.$l[5].'">'.$l[4] :
+                        '" data-change="'.$l[4].'>'.$l[5]
+                    ).
+                    '</button>
                 </div>
                 <p>'.fstring($data['description']).'</p>
                 <div>
@@ -90,7 +95,6 @@ if (squery(
             </div>
             ';
         }
-
     }
 ) === 0) {
     require '../include/error.php';
@@ -99,10 +103,7 @@ if (squery(
 // ----- Posts -----
 // Private profile
 if ($cat === 2 && !$is_liked) {
-    $main .=
-    '<span class="end center">
-        '.$l[16].'
-    </span>';
+    $main .= '<span class="end center">'.$l[16].'</span>';
 }
 // Public profile
 else {
@@ -111,18 +112,36 @@ else {
         global $id;
 
         switch ($cat) {
-            // Text
-            case '1':
-                $cat = '';
-                break;
             // Image // TODO
             case '2':
-            case '3': // TODO: pixelate, multiple
-                $cat = '<img src="/uc/s/'.$id.'/'.$pid.'-0.webp" alt="Image" loading="lazy" width="540">';
+            case '3':
+                $cat =
+                '<div class="media-c'.($cat === 3 ? ' pixel' : '').'">
+                    <button data-f="media.pi">'.svg('expand-left').'</button>
+                    <button data-f="media.ni">'.svg('expand-right').'</button>
+                    <span>1</span>
+                    <span>/ '.$cnt.'</span>
+                    <button data-f="media.f">'.svg('fullscreen').svg('fullscreen-exit').'</button>
+                </div>
+                <img src="/uc/s/'.$id.'/'.$pid.'-1.webp" alt="Image" loading="lazy" width="540">';
                 break;
             // Video // TODO
             case '4':
-                $cat = '[todo-video]';
+                $cat =
+                '<div class="media-p"><div></div></div>
+                <div class="media-c">
+                    <button data-f="media.p">'.svg('play').'</button>
+                    <button data-f="media.rp">'.svg('replay').'</button>
+                    <button data-f="media.fw">'.svg('forward').'</button>
+                    <span>00:00</span>
+                    <span>/ '.$cnt.'</span>
+                    <button data-f="media.v">'.svg('volume-up').'</button>
+                    <button data-f="media.s">'.svg('speed').'</button>
+                    <button data-f="media.f">'.svg('fullscreen').svg('fullscreen-exit').'</button>
+                </div>
+                <video width="540">
+                    <source src="/uc/s/'.$id.'/'.$pid.'.mp4" type="video/mp4">
+                </video>';
                 break;
             // Audio // TODO
             case '5':
@@ -141,48 +160,77 @@ else {
         return '<div class="media">'.$cat.'</div>';
     };
 
+    // Post badges
+    $badgeList = [
+        [],
+        ['edit'],
+        ['spoiler'],
+        ['nsfw'],
+        ['promoted'],
+        ['mod'],
+        ['spoiler','nsfw'],
+        ['edit','spoiler'],
+        ['edit','nsfw'],
+        ['edit','spoiler','nsfw']
+    ];
+
     $rows = squery(
         'SELECT p.*, UNIX_TIMESTAMP(p.created) AS created,
-        IF (p.pid, CONCAT("&", (SELECT c.cname FROM communities c WHERE c.id = p.pid)), "@'.$q[0].'") as name,'
+        IF (p.pid, CONCAT("&", (
+            SELECT c.cname
+            FROM communities c
+            WHERE c.id = p.pid
+        )), "@'.$q[0].'") as name,'
         .($uid ?
-            'IF ((SELECT uid FROM liked_posts l WHERE l.uid = '.$uid.' AND l.pid = p.id), " class=\"liked\"", NULL) AS liked ':
+            'IF ((
+                SELECT uid
+                FROM liked_posts l
+                WHERE l.uid = '.$uid.'
+                AND l.pid = p.id
+            ), " class=\"liked\"", NULL) AS liked ':
             'NULL AS liked '
         ).
         'FROM posts p
         WHERE p.uid = '.$id.'
+        AND NOT p.category = 0
         ORDER BY p.created DESC
         LIMIT 5;',
         function($data) {
             global $l;
             global $main;
+            global $badgeList;
 
-            [$badges, $media_cnt, $tmp1, $tmp2, $cat] = str_split(str_pad($data['info'], 5, '0', 0));
-            $media_cnt .= $tmp1.$tmp2;
-    
+            $info = str_pad($data['info'], 5, '0', 0);
+            $media_cnt = substr($info, 0, -1);
+            $badges = implode('', array_map(function($badge) {
+                return svg($badge);
+            }, $badgeList[$info[3]]));
             $main .=
-            '<article class="post" data-badges="'.$badges.'">
+            '<article class="post">
                 <div>
-                    <button data-f="sc">'.$data['name'].'</button>&nbsp;•&nbsp;
-                    <button data-f="sd" data-unix="'.$data['created'].'">'.fdate($data['created']).'</button>
-                    <button data-f="se" aria-label="'.$l[9].'">'.svg('more-h').'</button>
+                    <button data-f="post.n">'.$data['name'].'</button>&nbsp;•&nbsp;
+                    <button data-f="post.t" data-unix="'.$data['created'].'">'.fdate($data['created']).'</button>
+                    <button data-f="more.p" aria-label="'.$l[9].'">'.svg('more-h').'</button>
+                    '.$badges.'
                 </div>
                 <p>'.fstring($data['text']).'</p>
-                '.media($data['id'], $cat, $media_cnt).'
+                '.($data['category'] === 1 ? '' : media($data['id'], $data['category'], $media_cnt)).'
                 <div data-id="'.$data['id'].'">
-                    <button'.$data['liked'].' data-f="sf" aria-label="'.$l[10].'">'.svg('like').fnumber($data['likes']).'</button>
-                    <button data-f="sg" aria-label="'.$l[11].'">'.svg('post').fnumber($data['replies']).'</button>
-                    <button data-f="sh">'.svg('save').$l[12].'</button>
-                    <button data-f="si">'.svg('reply').$l[13].'</button>
+                    <button'.$data['liked'].' data-f="post.l" aria-label="'.$l[10].'">'
+                        .svg('like').fnumber($data['likes']).
+                    '</button>
+                    <button data-f="post.sr" aria-label="'.$l[11].'">'
+                        .svg('post').fnumber($data['replies']).
+                    '</button>
+                    <button data-f="post.s">'.svg('save').$l[12].'</button>
+                    <button data-f="post.r">'.svg('reply').$l[13].'</button>
                 </div>
             </article>';
         }
     );
     
     if ($rows < 5) {
-        $main .=
-        '<span class="end center">
-            '.($rows === 0 ? $l[14] : $l[15]).'
-        </span>';
+        $main .= '<span class="end center">'.($rows === 0 ? $l[14] : $l[15]).'</span>';
     }
 }
 

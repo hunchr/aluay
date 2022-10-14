@@ -22,7 +22,7 @@ function send($class) {
     html();
 };
 
-$url = $uri = $_SERVER['REQUEST_URI'].'.php';
+$url = $uri = $_SERVER['REQUEST_URI'];
 $rx = '/(?<=\/[@&])[a-z-]{2,20}|(?<=\/[a-z])\d{1,20}/';
 
 // Remove usernames and IDs
@@ -38,6 +38,7 @@ if (!isset($_SESSION['lang'])) {
 
 $uid = isset($_SESSION['uid']) ? $_SESSION['uid'] : 0;
 $lang = $_SESSION['lang'];
+$uri .= '.php';
 
 // Check if page exists
 if (!file_exists('../pages'.$uri)) {

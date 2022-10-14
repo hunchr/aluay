@@ -13,9 +13,9 @@
     --bg: #000;            /* 01.00 (+0,+0,+0) */
     --gray: #949597;       /* 07.00 (+0,+1,+3) */
     --hover: #1a1a1c;      /* 01.20 (+0,+0,+2) */
-    --blue: #6060Ff;       /* 04.61 (240°) */
-    --blue-hover: #7274FB; /* 06.40 (239°) */
-    --red: #ED0000;        /* 04.60 (000°) */
+    --blue: #6060ff;       /* 04.61 (240°) */
+    --blue-hover: #7274fb; /* 06.40 (239°) */
+    --red: #ed0000;        /* 04.60 (000°) */
     --red-hover: #FF4D49;  /* 06.40 (001°) */
     --transparent: #000a;
     --border: .0625rem solid var(--hover);
@@ -48,7 +48,6 @@ body {
     touch-action: manipulation;
     user-select: none;
     font: 400 16px Roboto, 'Roboto', -apple-system, BlinkMacSystemFont, system-ui, Helvetica, Arial, sans-serif;
-    /* font: 400 16px system-ui, -apple-system, BlinkMacSystemFont, Roboto, 'Segoe UI', Helvetica, Arial, sans-serif; */
     color: var(--fg);
     background-color: var(--bg);
     width: 100%;
@@ -122,10 +121,6 @@ textarea:focus {
     width: 2.5rem;
 }
 
-button > * {
-    pointer-events: none;
-}
-
 button:hover,
 button:focus-visible {
     color: var(--fg);
@@ -150,15 +145,7 @@ h1,
     margin-right: .5rem;
 }
 
-/* .btn {
-    flex-direction: column;
-    border: var(--border);
-    border-radius: var(--radius);
-    width: 100%;
-    min-height: 2.5rem;
-    margin: .125rem 0;
-}
-
+/*
 .btn button,
 .list > div {
     border-radius: var(--radius);
@@ -232,6 +219,13 @@ h1,
 }
 
 /* ----- Icons ----- */
+svg,
+img,
+video,
+button > * {
+    pointer-events: none;
+}
+
 svg {
     fill: var(--gray);
     aspect-ratio: 1/1;
@@ -261,25 +255,6 @@ p {
 }
 
 /* ----- Classes ----- */
-/* .space {
-    flex-wrap: wrap;
-    width: 100%;
-}
-
-.space input {
-    width: 100%;
-}*/
-
-/* 
-.fit {
-    width: fit-content;
-    padding: 0 .5rem;
-}
-
-.min {
-    height: 2rem;
-} */
-
 .hidden,
 .search h1,
 .search #bnav,

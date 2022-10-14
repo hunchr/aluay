@@ -2,9 +2,6 @@
 /**
  * Sends signup form data to backend.
  */
-include("get");
-include("popup");
-
 // Signup
 fn[f] = () => {
     get("signup", getData("div:first-child input")).then(err => {
@@ -19,7 +16,7 @@ fn[f] = () => {
 };
 
 // Email verification
-fn["signup.v"] = () => {
+fn[f + ".v"] = () => {
     get("signup", getData("input")).then(err => {
         if (err) {
             showPopup(...err.split("|"));
@@ -32,8 +29,11 @@ fn["signup.v"] = () => {
 };
 
 // Resend email verification
-fn["signup.r"] = () => {
+fn[f + ".r"] = () => {
     TODO("Resend email verification");
 };
 
-fn[f]();
+include("popup");
+include("get");
+
+fn["signup"]();

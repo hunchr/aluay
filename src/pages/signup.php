@@ -97,7 +97,7 @@ else {
         <input class="lower" type="email" placeholder="'.$l[4].'" maxlength="100" spellcheck="false" autocomplete="off">
         <input type="password" placeholder="'.$l[5].'" maxlength="1000" autocomplete="new-password">
         <input type="password" placeholder="'.$l[6].'" maxlength="1000" autocomplete="new-password">
-        <button class="btn" data-f="signup">'.$l[7].'</button>
+        <button class="btn" data-f="signup" data-n="signup">'.$l[7].'</button>
         <span>'.$l[8].'&nbsp;<button class="a" data-f="get" data-n="login">'.$l[9].'</button></span>
     </div>
     <div class="btns space hidden">

@@ -15,7 +15,7 @@ function html() {
     $is_error = $l[2] === null;
 
     // --- Get preferences ---
-    $prefs = '';
+    $display = '';
     $auth = ['guest', 0, 1]; // name, show_nsfw, dark_mode
 
     if (isset($_COOKIE['auth'])) {
@@ -23,8 +23,8 @@ function html() {
         count($tmp) === 3 ? $auth = $tmp : $uid = $_SESSION['uid'] = 0;
     }
 
-    if (!$auth[1]) $prefs .= 'no-nsfw ';
-    if (!$auth[2]) $prefs .= 'light-mode';
+    if (!$auth[1]) $display .= 'no-nsfw ';
+    if (!$auth[2]) $display .= 'light-mode';
 
     // --- Set headers ---
     $nonce = base64_encode(random_bytes(18));
@@ -50,39 +50,40 @@ function html() {
         <meta name="robots" content="'.($is_error ? 'no' : '').'index,follow">
         <meta property="og:title" content="'.$l[0].'">
         <meta property="og:description" content="'.$l[1].'">
-        <meta property="og:url" content="https://aluay/'.$url.'">
+        <meta property="og:url" content="https://aluay'.$url.'">
         <meta property="og:image" content="https://aluay/'.(isset($og_uri) ? $og_uri : 'img/open-graph').'.webp">
         <meta property="og:image:type" content="image/webp">
         <meta property="og:locale" content="'.$lang.'">
         <meta property="og:type" content="website">
         <meta property="og:site_name" content="aluay">
         <meta name="twitter:card" content="summary">
-        <link rel="canonical" href="https://aluay/'.$url.'">
+        <link rel="canonical" href="https://aluay'.$url.'">
         <link rel="stylesheet" href="/css/main.css?v=1">'
         .(isset($css) ?
             '<link rel="stylesheet" href="/css/'.$path.'.css?v=1">' :
             '<link rel="stylesheet" href="/css/social.css?v=1">'
-        ).'<script src="/js/main.js" defer nonce="'.$nonce.'"></script>
+        ).
+        '<script src="/main.js" defer nonce="'.$nonce.'"></script>
         <link rel="icon" type="image/svg+xml" href="/img/favicon.svg">
         <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
         <link rel="manifest" href="/manifest.json">
     </head>
-    <body class="'.$prefs.'">
+    <body class="'.$display.'">
     <nav class="btns square">
-        <button id="back" data-f="back" aria-label="'.$L[0].'">
-            '.svg('aluay').svg('arrow-back').svg('close').'
-        </button>
+        <button id="back" data-f="back" aria-label="'.$L[0].'">'
+            .svg('aluay').svg('arrow-back').svg('close').
+        '</button>
         <h1>'.$l[0].'</h1>
         <input type="text" placeholder="'.$L[1].'">
-        <button data-f="search" aria-label="'.$L[2].'"><svg viewBox="0 0 8 8">'.svg('search').'</button>
+        <button data-f="search" aria-label="'.$L[2].'">'.svg('search').'</button>
         <div id="bnav">
-            <button data-f="get" data-n="home" aria-label="'.$L[3].'">'.svg('home').'</button>
-            '.(isset($bnav) ? $bnav :
+            <button data-f="get" data-n="home" aria-label="'.$L[3].'">'.svg('home').'</button>'
+            .(isset($bnav) ? $bnav :
                 '<button data-f="get" data-n="explore" aria-label="'.$L[4].'">'.svg('explore').'</button>
                 <button data-f="TODO" aria-label="'.$L[5].'">'.svg('new').'</button>
                 <button data-f="get" data-n="inbox" aria-label="'.$L[6].'">'.svg('inbox').'</button>'
-            ).'
-            <button data-f="side" aria-label="'.$L[7].'">
+            ).
+            '<button data-f="side" aria-label="'.$L[7].'">
                 <img src="/uc/s/'.$uid.'/0.webp" alt="'.$L[8].'" loading="lazy" width="24">
             </button>
         </div>
@@ -157,6 +158,7 @@ function html() {
             <g id="i-volume-up"><path d="M5 0v1c1.16.41 2 1.7 2 3s-.84 2.59-2 3v1c1.72-.45 3-2.14 3-4S6.73.45 5 0Z"/><path d="M6 4c0-.74-.4-1.65-1-2v4c.6-.35 1-1.26 1-2ZM0 2.5v3h2l2 2v-7l-2 2H0z"/></g>
             <g id="i-speed"><path d="m4.93 4.89 1.83-3.14-3.14 1.83a.998.998 0 0 0 .39 1.92c.42 0 .77-.25.92-.61Z"/><path d="m7.15 2.06-.71.71c.35.49.56 1.09.56 1.73 0 .77-.3 1.47-.78 2H1.78C1.3 5.97 1 5.27 1 4.5c0-1.66 1.34-3 3-3 .65 0 1.24.21 1.73.56l.71-.71C5.76.82 4.92.5 4 .5c-2.21 0-4 1.79-4 4 0 1.2.54 2.27 1.38 3h5.24C7.46 6.77 8 5.7 8 4.5c0-.92-.33-1.76-.85-2.44Z"/></g>
             <path id="i-fullscreen" d="M3 0H0v3h1V1h2V0ZM5 0h3v3H7V1H5V0ZM3 8H0V5h1v2h2v1ZM5 8h3V5H7v2H5v1Z"/>
+            <path id="i-fullscreen-exit" d="M3 0v3H0V2h2V0h1ZM5 0v3h3V2H6V0H5ZM3 8V5H0v1h2v2h1ZM5 8V5h3v1H6v2H5Z"/>
         </svg>
     </div>
     </body>

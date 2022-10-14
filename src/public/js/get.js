@@ -2,7 +2,7 @@
 /**
  * Fetches pages from backend.
  */
-let layer;
+let layer = $("main");
 
 const main = $("#main"),
       title = $("h1"),
@@ -21,7 +21,7 @@ get = async (path, data = "", isFormData) => {
                 }
 
                 // Hide old layer
-                layer?.classList.add("hidden");
+                layer.classList.add("hidden");
                 
                 // Create new layer
                 layer = document.createElement("div");
@@ -29,12 +29,13 @@ get = async (path, data = "", isFormData) => {
                 layer = layer.firstElementChild;
 
                 // Change title
-                document.title = title.innerHTML = layer.dataset.title;
-                history.pushState(null, "", "https://aluay/" + layer.dataset.url);
+                const meta = layer.dataset.meta.split("|");
+                document.title = meta[1];
+                title.innerHTML = meta[2] || meta[1];
+                history.pushState(null, "", "https://aluay" + meta[0]);
 
                 main.appendChild(layer);
                 layers.push(layer);
-                console.log("layer", layer);
                 res();
             }
         };
@@ -45,7 +46,7 @@ get = async (path, data = "", isFormData) => {
         }
         else {
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhr.send("is_fetch=1&" + data);
+            xhr.send("fetch=1&" + data);
         }
     });
 },
@@ -56,6 +57,7 @@ getData = e => (
 );
 
 fn[f] = () => {
+    console.log(`get(${self.dataset.n})`);
     get(self.dataset.n);
 };
 

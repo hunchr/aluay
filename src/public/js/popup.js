@@ -4,9 +4,20 @@
  */
 let popupX = () => {};
 
-const popup = $("#popup"),
+const popup = document.createElement("div");
 
-popupElems = [
+popup.id = "popup";
+popup.className = "popup hidden";
+popup.innerHTML =
+`<div class="btns">
+    <h2></h2><p></p>
+    <button class="a upper red" data-f="popup.x"></button>
+    <button class="a upper" data-f="popup.o"></button>
+</div>`;
+
+nav.appendChild(popup);
+
+const popupElems = [
     $("#popup h2"),
     $("#popup p"),
     $("#popup .a:last-child"),
@@ -44,5 +55,3 @@ fn["popup.o"] = () => {
     popup.classList.add("hidden");
     body.classList.remove("freeze");
 };
-
-fn[f]();

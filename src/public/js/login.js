@@ -2,9 +2,6 @@
 /**
  * Sends login form data to backend.
  */
-include("get");
-include("popup");
-
 fn[f] = () => {
     get("login", getData("input")).then(err => {
         if (err) {
@@ -17,4 +14,7 @@ fn[f] = () => {
     });
 };
 
-fn[f]();
+include("popup");
+include("get");
+
+fn["login"]();

@@ -99,6 +99,84 @@
 }
 
 /* --- Media --- */
+.media,
+.media-c button {
+    justify-content: center;
+    align-items: center;
+}
+
+.media {
+    position: relative;
+    color: #fff;
+    margin: 0 0 .125rem 0;
+}
+
+.media-p,
+.media-c {
+    position: absolute;
+    border-radius: var(--radius);
+    width: calc(100% - .5rem);
+    left: .25rem;
+}
+
+.media svg {
+    fill: #fff;
+    width: 1.125rem;
+    margin: 0;
+}
+
+/* -- Progress bar -- */
+.media-p {
+    background-color: var(--transparent);
+    height: .375rem;
+    bottom: 2.25rem;
+}
+
+.media-p div {
+    width: 0;
+    background-color: var(--blue);
+    border-radius: .5rem 0 0 .5rem;
+}
+
+/* -- Controls -- */
+.media-c {
+    align-items: center;
+    background-color: #0004;
+    height: 1.75rem;
+    bottom: .25rem;
+}
+
+.media-c button {
+    width: 1.75rem;
+    height: 100%;
+}
+
+.media-c span {
+    margin-left: .25rem;
+}
+
+.media-c span:last-of-type {
+    margin-right: auto;
+}
+
+/* -- Fullscreen -- */
+.fullscreen {
+    position: fixed !important;
+    background-color: #000;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    z-index: 3;
+}
+
+.fullscreen video {
+    border-radius: 0;
+}
+
+.fullscreen .media-c > :last-child > :first-child,
+.media:not(.fullscreen) .media-c > :last-child > :last-child {
+    display: none;
+}
 
 /* --- Buttons --- */
 .post > :last-child {
@@ -106,7 +184,7 @@
 }
 
 /* Date */
-[data-f="sd"],
+[data-f="post.t"],
 .post > :first-child > svg:last-of-type {
     margin-right: .25rem;
 }

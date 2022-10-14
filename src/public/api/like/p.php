@@ -1,26 +1,26 @@
 <?php
 /**
- * Likes a sub.
- * @param int $id sub_id
+ * Likes a post.
+ * @param int $id post_id
  */
-require '../include/sql-like.php';
+require '../../include/sql-like.php';
 
 lquery(
     'SELECT uid
-    FROM liked_subs
+    FROM liked_posts
     WHERE uid = '.$uid.'
-    AND sid = '.$id.'
+    AND pid = '.$id.'
     LIMIT 1;',
-    'INSERT INTO liked_subs
+    'INSERT INTO liked_posts
     VALUES ('.$uid.','.$id.');
-    UPDATE subs
+    UPDATE posts
     SET likes = likes + 1
     WHERE id = '.$id.';',
-    'DELETE FROM liked_subs
+    'DELETE FROM liked_posts
     WHERE uid = '.$uid.'
-    AND sid = '.$id.'
+    AND pid = '.$id.'
     LIMIT 1;
-    UPDATE subs
+    UPDATE posts
     SET likes = likes - 1
     WHERE id = '.$id.';'
 );

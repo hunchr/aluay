@@ -73,7 +73,7 @@ else {
     '<div class="btns space">
         <input class="lower" type="text" placeholder="'.$l[3].'" maxlength="20" spellcheck="false" autocomplete="username" autofocus>
         <input type="password" placeholder="'.$l[4].'" maxlength="1000" autocomplete="current-password">
-        <button class="btn" data-f="login">'.$l[5].'</button>
+        <button class="btn" data-f="login" data-n="login">'.$l[5].'</button>
         <span>'.$l[6].'&nbsp;<button class="a" data-f="get" data-n="signup">'.$l[7].'</button></span>
     </div>';
 
