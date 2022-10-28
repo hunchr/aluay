@@ -2,33 +2,43 @@
 /**
  * Shows the search bar or makes a search query.
  */
-const search = $("nav input");
+const search = $("nav input"),
 
 // Search
-fn[f] = () => {
-    if (body.classList.contains("search")) {
-        const q = search.value.trim().replace(/^(https:\/\/)?aluay/, "");
+find = () => {
+    const q = search.value.trim().replace(/^(https:\/\/)?aluay/, "");
 
-        if (q) {
-            body.classList.remove("search");
-            search.value = "";
-    
-            // Get URI
-            // if (q[0] === "/") {
-            //     return get(q.substring(1));
-            // }
-    
-            // Search
-            return TODO("Search: " + q);
+    if (q) {
+        body.classList.remove("search");
+        search.value = "";
+
+        // Get URI
+        if (q[0] === "/") {
+            return get(q.substring(1));
         }
+
+        // Search
+        TODO("Search: " + q);
+    }
+}
+
+// Show/hide search bar
+fn[f + ".s"] = () => {
+    if (body.classList.contains("search")) {
+        body.classList.remove("search");
+        return search.value = "";
     }
 
-    // Show search bar if hidden
     body.classList.add("search");
     search.focus();
 };
 
-fn[f]();
+// Advanced search
+fn[f + ".a"] = () => {
+    TODO("Advanced search");
+};
+
+fn[F]?.();
 
 // Press enter to search
 search.addEventListener("keyup", ev => {

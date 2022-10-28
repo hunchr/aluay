@@ -2,20 +2,22 @@
 /**
  * Shows a popup.
  */
-let popupX = () => {};
+let popupX = () => fn[f + ".o"];
 
-const popup = document.createElement("div");
+const popupCont = document.createElement("div");
 
-popup.id = "popup";
-popup.className = "popup hidden";
-popup.innerHTML =
-`<div class="btns">
+popupCont.id = f;
+popupCont.className = f + " hidden";
+popupCont.innerHTML =
+`<div class="li">
     <h2></h2><p></p>
-    <button class="a upper red" data-f="popup.x"></button>
-    <button class="a upper" data-f="popup.o"></button>
+    <div>
+        <button class="a" data-f="popup.x"></button>
+        <button class="a" data-f="popup.o"></button>
+    </div>
 </div>`;
 
-nav.appendChild(popup);
+nav.appendChild(popupCont);
 
 const popupElems = [
     $("#popup h2"),
@@ -25,7 +27,7 @@ const popupElems = [
 ],
 
 // Show popup for info/warnings
-showPopup = msg => {
+popup = msg => {
     msg = msg.split("|");
 
     popupElems.forEach((e, i) => {
@@ -41,17 +43,17 @@ showPopup = msg => {
     }
     
     body.classList.add("freeze");
-    popup.classList.remove("hidden");
-    popup.focus();
+    popupCont.classList.remove("hidden");
+    popupCont.focus();
 };
 
 // Popup: Cancel/Exit
-fn["popup.x"] = () => {
+fn[f + ".x"] = () => {
     popupX();
 };
 
 // Popup: Continue/Okay
-fn["popup.o"] = () => {
-    popup.classList.add("hidden");
+fn[f + ".o"] = () => {
+    popupCont.classList.add("hidden");
     body.classList.remove("freeze");
 };

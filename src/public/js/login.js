@@ -2,19 +2,28 @@
 /**
  * Sends login form data to backend.
  */
-fn[f] = () => {
+// Submit form
+fn[f + ".s"] = () => {
     get("login", getData("input")).then(err => {
         if (err) {
-            showPopup(...err.split("|"));
+            return popup(err);
         }
-        else {
-            layers.pop().remove();
-            get("home");
-        }
+
+        layers.pop().remove();
+        get("home");
     });
 };
 
-include("popup");
-include("get");
+// Show password
+fn[f + ".v"] = () => {
+    const prev = self.previousElementSibling,
+          isHidden = prev.type !== "text";
+    
+    prev.type = isHidden ? "text" : "password";
+    self.firstChild.innerHTML = `<use href="#i-visibility${isHidden ? "-off" : ""}"></use>`;
+};
 
-fn["login"]();
+include("popup", true);
+include("get", true);
+
+fn[F]();

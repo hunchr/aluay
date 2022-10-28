@@ -5,7 +5,7 @@
 const side = $("#side");
 
 fn[f] = () => {
-    side.classList.toggle("hidden");
+    body.classList.toggle("side");
 };
 
-fn[f]();
+fn[F]();

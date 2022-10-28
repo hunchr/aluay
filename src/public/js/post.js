@@ -32,4 +32,4 @@ fn[f + ".t"] = () => {
     TODO("Like post");
 };
 
-fn[uri]();
+fn[F]();

@@ -91,19 +91,34 @@ if (isset($_POST['0'])) {
 }
 // Show signup form
 else {
-    $main = 
-    '<div class="btns space">
-        <input class="lower" type="text" placeholder="'.$l[3].'" maxlength="20" spellcheck="false" autocomplete="off" autofocus>
-        <input class="lower" type="email" placeholder="'.$l[4].'" maxlength="100" spellcheck="false" autocomplete="off">
-        <input type="password" placeholder="'.$l[5].'" maxlength="1000" autocomplete="new-password">
-        <input type="password" placeholder="'.$l[6].'" maxlength="1000" autocomplete="new-password">
-        <button class="btn" data-f="signup" data-n="signup">'.$l[7].'</button>
-        <span>'.$l[8].'&nbsp;<button class="a" data-f="get" data-n="login">'.$l[9].'</button></span>
+    $main =
+    '<div class="li space">
+        <div class="input">
+            <div>'.svg('profile').'</div>
+            <input class="lower" type="text" placeholder="'.$l[3].'" maxlength="20" spellcheck="false" autocomplete="off" autofocus>
+            <button data-f="signup.i" tabindex="-1">'.svg('info').'</button>
+        </div>
+        <div class="input">
+            <div>'.svg('email').'</div>
+            <input class="lower" type="email" placeholder="'.$l[4].'" maxlength="100" spellcheck="false" autocomplete="off">
+        </div>
+        <div class="input">
+            <div>'.svg('key').'</div>
+            <input type="password" placeholder="'.$l[5].'" maxlength="1000" autocomplete="new-password">
+            <button data-f="login.v" tabindex="-1">'.svg('visibility').'</button>
+        </div>
+        <div class="input">
+            <div>'.svg('key').'</div>
+            <input type="password" placeholder="'.$l[6].'" maxlength="1000" autocomplete="new-password">
+            <button data-f="login.v" tabindex="-1">'.svg('visibility').'</button>
+        </div>
+        <button class="btn" data-f="signup.s">'.$l[7].'</button>
+        <div>'.$l[8].'&nbsp;<button class="a" data-f="get" data-n="login">'.$l[9].'</button></div>
     </div>
-    <div class="btns space hidden">
+    <div class="li space hidden">
         <input type="text" placeholder="'.$l[10].'" maxlength="16" spellcheck="false" autocomplete="off">
-        <button class="btn" data-f="signup.v">'.$l[11].'</button>
-        <span>'.$l[12].'&nbsp;<button class="a" data-f="signup.r">'.$l[13].'</button></span>
+        <button class="btn" data-f="signup.e">'.$l[11].'</button>
+        <div>'.$l[12].'&nbsp;<button class="a" data-f="signup.r">'.$l[13].'</button></div>
     </div>';
 
     send('gray center');

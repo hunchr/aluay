@@ -35,9 +35,9 @@
     height: 2.75rem;
 }
 
-/* (User)name */
-[data-f="sc"],
-.profile-t span {
+/* Username */
+.profile-t span,
+.post-t > :first-child {
     display: block;
     white-space: pre;
     overflow: hidden;
@@ -51,14 +51,14 @@
 }
 
 /* Follow button */
-[data-f="se"],
-.profile button {
+.profile button,
+.post-t > :last-child {
     margin-left: auto;
 }
 
 /* More button */
-[data-f="sb"] svg,
-[data-f="se"] svg {
+.profile button svg,
+.post-t > :last-child svg {
     margin: 0;
 }
 
@@ -81,7 +81,7 @@
     margin-right: .5rem;
 }
 
-.post > :first-child > :last-child svg,
+.post-t > :last-child svg,
 .profile > :last-child > :last-child svg {
     margin: 0;
 }
@@ -133,9 +133,9 @@
 }
 
 .media-p div {
-    width: 0;
-    background-color: var(--blue);
+    background-color: var(--rose);
     border-radius: .5rem 0 0 .5rem;
+    width: 0;
 }
 
 /* -- Controls -- */
@@ -184,28 +184,28 @@
 }
 
 /* Date */
-[data-f="post.t"],
-.post > :first-child > svg:last-of-type {
+.post-t > :nth-child(3),
+.post-t > svg:last-of-type {
     margin-right: .25rem;
 }
 
 /* --- Liked post --- */
 .liked {
-    color: var(--blue);
+    color: var(--rose);
 }
 
 .liked:hover,
 .liked:focus-visible {
-    color: var(--blue-hover);
+    color: var(--rose-hover);
 }
 
 .liked svg {
-    fill: var(--blue);
+    fill: var(--rose);
 }
 
 .liked:hover svg,
 .liked:focus-visible svg {
-    fill: var(--blue-hover);
+    fill: var(--rose-hover);
 }
 
 /* ----- End of feed ----- */

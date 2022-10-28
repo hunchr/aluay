@@ -3,8 +3,8 @@
  * Main script (used everywhere).
  */
 let self = document.body,
-    uri,
-    f; // Last used function
+    F, // Last used function
+    f; // Filename of last used function
     
 const TODO = msg => console.log(msg),
       wait = async ms => await new Promise(res => setTimeout(res, ms)),
@@ -17,8 +17,11 @@ const TODO = msg => console.log(msg),
       fn = {},
 
 // Include JavaScript file
-include = path => {
-    uri = path;
+include = (path, noOverwrite) => {
+    if (!noOverwrite) {
+        F = path;
+    }
+
     f = path.replace(/\..+/, "");
 
     if (!scripts.includes(f)) {

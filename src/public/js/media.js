@@ -44,4 +44,4 @@ fn[f + ".ni"] = () => {
     TODO("Next image");
 };
 
-fn[uri]();
+fn[F]();

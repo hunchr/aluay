@@ -56,7 +56,9 @@ if (isset($_POST['0'], $_POST['1'])) {
     $uid = $_SESSION['uid'] = $data['id'];
     $lang = $_SESSION['lang'] = $data['language'];
     $time = date('Y-m-d H:i:s');
-    $token = base64_encode($name.'|'.$lang.'|'.$data['preferences'].'|'.$time.'|'.base64_encode(random_bytes(96))); // TODO: new
+    $token = base64_encode(implode('|', [
+        $name, $lang, $data['preferences'], $time, base64_encode(random_bytes(96))
+    ]));
     $conn -> query(
         'INSERT INTO auth
         VALUES ('.$uid.',"'.pwd($token, false).'","'.$time.'");'
@@ -69,12 +71,19 @@ if (isset($_POST['0'], $_POST['1'])) {
 }
 // Show login form
 else {
-    $main = 
-    '<div class="btns space">
-        <input class="lower" type="text" placeholder="'.$l[3].'" maxlength="20" spellcheck="false" autocomplete="username" autofocus>
-        <input type="password" placeholder="'.$l[4].'" maxlength="1000" autocomplete="current-password">
-        <button class="btn" data-f="login" data-n="login">'.$l[5].'</button>
-        <span>'.$l[6].'&nbsp;<button class="a" data-f="get" data-n="signup">'.$l[7].'</button></span>
+    $main =
+    '<div class="li space">
+        <div class="input">
+            <div>'.svg('profile').'</div>
+            <input class="lower" type="text" placeholder="'.$l[3].'" maxlength="20" spellcheck="false" autocomplete="username" autofocus>
+        </div>
+        <div class="input">
+            <div>'.svg('key').'</div>
+            <input type="password" placeholder="'.$l[4].'" maxlength="1000" autocomplete="current-password">
+            <button data-f="login.v" tabindex="-1">'.svg('visibility').'</button>
+        </div>
+        <button class="btn" data-f="login.s">'.$l[5].'</button>
+        <div>'.$l[6].'&nbsp;<button class="a" data-f="get" data-n="signup">'.$l[7].'</button></div>
     </div>';
 
     send('gray center');

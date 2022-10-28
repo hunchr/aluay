@@ -7,4 +7,4 @@ fn[f + ".p"] = () => {
     TODO("Post");
 };
 
-fn[uri]();
+fn[F]();

@@ -2,29 +2,27 @@
 /**
  * Sends signup form data to backend.
  */
-// Signup
-fn[f] = () => {
+// Submit form
+fn[f+ ".s"] = () => {
     get("signup", getData("div:first-child input")).then(err => {
         if (err) {
-            showPopup(...err.split("|"));
+            return popup(err);
         }
-        else {
-            layer.querySelector("div:first-child").remove();
-            layer.querySelector("div").classList.remove("hidden");
-        }
+
+        layer.querySelector("div:first-child").remove();
+        layer.querySelector("div").classList.remove("hidden");
     });
 };
 
-// Email verification
-fn[f + ".v"] = () => {
+// Send email verification
+fn[f + ".e"] = () => {
     get("signup", getData("input")).then(err => {
         if (err) {
-            showPopup(...err.split("|"));
+            return popup(err);
         }
-        else {
-            layers.pop().remove();
-            get("login");
-        }
+
+        layers.pop().remove();
+        get("login");
     });
 };
 
@@ -33,7 +31,9 @@ fn[f + ".r"] = () => {
     TODO("Resend email verification");
 };
 
-include("popup");
-include("get");
+// Show usename info
+fn[f + ".i"] = () => {
+    TODO("Show usename info");
+};
 
-fn["signup"]();
+include("login", true);
