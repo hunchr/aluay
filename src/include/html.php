@@ -69,28 +69,32 @@ function html() {
         <link rel="manifest" href="/manifest.json">
     </head>
     <body class="'.$display.'">
-    <nav class="btns square">
-        <button id="back" data-f="back" aria-label="'.$L[0].'">'
-            .svg('aluay').svg('arrow-back').svg('close').
-        '</button>
-        <h1>'.$l[0].'</h1>
-        <input type="text" placeholder="'.$L[1].'">
-        <button data-f="search" aria-label="'.$L[2].'">'.svg('search').'</button>
+    <nav class="li sq row">
+        <div>
+            <button id="back" data-f="back" aria-label="'.$L[0].'">'.svg('aluay').svg('arrow-back').'</button>
+            <h1>'.$l[0].'</h1>
+        </div>
+        <div class="input">
+            <div>'.svg('search').'</div>
+            <input data-f="search" type="text" placeholder="'.$L[1].'">
+            <button data-f="search.a" aria-label="'.$L[2].'">'.svg('tune').'</button>
+        </div>
+        <button id="search" data-f="search.s" aria-label="'.$L[3].'">'.svg('search').svg('close').'</button>
         <div id="bnav">
-            <button data-f="get" data-n="home" aria-label="'.$L[3].'">'.svg('home').'</button>'
+            <button data-f="get" data-n="home" aria-label="'.$L[4].'">'.svg('home').'</button>'
             .(isset($bnav) ? $bnav :
-                '<button data-f="get" data-n="explore" aria-label="'.$L[4].'">'.svg('explore').'</button>
-                <button data-f="TODO" aria-label="'.$L[5].'">'.svg('new').'</button>
-                <button data-f="get" data-n="inbox" aria-label="'.$L[6].'">'.svg('inbox').'</button>'
+                '<button data-f="get" data-n="explore" aria-label="'.$L[5].'">'.svg('explore').'</button>
+                <button data-f="TODO" aria-label="'.$L[6].'">'.svg('new').'</button>
+                <button data-f="get" data-n="inbox" aria-label="'.$L[7].'">'.svg('inbox').'</button>'
             ).
-            '<button data-f="side" aria-label="'.$L[7].'">
-                <img src="/uc/s/'.$uid.'/0.webp" alt="'.$L[8].'" loading="lazy" width="24">
+            '<button data-f="side" aria-label="'.$L[8].'">
+                <img src="/uc/s/'.$uid.'/0.webp" alt="'.$L[9].'" loading="lazy" width="24">
             </button>
         </div>
-        <noscript class="banner center">'.$L[9].'</noscript>
+        <noscript class="banner">'.$L[10].'</noscript>
     </nav>
-    <div id="side" class="btns hidden">
-        <div class="btns">
+    <div id="side" class="li hidden">
+        <div class="li">
             <button data-f="get" data-n="profile">'.svg('profile').'<span>Profile</span></button>
             <button data-f="get" data-n="communities">'.svg('community').'<span>Communities</span></button>
             <button data-f="get" data-n="lists">'.svg('list').'<span>Lists</span></button>
@@ -98,38 +102,40 @@ function html() {
             <button data-f="get" data-n="liked">'.svg('like').'<span>Liked</span>'.svg('expand-right').'</button>
             <button data-f="get" data-n="settings">'.svg('settings').'<span>Settings</span></button>
             <button data-f="get" data-n="premium">'.svg('premium').'<span>Premium</span></button>
-            <button data-f="get" data-n="help/aluay">'.svg('help').'<span>Help</span></button>
-            <button data-f="get" data-n="feedback/aluay">'.svg('feedback').'<span>Feedback</span></button>
+            <button data-f="get" data-n="help">'.svg('help').'<span>Help</span></button>
+            <button data-f="get" data-n="feedback">'.svg('feedback').'<span>Feedback</span></button>
             <button data-f="get" data-n="privacy-policy">'.svg('policy').'<span>Privacy Policy</span></button>
             <button data-f="get" data-n="terms">'.svg('terms').'<span>Terms</span></button>
             <button data-f="get" data-n="apps">'.svg('apps').'<span>More Apps</span></button>
         </div>
         <button>
-            <img src="/uc/s/'.$uid.'/0.webp" alt="'.$L[8].'" loading="lazy" width="24">
-            <span>'.htmlspecialchars($auth[0]).'</span>
-            '.svg('expand').'
-        </button>
+            <img src="/uc/s/'.$uid.'/0.webp" alt="'.$L[9].'" loading="lazy" width="24">
+            <span>'.htmlspecialchars($auth[0]).'</span>'
+            .svg('expand').
+        '</button>
     </div>
-    <div id="main">
-        '.$main.'
-    </div>
+    <div id="main">'.$main.'</div>
     <div class="hidden">
-        <span>'.$L[10].'</span>
+        <span>'.$L[11].'</span>
         <svg viewBox="0 0 8 8">
-            <g id="i-aluay"><rect width="8" height="8" rx="2.67" ry="2.67" fill="#6060ff"/><path d="M6.58 2.96c-.48-.13-.99-.11-1.47.04C4.88 2.46 4.5 2 4 1.71 3.5 2 3.12 2.46 2.89 3a2.82 2.82 0 0 0-1.47-.04c-.23.89-.01 1.87.68 2.57.52.52 1.21.78 1.89.77.69 0 1.37-.25 1.89-.77.7-.7.92-1.68.68-2.57ZM3.17 4.97a.67.67 0 1 1 0-1.34.67.67 0 0 1 0 1.34Zm1.67 0a.67.67 0 1 1 0-1.34.67.67 0 0 1 0 1.34Z" fill="#fff"/></g>
+            <g id="i-aluay"><rect width="8" height="8" rx="2.67" ry="2.67" fill="#ff0080"/><path d="M6.26 1.82c-.31.38-.71.69-1.17.88.22.26.37.58.37.94 0 .43-.19.81-.49 1.07-.14-.33-.24-.69-.24-1.07 0-.04.01-.07.02-.11-.24.06-.49.11-.74.11s-.51-.04-.74-.11c0 .04.02.07.02.11 0 .39-.1.74-.24 1.07-.3-.27-.49-.64-.49-1.07 0-.36.15-.69.37-.94-.46-.19-.86-.5-1.17-.88-.4.5-.66 1.13-.66 1.82 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-.69-.25-1.32-.66-1.82z" fill="#fff"/></g>
             <path id="i-arrow-back" d="M8 3.5H1.92L4.71.71 4 0 0 4l4 4 .7-.7-2.78-2.8h6.09v-1Z"/>
             <path id="i-close" d="M6.36 2.36 8 .71 7.3 0 5.65 1.65 4 3.3 2.36 1.65.71 0 0 .71l1.65 1.65L3.3 4 0 7.3l.71.7L4 4.71 7.3 8l.7-.7L4.71 4l1.65-1.64z"/>
             <path id="i-search" d="M8 7.3 5.44 4.74c.35-.49.56-1.09.56-1.73C6 1.35 4.66 0 3 0S0 1.35 0 3s1.34 3 3 3c.65 0 1.24-.21 1.73-.56L7.29 8 8 7.29ZM1 3c0-1.1.9-2 2-2s2 .9 2 2a2.012 2.012 0 0 1-.99 1.72C3.71 4.9 3.37 5 3 5c-1.1 0-2-.9-2-2Z"/>
+            <path id="i-tune" d="M3.5 3.5H8v1H3.5zM0 6h3v1H0zM0 1h4.5v1H0zM2 3.5H0v1h2v1h1v-3H2v1zM4.5 5h-1v3h1V7H8V6H4.5V5zM6 1V0H5v3h1V2h2V1H6z"/>
+            <path id="i-filter" d="m0 0 3 4.5V8h2V4.5L8 0H0z"/>
             <path id="i-home" d="M4 0 0 4v4h3V5h2v3h3V4L4 0z"/>
             <g id="i-explore"><circle cx="4" cy="4" r=".5"/><path d="M4 0C1.79 0 0 1.79 0 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4Zm1 5L2 6l1-3 3-1-1 3Z"/></g>
             <path id="i-new" d="M8 3.5H4.5V0h-1v3.5H0v1h3.5V8h1V4.5H8v-1z"/>
             <path id="i-inbox" d="M0 0v8h8V0H0Zm7 5H5.5c0 .8-.7 1.5-1.5 1.5S2.5 5.8 2.5 5H1V1h6v4Z"/>
             <path id="i-notifications" d="M5 7c0 .55-.45 1-1 1s-1-.45-1-1M6.5 5.5V3.25c0-1.12-.74-2.05-1.75-2.37V.75a.749.749 0 1 0-1.5 0v.13A2.497 2.497 0 0 0 1.5 3.25V5.5L.5 6v.5h7V6l-1-.5Z"/>
+            <path id="i-key" d="M7.25 3.25H4.11a2.12 2.12 0 0 0-1.98-1.38C.96 1.88 0 2.83 0 4s.95 2.12 2.12 2.12c.91 0 1.68-.57 1.98-1.38h.14l.75.75.75-.75.75.75.75-.75.75-.75-.75-.75ZM2.13 5.13c-.62 0-1.12-.5-1.12-1.12s.5-1.12 1.12-1.12 1.12.5 1.12 1.12-.5 1.12-1.12 1.12Z"/>
             <g id="i-profile"><circle cx="4" cy="2" r="2"/><path d="M0 8c0-2.2 1.8-4 4-4s4 1.8 4 4"/></g>
             <g id="i-community"><path d="M5 .5c-.18 0-.34.04-.5.09.58.21 1 .76 1 1.41s-.42 1.2-1 1.41c.16.06.32.09.5.09.83 0 1.5-.67 1.5-1.5S5.83.5 5 .5Z"/><circle cx="3" cy="2" r="1.5"/><path d="M3 3.5c-1.65 0-3 1.35-3 3v1h6v-1c0-1.66-1.34-3-3-3Z"/><path d="M5 3.5c-.17 0-.34.02-.5.05A2.99 2.99 0 0 1 7 6.5v1h1v-1c0-1.66-1.34-3-3-3Z"/></g>
             <g id="i-list"><path d="M0 0v6l2-1h4V0H0ZM8 6v2L6 7H2V6h6Z"/><path d="M7 2h1v4.1H7z"/></g>
             <path id="i-settings" d="M8 3H6.41l1.12-1.12L6.12.47 5 1.59V0H3v1.59L1.88.47.47 1.88 1.59 3H0v2h1.59L.47 6.12l1.41 1.41L3 6.41V8h2V6.41l1.12 1.12 1.41-1.41L6.41 5H8V3ZM4 5.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5Z"/>
             <path id="i-help" d="M4 0C1.79 0 0 1.79 0 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4Zm.5 7h-1V6h1v1Zm0-1.5h-1C3.5 3.88 5 4 5 3c0-.55-.45-1-1-1s-1 .45-1 1H2c0-1.1.9-2 2-2s2 .9 2 2c0 1.25-1.5 1.38-1.5 2.5Z"/>
+            <path id="i-info" d="M8 4c0-2.21-1.79-4-4-4S0 1.79 0 4s1.79 4 4 4 4-1.79 4-4ZM4.5 2.25h-1v-1h1v1Zm0 4.5h-1v-3.5h1v3.5Z"/>
             <path id="i-feedback" d="M.75 0v6.5H2.5L4 8l1.5-1.5h1.75V0H.75Zm3.96 3.96L4 5.25l-.71-1.29L2 3.25l1.29-.71L4 1.25l.71 1.29L6 3.25l-1.29.71Z"/>
             <g id="i-policy"><path d="M4 0 .5 1.5v1S.5 7 4 8c.87-.25 1.53-.72 2.02-1.28L5.01 5.71c-.3.18-.64.28-1.01.28-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2c0 .37-.11.71-.28 1.01l.88.88c.9-1.58.9-3.39.9-3.39V1.5L4 0Z"/><circle cx="4" cy="4" r="1"/></g>
             <path id="i-terms" d="m.004 4.18 1.393-1.394 2.086 2.086L2.09 6.265zM2.784 1.398 4.177.005 6.263 2.09 4.87 3.484zM1.742 2.438l.693-.693L8 7.31l-.693.692z"/>
@@ -159,6 +165,9 @@ function html() {
             <g id="i-speed"><path d="m4.93 4.89 1.83-3.14-3.14 1.83a.998.998 0 0 0 .39 1.92c.42 0 .77-.25.92-.61Z"/><path d="m7.15 2.06-.71.71c.35.49.56 1.09.56 1.73 0 .77-.3 1.47-.78 2H1.78C1.3 5.97 1 5.27 1 4.5c0-1.66 1.34-3 3-3 .65 0 1.24.21 1.73.56l.71-.71C5.76.82 4.92.5 4 .5c-2.21 0-4 1.79-4 4 0 1.2.54 2.27 1.38 3h5.24C7.46 6.77 8 5.7 8 4.5c0-.92-.33-1.76-.85-2.44Z"/></g>
             <path id="i-fullscreen" d="M3 0H0v3h1V1h2V0ZM5 0h3v3H7V1H5V0ZM3 8H0V5h1v2h2v1ZM5 8h3V5H7v2H5v1Z"/>
             <path id="i-fullscreen-exit" d="M3 0v3H0V2h2V0h1ZM5 0v3h3V2H6V0H5ZM3 8V5H0v1h2v2h1ZM5 8V5h3v1H6v2H5Z"/>
+            <path id="i-email" d="M0 1v6h8V1H0Zm7 2.11-3 1.4-3-1.4v-1.1l3 1.4 3-1.4v1.1Z"/>
+            <g id="i-visibility"><circle cx="4" cy="4" r="1"/><path d="M6.5 2c-.46-.39-1.34-.92-2.25-1h-.5c-.91.08-1.79.61-2.25 1C.72 2.68.26 3.45 0 4c.26.56.71 1.33 1.5 2 .46.39 1.34.92 2.25 1h.5c.91-.08 1.79-.61 2.25-1 .79-.67 1.24-1.44 1.5-2-.26-.56-.71-1.33-1.5-2ZM4 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2Z"/></g>
+            <path id="i-visibility-off" d="m5.99 3.87 1.3 1.3c.32-.42.56-.83.72-1.16-.26-.56-.71-1.33-1.5-2-.46-.39-1.34-.92-2.25-1h-.5c-.18.02-.35.06-.52.11l.91.91c.99.07 1.78.86 1.85 1.85ZM6.61 5.9l-.89-.89-.77-.77-1.19-1.19-.77-.77-.77-.77L.71 0 0 .71l1.4 1.4C.68 2.75.25 3.47 0 4c.26.56.71 1.33 1.5 2 .46.39 1.34.92 2.25 1h.5c.55-.05 1.08-.27 1.53-.52L7.3 8l.71-.71-1.4-1.4Zm-2.6.1c-1.1 0-2-.9-2-2 0-.37.1-.72.28-1.01l.76.76c-.02.08-.04.16-.04.25 0 .55.45 1 1 1 .09 0 .17-.02.25-.04l.76.76c-.3.18-.64.28-1.01.28Z"/>
         </svg>
     </div>
     </body>

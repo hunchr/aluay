@@ -9,7 +9,7 @@
     "orientation": "portrait-primary",
     "dir": "ltr",
     "lang": "en-US",
-    "theme_color": "#6060ff",
+    "theme_color": "#ff0080",
     "background_color": "#000000",
     "categories": [
         "social",
@@ -17,23 +17,23 @@
     ],
     "icons": [
         {
-            "src": "/img/pwa/icon-192.png",
+            "src": "/img/pwa/192.png",
             "type": "image/png",
             "sizes": "192x192"
         },
         {
-            "src": "/img/pwa/icon-512.png",
+            "src": "/img/pwa/512.png",
             "type": "image/png",
             "sizes": "512x512"
         },
         {
-            "src": "/img/pwa/icon-m-192.png",
+            "src": "/img/pwa/192-m.png",
             "type": "image/png",
             "sizes": "192x192",
             "purpose": "maskable"
         },
         {
-            "src": "/img/pwa/icon-m-512.png",
+            "src": "/img/pwa/512-m.png",
             "type": "image/png",
             "sizes": "512x512",
             "purpose": "maskable"
@@ -45,7 +45,7 @@
             "short_name": "Home",
             "url": "/home",
             "icons": [{
-                "src": "/img/pwa/home-192.png",
+                "src": "/img/pwa/192-home.png",
                 "type": "image/png",
                 "sizes": "192x192"
             }]
@@ -55,7 +55,7 @@
             "short_name": "New",
             "url": "/new",
             "icons": [{
-                "src": "/img/pwa/new-192.png",
+                "src": "/img/pwa/192-new.png",
                 "type": "image/png",
                 "sizes": "192x192"
             }]
@@ -65,10 +65,26 @@
             "short_name": "Inbox",
             "url": "/inbox",
             "icons": [{
-                "src": "/img/pwa/inbox-192.png",
+                "src": "/img/pwa/192-inbox.png",
                 "type": "image/png",
                 "sizes": "192x192"
             }]
         }
-    ]
+    ],
+    "share_target": {
+        "action": "/share",
+        "method": "POST",
+        "enctype": "multipart/form-data",
+        "params": {
+            "title": "title",
+            "text": "text",
+            "url": "https://url",
+            "files": [
+                {
+                    "name": "image",
+                    "accept": [".png",".jpg",".jpeg"]
+                }
+            ]
+        }
+    }
 }

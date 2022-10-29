@@ -345,7 +345,7 @@ h1,
     color: #fff;
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url(../img/bg/peaks.svg);
+    /* background-image: url(../img/bg/peaks.svg); */
     background-size: cover;
     max-width: none !important;
 }

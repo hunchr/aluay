@@ -3,6 +3,7 @@ $L = [
     'Back',
     'Search or type a URL',
     'Search',
+    'Advanced search',
     'Home',
     'Explore',
     'Create post',
