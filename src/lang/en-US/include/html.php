@@ -10,7 +10,7 @@ $L = [
     'Inbox',
     'Menu',
     'Profile picture',
-    'Please enable JavaScript in your browser.',
+    'Please enable JavaScript in your browser',
     'Post Date|The Unix timestamp for this post is $1, which means this post was created at $2.|Okay'
 ];
 ?>

@@ -8,24 +8,18 @@
 }
 
 :root {
-    --fg: #e1e0e6;         /* 16.00 */
-    --bg: #000;            /*  1.00 */
-    --gray: #949597;       /*  7.00 */
-    --hover: #1a1a1c;      /*  1.20 */
-    --rose: #e80070;       /*  4.66 */
-    --rose-hover: #c0005c; /*  3.39 */
-    --red: #ee0000;        /*  4.63 */
-    --red-hover: #c00000;  /*  3.24 */
+    --fg: #e1e0e6;    /* 16.00 */
+    --bg: #000;       /*  1.00 */
+    --gray: #9b9a9d;  /*  7.50 */
+    --hover: #1a1a1c; /*  1.20 */
+    --rose: #e80070;
+    --rose-hover: #c0005c;
     --transparent: #000a;
+    --font-size: 16px;
     --border: .0625rem solid var(--hover);
     --radius: .5rem;
     --main-width: 34.75rem;
     --menu-width: 12.5rem;
-}
-
-::selection {
-    color: #fff;
-    background-color: var(--rose);
 }
 
 a,
@@ -40,12 +34,18 @@ textarea {
     all: unset;
 }
 
+::selection {
+    color: #fff;
+    background-color: var(--rose);
+}
+
 /* ----- Body ----- */
 html,
 body {
     flex-direction: column;
     touch-action: manipulation;
-    font: 400 16px Roboto, 'Roboto', -apple-system, BlinkMacSystemFont, system-ui, Helvetica, Arial, sans-serif;
+    --font-size: 16px;
+    font: 400 var(--font-size) Roboto, 'Roboto', -apple-system, BlinkMacSystemFont, system-ui, Helvetica, Arial, sans-serif;
     color: var(--fg);
     background-color: var(--bg);
     width: 100%;
@@ -57,6 +57,34 @@ body * {
     display: flex;
     box-sizing: border-box;
 }
+
+/* --- Theme --- */
+/* Gray */
+body[data-theme='01'] {
+    --fg: #f5f6f2;    /* 16.00 */
+    --bg: #1a1a1c;    /*  1.00 */
+    --gray: #aaaaae;  /*  7.50 */
+    --hover: #292A2A; /*  1.20 */
+}
+
+/* Light */
+body[data-theme='10'] {
+    --fg: #202221;    /* 16.00 */
+    --bg: #fff;       /*  1.00 */
+    --gray: #555459;  /*  7.50 */
+    --hover: #eaeaeb; /*  1.20 */
+}
+
+/* High contrast (dark) */
+body[data-theme='11'] {
+    --fg: #fff;       /* 21.00 */
+    --gray: #c3c4c3;  /* 12.00 */
+}
+
+/* --- Font size --- */
+body[data-font='00'] {--font-size: 15px;}
+body[data-font='10'] {--font-size: 17px;}
+body[data-font='11'] {--font-size: 18px;}
 
 /* ----- Nav ----- */
 nav {
@@ -73,7 +101,8 @@ nav > :first-child {
     min-width: 12.5rem;
 }
 
-nav h1 {
+h1,
+.popup h2 {
     font-size: 18px;
     height: fit-content;
 }
@@ -145,7 +174,7 @@ button:focus-visible {
 
 /* --- Rose buttons --- */
 .btn {
-    color: #fff;
+    color: #fff !important;
     background-color: var(--rose);
     height: 2.5rem;
 }
@@ -316,10 +345,6 @@ h1,
     padding: .375rem .5rem;
 }
 
-.popup h2 {
-    font-size: 1.125rem;
-}
-
 .popup div div {
     justify-content: flex-end;
 }
@@ -343,11 +368,21 @@ h1,
 /* ----- Error page ----- */
 .error {
     color: #fff;
-    background-position: center;
-    background-repeat: no-repeat;
-    /* background-image: url(../img/bg/peaks.svg); */
-    background-size: cover;
     max-width: none !important;
+}
+
+.error span {
+    text-align: center;
+    font-size: 18px;
+    z-index: 1;
+}
+
+.error img {
+    position: absolute;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    top: 0;
 }
 
 /* ----- Classes ----- */
@@ -368,6 +403,7 @@ body:not(.search) #search > :last-child {
 
 button,
 .popup,
+.error,
 .banner,
 .center {
     justify-content: center;

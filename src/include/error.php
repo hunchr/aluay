@@ -6,7 +6,9 @@ if (isset($conn)) {
     $conn -> close();
 }
 
-$main = $l[1];
+$main =
+'<span>'.$l[1].'</span>
+<img src="/img/bg/peaks-'.random_int(0, 9).'.svg" alt="'.$l[3].'">';
 
-send('error center');
+send('error');
 ?>
