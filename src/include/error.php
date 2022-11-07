@@ -7,8 +7,8 @@ if (isset($conn)) {
 }
 
 $main =
-'<span>'.$l[1].'</span>
-<img src="/img/bg/peaks-'.random_int(0, 9).'.svg" alt="'.$l[3].'">';
+'<span>'.$l['description'].'</span>
+<img src="/img/bg/peaks-'.random_int(0, 9).'.svg" alt="'.$l['bg_alt'].'">';
 
 send('error');
 ?>

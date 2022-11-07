@@ -1,7 +1,7 @@
 <?php
 $l = [
     'title' => 'Not Found',
-    'description' => 'Looks like this community doesn\'t exist',
+    'description' => 'Looks like this list doesn\'t exist',
     'keywords' => null,
 ];
 ?>

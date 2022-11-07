@@ -12,19 +12,19 @@ function html() {
     global $lang;
     global $og_uri;
 
-    $is_error = $l[2] === null;
+    $is_hidden = $l[2] === null;
 
     // --- Get preferences ---
-    $display = '';
-    $auth = ['guest', 0, 1]; // name, show_nsfw, dark_mode
+    // $display = '';
+    // $auth = ['guest', 0, 1]; // name, show_nsfw, dark_mode
 
-    if (isset($_COOKIE['auth'])) {
-        $tmp = explode('|', base64_decode($_COOKIE['auth']), 3);
-        count($tmp) === 3 ? $auth = $tmp : $uid = $_SESSION['uid'] = 0;
-    }
+    // if (isset($_COOKIE['auth'])) {
+    //     $tmp = explode('|', base64_decode($_COOKIE['auth']), 3);
+    //     count($tmp) === 3 ? $auth = $tmp : $uid = $_SESSION['uid'] = 0;
+    // }
 
-    if (!$auth[1]) $display .= 'no-nsfw ';
-    if (!$auth[2]) $display .= 'light-mode';
+    // if (!$auth[1]) $display .= 'no-nsfw ';
+    // if (!$auth[2]) $display .= 'light-mode';
 
     // --- Set headers ---
     $nonce = base64_encode(random_bytes(18));
@@ -42,22 +42,22 @@ function html() {
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-        <title>'.$l[0].'</title>
-        <meta name="description" content="'.$l[1].'">
-        <meta name="keywords" content="aluay'.($is_error ? '' : ','.$l[0].$l[2]).'">
+        <title>'.$l['title'].'</title>
+        <meta name="description" content="'.$l['description'].'">
+        <meta name="keywords" content="aluay'.($is_hidden ? '' : ','.$l['keywords']).'">
         <meta name="theme-color" content="#000000">
         <meta name="referrer" content="no-referrer">
-        <meta name="robots" content="'.($is_error ? 'no' : '').'index,follow">
-        <meta property="og:title" content="'.$l[0].'">
-        <meta property="og:description" content="'.$l[1].'">
-        <meta property="og:url" content="https://aluay'.$url.'">
-        <meta property="og:image" content="https://aluay/'.(isset($og_uri) ? $og_uri : 'img/open-graph').'.webp">
+        <meta name="robots" content="'.($is_hidden ? 'no' : '').'index,follow">
+        <meta property="og:title" content="'.$l['title'].'">
+        <meta property="og:description" content="'.$l['description'].'">
+        <meta property="og:url" content="http://[::1]'.$url.'">
+        <meta property="og:image" content="http://[::1]/'.(isset($og_uri) ? $og_uri : 'img/open-graph').'.webp">
         <meta property="og:image:type" content="image/webp">
         <meta property="og:locale" content="'.$lang.'">
         <meta property="og:type" content="website">
         <meta property="og:site_name" content="aluay">
         <meta name="twitter:card" content="summary">
-        <link rel="canonical" href="https://aluay'.$url.'">
+        <link rel="canonical" href="http://[::1]'.$url.'">
         <link rel="stylesheet" href="/css/main.css?v=1">'
         .(isset($css) ?
             '<link rel="stylesheet" href="/css/'.$path.'.css?v=1">' :
@@ -68,30 +68,30 @@ function html() {
         <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
         <link rel="manifest" href="/manifest.json">
     </head>
-    <body class="'.$display.'">
+    <body class="">
     <nav class="li sq row">
         <div>
-            <button id="back" data-f="back" aria-label="'.$L[0].'">'.svg('aluay').svg('arrow-back').'</button>
-            <h1>'.$l[0].'</h1>
+            <button id="back" data-f="back" aria-label="'.$L['back_aria'].'">'.svg('aluay').svg('arrow-back').'</button>
+            <h1>'.$l['title'].'</h1>
         </div>
         <div class="input">
             <div>'.svg('search').'</div>
-            <input data-f="search" type="text" placeholder="'.$L[1].'">
-            <button data-f="search.a" aria-label="'.$L[2].'">'.svg('tune').'</button>
+            <input data-f="search" type="text" placeholder="'.$L['search_ph'].'">
+            <button data-f="search.a" aria-label="'.$L['search_aria'].'">'.svg('tune').'</button>
         </div>
-        <button id="search" data-f="search.s" aria-label="'.$L[3].'">'.svg('search').svg('close').'</button>
+        <button id="search" data-f="search.s" aria-label="'.$L['search_advanced_aria'].'">'.svg('search').svg('close').'</button>
         <div id="bnav">
-            <button data-f="get" data-n="home" aria-label="'.$L[4].'">'.svg('home').'</button>'
+            <button data-f="get" data-n="home" aria-label="'.$L['home_aria'].'">'.svg('home').'</button>'
             .(isset($bnav) ? $bnav :
-                '<button data-f="get" data-n="explore" aria-label="'.$L[5].'">'.svg('explore').'</button>
-                <button data-f="TODO" aria-label="'.$L[6].'">'.svg('new').'</button>
-                <button data-f="get" data-n="inbox" aria-label="'.$L[7].'">'.svg('inbox').'</button>'
+                '<button data-f="get" data-n="explore" aria-label="'.$L['explore_aria'].'">'.svg('explore').'</button>
+                <button data-f="TODO" aria-label="'.$L['new_aria'].'">'.svg('new').'</button>
+                <button data-f="get" data-n="inbox" aria-label="'.$L['inbox_aria'].'">'.svg('inbox').'</button>'
             ).
-            '<button data-f="side" aria-label="'.$L[8].'">
-                <img src="/uc/s/'.$uid.'/0.webp" alt="'.$L[9].'" loading="lazy" width="24">
+            '<button data-f="side" aria-label="'.$L['menu_aria'].'">
+                <img src="/uc/s/'.$uid.'/0.webp" alt="'.$L['pfp_alt'].'" loading="lazy" width="24">
             </button>
         </div>
-        <noscript class="banner">'.$L[10].'</noscript>
+        <noscript class="banner">'.$L['noscript_note'].'</noscript>
     </nav>
     <div id="side" class="li hidden">
         <div class="li">
@@ -104,19 +104,19 @@ function html() {
             <button data-f="get" data-n="premium">'.svg('premium').'<span>Premium</span></button>
             <button data-f="get" data-n="help">'.svg('help').'<span>Help</span></button>
             <button data-f="get" data-n="feedback">'.svg('feedback').'<span>Feedback</span></button>
-            <button data-f="get" data-n="privacy-policy">'.svg('policy').'<span>Privacy Policy</span></button>
+            <button data-f="get" data-n="privacy">'.svg('policy').'<span>Privacy Policy</span></button>
             <button data-f="get" data-n="terms">'.svg('terms').'<span>Terms</span></button>
             <button data-f="get" data-n="apps">'.svg('apps').'<span>More Apps</span></button>
         </div>
         <button>
-            <img src="/uc/s/'.$uid.'/0.webp" alt="'.$L[9].'" loading="lazy" width="24">
-            <span>'.htmlspecialchars($auth[0]).'</span>'
+            <img src="/uc/s/'.$uid.'/0.webp" alt="'.$L['pfp_alt'].'" loading="lazy" width="24">
+            <span>'.''/*htmlspecialchars($auth[0])*/.'</span>'
             .svg('expand').
         '</button>
     </div>
     <div id="main">'.$main.'</div>
     <div class="hidden">
-        <span>'.$L[11].'</span>
+        <span>'.$L['post_date_popup'].'</span>
         <svg viewBox="0 0 8 8">
             <g id="i-aluay"><rect width="8" height="8" rx="2.67" ry="2.67" fill="#ff0080"/><path d="M6.26 1.82c-.31.38-.71.69-1.17.88.22.26.37.58.37.94 0 .43-.19.81-.49 1.07-.14-.33-.24-.69-.24-1.07 0-.04.01-.07.02-.11-.24.06-.49.11-.74.11s-.51-.04-.74-.11c0 .04.02.07.02.11 0 .39-.1.74-.24 1.07-.3-.27-.49-.64-.49-1.07 0-.36.15-.69.37-.94-.46-.19-.86-.5-1.17-.88-.4.5-.66 1.13-.66 1.82 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-.69-.25-1.32-.66-1.82z" fill="#fff"/></g>
             <path id="i-arrow-back" d="M8 3.5H1.92L4.71.71 4 0 0 4l4 4 .7-.7-2.78-2.8h6.09v-1Z"/>

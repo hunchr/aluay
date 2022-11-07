@@ -7,6 +7,7 @@ let layer = $("main");
 const main = $("#main"),
       title = $("h1"),
       layers = [],
+      notPrivate = location.pathname !== "/private",
 
 // Get page
 get = async (path, data = "", isFormData) => {
@@ -30,10 +31,13 @@ get = async (path, data = "", isFormData) => {
 
                 // Change title
                 const meta = layer.dataset.meta.split("|");
-                document.title = meta[1];
                 title.innerHTML = meta[2] || meta[1];
-                history.pushState(null, "", "https://aluay" + meta[0]);
 
+                if (notPrivate) {
+                    document.title = meta[1];
+                    history.pushState(null, "", "https://aluay" + meta[0]);
+                }
+                
                 main.appendChild(layer);
                 layers.push(layer);
                 res();
@@ -60,5 +64,3 @@ fn[f] = () => {
     console.log(`get(${self.dataset.n})`);
     get(self.dataset.n);
 };
-
-// fn[fL]();

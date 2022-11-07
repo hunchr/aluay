@@ -1,7 +1,6 @@
 <?php
 /**
- * Shows a specific user's liked replies.
- * @param array $q username
+ * Shows the 'create new post' form for shared text or images.
  */
 $main = '<code>'.$_SERVER['REQUEST_URI'].'</code> is coming soon';
 

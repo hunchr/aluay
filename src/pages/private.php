@@ -1,7 +1,6 @@
 <?php
 /**
- * Shows a specific user's created replies.
- * @param array $q username
+ * Browse aluay in incognito mode.
  */
 $main = '<code>'.$_SERVER['REQUEST_URI'].'</code> is coming soon';
 

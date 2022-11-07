@@ -13,7 +13,7 @@ if (isset($_POST['0'], $_POST['1'])) {
 
     // 5 strikes rule // TODO: Implement better rule with SQL logging and ip ban
     if ($_SESSION['strikes'] >= 5) {
-        exit($l[10]);
+        exit($l['dos_err']);
     }
 
     $name = strtolower($_POST['0']);
@@ -21,7 +21,7 @@ if (isset($_POST['0'], $_POST['1'])) {
 
     // Validate inputs
     if (!preg_match('/^[a-z][a-z0-9-]{0,18}[a-z0-9]$/', $name)) {
-        exit($l[8]);
+        exit($l['uname_err']);
     }
     if (!(
         preg_match('/[^a-z0-9]/i', $pwd) &&
@@ -30,26 +30,26 @@ if (isset($_POST['0'], $_POST['1'])) {
         preg_match('/[a-z]/', $pwd) &&
         strlen($pwd) > 7)
     ) {
-        exit($l[9]);
+        exit($l['pwd_err']);
     }
 
     require '../include/sql.php';
 
     // Get user data
     [$data, $row_cnt, $conn] = query(
-        'SELECT id, uname, password, language, preferences
+        'SELECT id, uname, password, language, display
         FROM users
         WHERE uname = "'.$name.'";',
         true,
         function() {
             global $l;
-            exit($l[8]);
+            exit($l['uname_err']);
         }
     );
 
     // Compare passwords
     if (!pwd($pwd, $data['password'])) {
-        exit($l[9]);
+        exit($l['pwd_err']);
     }
 
     // Generate auth token
@@ -57,7 +57,7 @@ if (isset($_POST['0'], $_POST['1'])) {
     $lang = $_SESSION['lang'] = $data['language'];
     $time = date('Y-m-d H:i:s');
     $token = base64_encode(implode('|', [
-        $name, $lang, $data['preferences'], $time, base64_encode(random_bytes(96))
+        $name, $lang, $data['display'], $time, base64_encode(random_bytes(96))
     ]));
     $conn -> query(
         'INSERT INTO auth
@@ -75,15 +75,15 @@ else {
     '<div class="li space">
         <div class="input">
             <div>'.svg('profile').'</div>
-            <input class="lower" type="text" placeholder="'.$l[3].'" maxlength="20" spellcheck="false" autocomplete="username" autofocus>
+            <input class="lower" type="text" placeholder="'.$l['uname_ph'].'" maxlength="20" spellcheck="false" autocomplete="username" autofocus>
         </div>
         <div class="input">
             <div>'.svg('key').'</div>
-            <input type="password" placeholder="'.$l[4].'" maxlength="1000" autocomplete="current-password">
+            <input type="password" placeholder="'.$l['pwd_ph'].'" maxlength="1000" autocomplete="current-password">
             <button data-f="login.v" tabindex="-1">'.svg('visibility').'</button>
         </div>
-        <button class="btn" data-f="login.s">'.$l[5].'</button>
-        <div>'.$l[6].'&nbsp;<button class="a" data-f="get" data-n="signup">'.$l[7].'</button></div>
+        <button class="btn" data-f="login.s">'.$l['login_btn'].'</button>
+        <div>'.$l['login_note'].'&nbsp;<button class="a" data-f="get" data-n="signup">'.$l['signup_btn'].'</button></div>
     </div>';
 
     send('gray center');

@@ -1,7 +1,7 @@
 <?php
 $l = [
-    'Home',
-    'Your personal home feed.',
-    '',
+    'title' => 'Home',
+    'description' => 'Your personal home feed',
+    'keywords' => 'home',
 ];
 ?>

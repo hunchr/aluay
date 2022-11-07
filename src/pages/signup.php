@@ -18,13 +18,13 @@ if (isset($_POST['0'])) {
 
         // Validate inputs // TODO: Check if username contains forbidden words
         if ($pwd !== $_POST['3']) {
-            exit($l[18]);
+            exit($l['pwd_confirm_err']);
         }
         if (!preg_match('/^[a-z][a-z0-9-]{0,18}[a-z0-9]$/', $name)) {
-            exit($l[14]);
+            exit($l['uname_err']);
         }
         if (!preg_match('/^[\w!#$%&\'*+\/=?^`{|}~-]+(\.[\w!#$%&\'*+\/=?^`{|}~-]+)*@([a-z0-9-]+\.)+[a-z]{2,24}$/', $mail)) {
-            exit($l[16]);
+            exit($l['email_err']);
         }
         if (!(
             preg_match('/[^a-z0-9]/i', $pwd) &&
@@ -33,7 +33,7 @@ if (isset($_POST['0'])) {
             preg_match('/[a-z]/', $pwd) &&
             strlen($pwd) > 7)
         ) {
-            exit($l[17]);
+            exit($l['pwd_err']);
         }
         
         require '../include/sql.php';
@@ -58,7 +58,7 @@ if (isset($_POST['0'])) {
             }
         );
                 
-        exit($l[15]);
+        exit($l['uname_taken_err']);
     }
 
     // Verify email
@@ -66,7 +66,8 @@ if (isset($_POST['0'])) {
         $data = $_SESSION['signup'];
 
         if ($data[0] !== $_POST['0']) {
-            exit($data[0]); // TODO: exit($l[19]);
+            exit($data[0]); // TODO: remove line
+            exit($l['verify_err']);
         }
         
         require '../include/sql.php';
@@ -95,30 +96,30 @@ else {
     '<div class="li space">
         <div class="input">
             <div>'.svg('profile').'</div>
-            <input class="lower" type="text" placeholder="'.$l[3].'" maxlength="20" spellcheck="false" autocomplete="off" autofocus>
+            <input class="lower" type="text" placeholder="'.$l['uname_ph'].'" maxlength="20" spellcheck="false" autocomplete="off" autofocus>
             <button data-f="signup.i" tabindex="-1">'.svg('info').'</button>
         </div>
         <div class="input">
             <div>'.svg('email').'</div>
-            <input class="lower" type="email" placeholder="'.$l[4].'" maxlength="100" spellcheck="false" autocomplete="off">
+            <input class="lower" type="email" placeholder="'.$l['email_ph'].'" maxlength="100" spellcheck="false" autocomplete="off">
         </div>
         <div class="input">
             <div>'.svg('key').'</div>
-            <input type="password" placeholder="'.$l[5].'" maxlength="1000" autocomplete="new-password">
+            <input type="password" placeholder="'.$l['pwd_ph'].'" maxlength="1000" autocomplete="new-password">
             <button data-f="login.v" tabindex="-1">'.svg('visibility').'</button>
         </div>
         <div class="input">
             <div>'.svg('key').'</div>
-            <input type="password" placeholder="'.$l[6].'" maxlength="1000" autocomplete="new-password">
+            <input type="password" placeholder="'.$l['pwd_confirm_ph'].'" maxlength="1000" autocomplete="new-password">
             <button data-f="login.v" tabindex="-1">'.svg('visibility').'</button>
         </div>
-        <button class="btn" data-f="signup.s">'.$l[7].'</button>
-        <div>'.$l[8].'&nbsp;<button class="a" data-f="get" data-n="login">'.$l[9].'</button></div>
+        <button class="btn" data-f="signup.s">'.$l['signup_btn'].'</button>
+        <div>'.$l['signup_note'].'&nbsp;<button class="a" data-f="get" data-n="login">'.$l['login_btn'].'</button></div>
     </div>
     <div class="li space hidden">
-        <input type="text" placeholder="'.$l[10].'" maxlength="16" spellcheck="false" autocomplete="off">
-        <button class="btn" data-f="signup.e">'.$l[11].'</button>
-        <div>'.$l[12].'&nbsp;<button class="a" data-f="signup.r">'.$l[13].'</button></div>
+        <input type="text" placeholder="'.$l['verify_ph'].'" maxlength="16" spellcheck="false" autocomplete="off">
+        <button class="btn" data-f="signup.e">'.$l['verify_btn'].'</button>
+        <div>'.$l['verify_note'].'&nbsp;<button class="a" data-f="signup.r">'.$l['verify_resend_btn'].'</button></div>
     </div>';
 
     send('gray center');
