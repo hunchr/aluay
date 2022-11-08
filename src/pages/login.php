@@ -28,7 +28,7 @@ if (isset($_POST['0'], $_POST['1'])) {
         preg_match('/\d/', $pwd) &&
         preg_match('/[A-Z]/', $pwd) &&
         preg_match('/[a-z]/', $pwd) &&
-        strlen($pwd) > 7)
+        strlen($pwd) >= 8)
     ) {
         exit($l['pwd_err']);
     }
@@ -57,7 +57,8 @@ if (isset($_POST['0'], $_POST['1'])) {
     $lang = $_SESSION['lang'] = $data['language'];
     $time = date('Y-m-d H:i:s');
     $token = base64_encode(implode('|', [
-        $name, $lang, $data['display'], $time, base64_encode(random_bytes(96))
+        $name, $lang, str_pad(decbin($data['display']), 8, '0', 0), $time, base64_encode(random_bytes(96))
+        // $name, $lang, $data['display'], $time, base64_encode(random_bytes(96))
     ]));
     $conn -> query(
         'INSERT INTO auth

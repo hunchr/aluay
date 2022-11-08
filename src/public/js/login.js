@@ -9,8 +9,8 @@ fn[f + ".s"] = () => {
             return popup(err);
         }
 
-        layers.pop().remove();
-        get("home");
+        pages.pop().remove();
+        get((location.search.match(/(?<=^\?next=\/).*/) || ["home"])[0]);
     });
 };
 

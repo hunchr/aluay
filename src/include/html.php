@@ -12,7 +12,7 @@ function html() {
     global $lang;
     global $og_uri;
 
-    $is_hidden = $l[2] === null;
+    $is_hidden = $l['keywords'] === null;
 
     // --- Get preferences ---
     // $display = '';

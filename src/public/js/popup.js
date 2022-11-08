@@ -6,8 +6,8 @@ let popupX = () => fn[f + ".o"];
 
 const popupCont = document.createElement("div");
 
-popupCont.id = f;
-popupCont.className = f + " hidden";
+popupCont.id = "popup";
+popupCont.className = "popup hidden";
 popupCont.innerHTML =
 `<div class="li">
     <h2></h2><p></p>

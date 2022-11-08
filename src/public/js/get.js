@@ -2,11 +2,11 @@
 /**
  * Fetches pages from backend.
  */
-let layer = $("main");
+let page = $("main");
 
 const main = $("#main"),
       title = $("h1"),
-      layers = [],
+      pages = [],
       notPrivate = location.pathname !== "/private",
 
 // Get page
@@ -21,25 +21,24 @@ get = async (path, data = "", isFormData) => {
                     return res(xhr.response);
                 }
 
-                // Hide old layer
-                layer.classList.add("hidden");
-                
-                // Create new layer
-                layer = document.createElement("div");
-                layer.innerHTML = xhr.response;
-                layer = layer.firstElementChild;
+                // Create new page
+                page.classList.add("hidden");
+                page = document.createElement("div");
+                page.innerHTML = xhr.response;
+                page = page.firstElementChild;
 
                 // Change title
-                const meta = layer.dataset.meta.split("|");
+                const meta = page.dataset.meta.split("|");
                 title.innerHTML = meta[2] || meta[1];
 
                 if (notPrivate) {
                     document.title = meta[1];
-                    history.pushState(null, "", "https://aluay" + meta[0]);
+                    history.pushState(null, "", location.origin + meta[0]);
                 }
                 
-                main.appendChild(layer);
-                layers.push(layer);
+                main.appendChild(page);
+                pages.push(page);
+                body.classList.add("back");
                 res();
             }
         };
@@ -57,10 +56,17 @@ get = async (path, data = "", isFormData) => {
 
 // Get form data
 getData = e => (
-    [...layer.querySelectorAll(e)].map((e, i) => `${i}=${e.value}&`).join("")
+    [...page.querySelectorAll(e)].map((e, i) => `&${i}=${e.value}`).join("").substring(1)
 );
 
+// Get file
 fn[f] = () => {
-    console.log(`get(${self.dataset.n})`);
     get(self.dataset.n);
 };
+
+// Get all pages
+pages.push(...document.querySelectorAll("main"));
+
+if (f === "get") {
+    fn[f]();
+}

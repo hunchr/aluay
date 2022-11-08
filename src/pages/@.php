@@ -57,40 +57,40 @@ if (squery(
             }
 
             // Archived/Banned
-            $l[1] = $cat === 3 ? $l[17] : $l[18];
+            $l[1] = $cat === 3 ? $l['acc_archived_note'] : $l['acc_banned_note'];
             require '../include/error.php';
         }
         // Public profile
         else {
-            $l[0] = $q[0];
-            $l[1] = strlen($data['description']) > 149 ?
+            $l['title'] = $q[0];
+            $l['description'] = strlen($data['description']) >= 150 ?
                 substr($data['description'], 0, 149).'…' :
                 $data['description'];
-            $l[2] = ',user';
+            $l['keywords'] = $l['title'].',user';
             $main =
             '<div class="profile">
                 <div class="profile-t">
-                    <img src="/'.$og_uri.'.webp" alt="'.$l[3].'" loading="lazy" width="40">
+                    <img src="/'.$og_uri.'.webp" alt="'.$l['pfp_alt'].'" loading="lazy" width="40">
                     <div>
                         <div><span>'.$data['name'].'</span>'.$badges.'</div>
-                        <div><span>@'.$l[0].'</span></div>
+                        <div><span>@'.$l['title'].'</span></div>
                     </div>
-                    <button data-f="sa" class="a upper'
+                    <button data-f="sa" class="a'
                     .($is_liked ?
-                        ' liked" data-change="'.$l[5].'">'.$l[4] :
-                        '" data-change="'.$l[4].'>'.$l[5]
+                        ' liked" data-change="'.$l['follow_btn'].'">'.$l['following_btn'] :
+                        '" data-change="'.$l['following_btn'].'>'.$l['follow_btn']
                     ).
                     '</button>
                 </div>
                 <p>'.fstring($data['description']).'</p>
                 <div>
                     '.svg('community').'
-                    <span aria-label="'.$l[6].'">'.fnumber($data['likes']).'</span>
+                    <span aria-label="'.$l['followers_label'].'">'.fnumber($data['likes']).'</span>
                     '.svg('post').'
-                    <span aria-label="'.$l[7].'">'.fnumber($data['posts']).'</span>
+                    <span aria-label="'.$l['posts_label'].'">'.fnumber($data['posts']).'</span>
                     '.svg('created').'
-                    <span aria-label="'.$l[8].'">'.fdate($data['created']).'</span>
-                    <button data-f="sb" aria-label="'.$l[9].'">'.svg('more-h').'</button>
+                    <span aria-label="'.$l['created_label'].'">'.fdate($data['created']).'</span>
+                    <button data-f="sb" aria-label="'.$l['more_aria'].'">'.svg('more-h').'</button>
                 </div>
             </div>
             ';
@@ -103,7 +103,7 @@ if (squery(
 // ----- Posts -----
 // Private profile
 if ($cat === 2 && !$is_liked) {
-    $main .= '<span class="end center">'.$l[16].'</span>';
+    $main .= '<span class="end center">'.$l['acc_private_note'].'</span>';
 }
 // Public profile
 else {
@@ -210,27 +210,27 @@ else {
                 <div>
                     <button data-f="post.n">'.$data['name'].'</button>&nbsp;•&nbsp;
                     <button data-f="post.t" data-unix="'.$data['created'].'">'.fdate($data['created']).'</button>
-                    <button data-f="more.p" aria-label="'.$l[9].'">'.svg('more-h').'</button>
+                    <button data-f="more.p" aria-label="'.$l['more_aria'].'">'.svg('more-h').'</button>
                     '.$badges.'
                 </div>
                 <p>'.fstring($data['text']).'</p>
                 '.($data['category'] === 1 ? '' : media($data['id'], $data['category'], $media_cnt)).'
                 <div data-id="'.$data['id'].'">
-                    <button'.$data['liked'].' data-f="post.l" aria-label="'.$l[10].'">'
+                    <button'.$data['liked'].' data-f="post.l" aria-label="'.$l['likes_aria'].'">'
                         .svg('like').fnumber($data['likes']).
                     '</button>
-                    <button data-f="post.sr" aria-label="'.$l[11].'">'
+                    <button data-f="post.sr" aria-label="'.$l['replies_aria'].'">'
                         .svg('post').fnumber($data['replies']).
                     '</button>
-                    <button data-f="post.s">'.svg('save').$l[12].'</button>
-                    <button data-f="post.r">'.svg('reply').$l[13].'</button>
+                    <button data-f="post.s">'.svg('save').$l['save_label'].'</button>
+                    <button data-f="post.r">'.svg('reply').$l['reply_label'].'</button>
                 </div>
             </article>';
         }
     );
     
     if ($rows < 5) {
-        $main .= '<span class="end center">'.($rows === 0 ? $l[14] : $l[15]).'</span>';
+        $main .= '<span class="end center">'.($rows === 0 ? $l['no_posts_note'] : $l['end_of_feed_note']).'</span>';
     }
 }
 

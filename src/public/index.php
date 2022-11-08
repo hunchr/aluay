@@ -10,19 +10,27 @@ function svg($id) {
     return '<svg viewBox="0 0 8 8"><use href="#i-'.$id.'"></use></svg>';
 };
 
+// Login required
+function login_req() {
+    if (!isset($_SESSION['uid'])) {
+        global $url;
+        header('Location: /login?next='.$url);
+    }
+};
+
 // Send HTML to frondend
 function send($class) {
     global $l;
     global $url;
     global $main;
 
-    $main = '<main class="'.$class.'" data-meta="'.$url.'|'.$l[0].'">'.$main.'</main>';
+    $main = '<main class="'.$class.'" data-meta="'.$url.'|'.$l['title'].'">'.$main.'</main>';
 
-    isset($_POST['fetch']) ? exit($main) : require '../include/html.php';    
+    isset($_POST['fetch']) ? exit($main) : require '../include/html.php';
     html();
 };
 
-$url = $uri = $_SERVER['REQUEST_URI'];
+$url = $uri = preg_replace('/\?.*/', '', $_SERVER['REQUEST_URI']);
 $rx = '/(?<=\/[@&])[a-z-]{2,20}|(?<=\/[a-z])\d{1,20}/';
 
 // Remove usernames and IDs

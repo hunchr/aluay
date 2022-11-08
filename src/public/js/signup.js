@@ -5,12 +5,13 @@
 // Submit form
 fn[f+ ".s"] = () => {
     get("signup", getData("div:first-child input")).then(err => {
+        console.log(err);
         if (err) {
             return popup(err);
         }
 
-        layer.querySelector("div:first-child").remove();
-        layer.querySelector("div").classList.remove("hidden");
+        page.querySelector("div:first-child").remove();
+        page.querySelector("div").classList.remove("hidden");
     });
 };
 
@@ -21,7 +22,7 @@ fn[f + ".e"] = () => {
             return popup(err);
         }
 
-        layers.pop().remove();
+        pages.pop().remove();
         get("login");
     });
 };
@@ -36,4 +37,5 @@ fn[f + ".i"] = () => {
     TODO("Show usename info");
 };
 
+include("get", true);
 include("login", true);
