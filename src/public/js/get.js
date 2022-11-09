@@ -60,13 +60,13 @@ getData = e => (
 );
 
 // Get file
-fn[f] = () => {
+fn["get"] = () => {
     get(self.dataset.n);
 };
 
 // Get all pages
 pages.push(...document.querySelectorAll("main"));
 
-if (f === "get") {
-    fn[f]();
+if (lastIncludedFile === "get") {
+    fn["get"]();
 }

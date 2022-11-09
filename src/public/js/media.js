@@ -4,43 +4,43 @@
  */
 // ----- Video -----
 // Play/Pause
-fn[f + ".p"] = () => {
+fn["media.p"] = () => {
     TODO("Play/Pause");
 };
 
 // Replay
-fn[f + ".rp"] = () => {
+fn["media.rp"] = () => {
     TODO("Replay");
 };
 
 // Forward
-fn[f + ".fw"] = () => {
+fn["media.fw"] = () => {
     TODO("Forward");
 };
 
 // Volume
-fn[f + ".v"] = () => {
+fn["media.v"] = () => {
     TODO("Volume");
 };
 
 // Speed
-fn[f + ".s"] = () => {
+fn["media.s"] = () => {
     TODO("Speed");
 };
 
 // Fullscreen
-fn[f + ".f"] = () => {
+fn["media.f"] = () => {
     self.parentNode.parentNode.classList.toggle("fullscreen");
 };
 
 // ----- Image -----
 // Previous image
-fn[f + ".pi"] = () => {
+fn["media.pi"] = () => {
     TODO("Previous image");
 };
 
 // Next image
-fn[f + ".ni"] = () => {
+fn["media.ni"] = () => {
     TODO("Next image");
 };
 

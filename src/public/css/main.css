@@ -30,6 +30,7 @@ html,
 body,
 input,
 button,
+dialog,
 textarea {
     all: unset;
 }
@@ -102,7 +103,7 @@ nav > :first-child {
 }
 
 h1,
-.popup h2 {
+dialog h2 {
     font-size: 18px;
     height: fit-content;
 }
@@ -158,6 +159,7 @@ main,
 
 /* ----- Buttons ----- */
 h1,
+h2,
 svg,
 img,
 span,
@@ -327,8 +329,8 @@ h1,
     margin-right: .5rem;
 }
 
-/* ----- Popup ----- */
-.popup {
+/* ----- Dialog ----- */
+dialog {
     position: fixed;
     background-color: var(--transparent);
     width: 100%;
@@ -338,18 +340,18 @@ h1,
     z-index: 3;
 }
 
-.popup > div {
+dialog > div {
     border: var(--border);
     border-radius: var(--radius);
     max-width: calc(var(--main-width) - 1rem);
     padding: .375rem .5rem;
 }
 
-.popup div div {
+dialog div div {
     justify-content: flex-end !important;
 }
 
-#popup .a {
+#dialog .a {
     margin-left: .5rem;
 }
 
@@ -388,6 +390,7 @@ h1,
 /* ----- Classes ----- */
 .hidden,
 #search,
+dialog:not([open]),
 ::-webkit-scrollbar,
 body:not(.side) #side,
 .back #back > :first-child,
@@ -402,16 +405,12 @@ body:not(.search) #search > :last-child {
 }
 
 button,
-.popup,
+dialog,
 .error,
 .banner,
 .center {
     justify-content: center;
     align-items: center;
-}
-
-.freeze {
-    overflow: hidden;
 }
 
 .lower {

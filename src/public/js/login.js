@@ -2,11 +2,14 @@
 /**
  * Sends login form data to backend.
  */
+include("dialog", true);
+include("get", true);
+
 // Submit form
-fn[f + ".s"] = () => {
+fn["login.s"] = () => {
     get("login", getData("input")).then(err => {
         if (err) {
-            return popup(err);
+            return showDialog(err);
         }
 
         pages.pop().remove();
@@ -15,15 +18,12 @@ fn[f + ".s"] = () => {
 };
 
 // Show password
-fn[f + ".v"] = () => {
+fn["login.v"] = () => {
     const prev = self.previousElementSibling,
           isHidden = prev.type !== "text";
     
     prev.type = isHidden ? "text" : "password";
     self.firstChild.innerHTML = `<use href="#i-visibility${isHidden ? "-off" : ""}"></use>`;
 };
-
-include("popup", true);
-include("get", true);
 
 fn[F]();

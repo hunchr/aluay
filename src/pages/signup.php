@@ -97,7 +97,7 @@ else {
         <div class="input">
             <div>'.svg('profile').'</div>
             <input class="lower" type="text" placeholder="'.$l['uname_ph'].'" maxlength="20" spellcheck="false" autocomplete="off" autofocus>
-            <button data-f="signup.i" tabindex="-1">'.svg('info').'</button>
+            <button data-f="signup.i" data-info="'.$l['uname_popup'].'" tabindex="-1">'.svg('info').'</button>
         </div>
         <div class="input">
             <div>'.svg('email').'</div>

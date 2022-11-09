@@ -3,32 +3,32 @@
  * Lets the user interact with the post.
  */
 // Like
-fn[f + ".l"] = () => {
+fn["post.l"] = () => {
     TODO("Like post");
 };
 
 // Show replies
-fn[f + ".sr"] = () => {
+fn["post.sr"] = () => {
     TODO("Show replies");
 };
 
 // Save
-fn[f + ".s"] = () => {
+fn["post.s"] = () => {
     TODO("Save");
 };
 
 // Reply
-fn[f + ".r"] = () => {
+fn["post.r"] = () => {
     TODO("Reply");
 };
 
 // Go to user/community
-fn[f + ".n"] = () => {
+fn["post.n"] = () => {
     TODO("Go to user/community");
 };
 
 // Show timestamp/date
-fn[f + ".t"] = () => {
+fn["post.t"] = () => {
     TODO("Like post");
 };
 

@@ -4,7 +4,7 @@
  */
 const side = $("#side");
 
-fn[f] = () => {
+fn["side"] = () => {
     body.classList.toggle("side");
 };
 

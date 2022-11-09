@@ -4,7 +4,7 @@
  */
 let self = document.body,
     F, // Last used function
-    f; // Filename of last used function
+    lastIncludedFile;
     
 const TODO = msg => console.log(msg),
       wait = async ms => await new Promise(res => setTimeout(res, ms)),
@@ -22,26 +22,26 @@ include = (path, noOverwrite) => {
         F = path;
     }
 
-    f = path.replace(/\..+/, "");
+    lastIncludedFile = path.replace(/\..+/, "");
 
-    if (!scripts.includes(f)) {
+    if (!scripts.includes(lastIncludedFile)) {
         const script = document.createElement("script");
 
         script.setAttribute("nonce", nonce);
-        script.setAttribute("src", `js/${f}.js`);
+        script.setAttribute("src", `js/${lastIncludedFile}.js`);
     
         head.appendChild(script);
-        scripts.push(f);
+        scripts.push(lastIncludedFile);
     }
 };
 
 // Event listener for executing functions
 document.addEventListener("click", ev => {
-    f = ev.target?.dataset.f;
+    lastIncludedFile = ev.target?.dataset.f;
 
-    if (f) {
+    if (lastIncludedFile) {
         self = ev.target;
-        fn[f] ? fn[f]() : include(f);
+        fn[lastIncludedFile] ? fn[lastIncludedFile]() : include(lastIncludedFile);
     }
 });
 

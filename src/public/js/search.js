@@ -23,7 +23,7 @@ find = () => {
 }
 
 // Show/hide search bar
-fn[f + ".s"] = () => {
+fn["search.s"] = () => {
     if (body.classList.contains("search")) {
         body.classList.remove("search");
         return search.value = "";
@@ -34,7 +34,7 @@ fn[f + ".s"] = () => {
 };
 
 // Advanced search
-fn[f + ".a"] = () => {
+fn["search.a"] = () => {
     TODO("Advanced search");
 };
 

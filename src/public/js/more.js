@@ -3,7 +3,7 @@
  * Shows more options.
  */
 // Post
-fn[f + ".p"] = () => {
+fn["post.p"] = () => {
     TODO("Post");
 };
 

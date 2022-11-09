@@ -2,12 +2,15 @@
 /**
  * Sends signup form data to backend.
  */
+include("get", true);
+include("dialog", true);
+include("login", true);
+
 // Submit form
-fn[f+ ".s"] = () => {
+fn["signup.s"] = () => {
     get("signup", getData("div:first-child input")).then(err => {
-        console.log(err);
         if (err) {
-            return popup(err);
+            return showDialog(err);
         }
 
         page.querySelector("div:first-child").remove();
@@ -16,10 +19,10 @@ fn[f+ ".s"] = () => {
 };
 
 // Send email verification
-fn[f + ".e"] = () => {
+fn["signup.e"] = () => {
     get("signup", getData("input")).then(err => {
         if (err) {
-            return popup(err);
+            return showDialog(err);
         }
 
         pages.pop().remove();
@@ -28,14 +31,12 @@ fn[f + ".e"] = () => {
 };
 
 // Resend email verification
-fn[f + ".r"] = () => {
+fn["signup.r"] = () => {
     TODO("Resend email verification");
 };
 
 // Show usename info
-fn[f + ".i"] = () => {
-    TODO("Show usename info");
+fn["signup.i"] = () => {
+    showDialog(self.dataset.info);
+    // TODO("Show usename info");
 };
-
-include("get", true);
-include("login", true);

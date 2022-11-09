@@ -2,7 +2,7 @@
 /**
  * Shows the startpage or acts as 'go back' button
  */
-fn[f] = () => {
+fn["back"] = () => {
     // Go to start page
     if (!body.classList.contains("back")) {
         return get("");
@@ -27,4 +27,4 @@ fn[f] = () => {
     }
 };
 
-fn[f]();
+fn["back"]();
