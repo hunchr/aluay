@@ -1,0 +1,400 @@
+/* Latin */
+@font-face {
+    font-family: 'Roboto';
+    font-display: swap;
+    font-style: normal;
+    font-weight: 400;
+    src: url(../font/roboto.woff2) format('woff2');
+}
+
+/* Symbols */
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url(../font/material-icons.woff2) format('woff2');
+}
+
+:root {
+    --fg: #e1e0e6;    /* 16.00 */
+    --bg: #000;       /*  1.00 */
+    --gray: #9b9a9d;  /*  7.50 */
+    --hover: #1a1a1c; /*  1.20 */
+    --primary: #e80070;
+    --primary-hover: #c0005c;
+    --transparent: #000a;
+    --font-size: 16px;
+    --border: .0625rem solid var(--hover);
+    --main-width: 37.5rem;
+    /* --main-width: 34.75rem; */
+    --menu-width: 12.5rem;
+}
+
+::selection {
+    color: #fff;
+    background-color: var(--primary);
+}
+
+a,
+p,
+h1,
+h2,
+html,
+body,
+input,
+button,
+dialog,
+textarea {
+    all: unset;
+}
+
+/* ----- Body ----- */
+html,
+body {
+    flex-direction: column;
+    touch-action: manipulation;
+    font: 400 var(--font-size) Roboto, 'Roboto', -apple-system, BlinkMacSystemFont, system-ui, Helvetica, Arial, sans-serif;
+    color: var(--fg);
+    background-color: var(--bg);
+    width: 100%;
+    height: 100%;
+}
+
+body,
+body * {
+    display: flex;
+    box-sizing: border-box;
+}
+
+p {
+    text-align: justify;
+}
+
+button > * {
+    pointer-events: none;
+}
+
+img {
+    border-radius: .5rem;
+}
+
+/* ----- Banner ----- */
+.banner {
+    position: fixed;
+    border-bottom: var(--border);
+    background-color: var(--primary);
+    width: 100%;
+    height: 2.5rem;
+    z-index: 1;
+}
+
+/* ----- List ----- */
+.li {
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: center;
+    overflow: hidden auto;
+    scrollbar-width: none;
+    background-color: var(--bg);
+    width: 100%;
+}
+
+.li > span {
+    width: 100%;
+    border-bottom: var(--border);
+}
+
+/* --- Buttons --- */
+h1,
+h2,
+span,
+button:not(.href) {
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.input,
+.li button:not(.a) {
+    align-items: center;
+    border-radius: .5rem;
+    width: 100%;
+    min-width: 2.5rem;
+    height: 2.5rem;
+}
+
+.sq > button,
+#bnav button,
+.input button {
+    justify-content: center;
+    width: 2.5rem !important;
+}
+
+.li button:not(.a):hover,
+.li button:not(.a):focus-visible {
+    background-color: var(--hover);
+}
+
+/* button:not(.a, .btn):focus-visible {
+    border: .125rem solid var(--primary);
+} */
+
+/* -- Primary -- */
+.btn {
+    color: #fff;
+    background-color: var(--primary);
+    width: 100% !important;
+}
+
+.btn:hover,
+.btn:focus-visible {
+    background-color: var(--primary-hover) !important;
+}
+
+/* -- Links -- */
+.a {
+    cursor: default;
+    color: var(--primary);
+}
+
+.a:hover,
+.a:focus-visible {
+    color: var(--primary-hover);
+}
+
+/* .a:focus-visible {
+    outline: .125rem solid var(--primary);
+    border-radius: .375rem;
+} */
+
+/* --- Icons --- */
+.i {
+    font: 400 28px 'Material Icons';
+    color: var(--gray);
+    aspect-ratio: 1/1;
+    width: 2.5rem;
+    min-width: 2.5rem;
+}
+
+input,
+button:hover .i,
+button:focus-visible .i {
+    color: var(--fg);
+}
+
+button img {
+    width: 1.5rem;
+}
+
+/* --- Text --- */
+h1,
+button span:not(.i) {
+    display: block;
+    flex-grow: 1;
+    white-space: pre;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ----- Menu ----- */
+.menu {
+    position: absolute;
+    border: var(--border);
+    border-radius: .5rem;
+    width: var(--menu-width);
+    right: 0;
+}
+
+/* ----- Inputs ----- */
+.input {
+    background-color: var(--hover);
+    max-width: var(--main-width);
+}
+
+input {
+    flex-grow: 1;
+    height: 2.5rem;
+}
+
+::placeholder {
+    text-transform: none;
+}
+
+/* ----- Classes ----- */
+.hidden,
+.search h1,
+.search #bnav,
+.back #back img,
+dialog:not([open]),
+::-webkit-scrollbar,
+body:not(.side) #side,
+body:not(.back) #back span,
+body:not(.search) nav .input {
+    display: none;
+}
+
+.i,
+.btn,
+dialog,
+.error,
+.banner,
+.center {
+    justify-content: center;
+    align-items: center;
+}
+
+.lower {
+    text-transform: lowercase;
+}
+
+.gray,
+::placeholder {
+    color: var(--gray);
+}
+
+.space > * {
+    margin: .125rem 0;
+}
+
+/* ----- Nav ----- */
+nav,
+#acc,
+#side,
+dialog {
+    position: fixed;
+    top: 0;
+}
+
+#nav {
+    flex-wrap: nowrap;
+}
+
+/* Title */
+h1 {
+    font-size: 18px;
+    height: fit-content;
+}
+
+/* Search */
+nav .input {
+    margin: 0 auto;
+}
+
+/* Account dropdown */
+#acc {
+    border-radius: 0 0 0 .5rem;
+    max-height: calc(100% - 2.5rem);
+    top: 2.5rem;
+}
+
+/* --- Dialog --- */
+h2,
+dialog,
+dialog p {
+    width: 100%;
+}
+
+dialog {
+    background-color: var(--bg);
+    height: 100%;
+    z-index: 2;
+}
+
+dialog .li {
+    justify-content: flex-end;
+    border: var(--border);
+    border-radius: .5rem;
+    max-width: var(--main-width);
+    padding: .5rem;
+}
+
+h2 {
+    font-size: 18px;
+}
+
+dialog .a:last-child {
+    margin-left: .5rem;
+}
+
+/* ----- Sidebar ----- */
+#side,
+#main {
+    padding-top: 2.5rem;
+}
+
+#side {
+    position: fixed;
+    border-right: var(--border);
+    width: var(--menu-width);
+    height: 100%;
+}
+
+/* ----- Main ----- */
+#main {
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.side #main {
+    padding-left: var(--menu-width);
+}
+
+main {
+    flex-direction: column;
+    align-items: center;
+    max-width: var(--main-width);
+    width: 100%;
+    padding: 0 .5rem;
+}
+
+/* ----- Error page ----- */
+.error {
+    color: #fff;
+    max-width: none;
+}
+
+.error span {
+    text-align: center;
+    font-size: 18px;
+    z-index: 1;
+}
+
+.error img {
+    position: absolute;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    top: 0;
+}
+
+/* ----- Mobile layout ----- */
+@media screen and (max-width: 550px) {
+    /* ----- Nav ----- */
+    h1 {
+        text-align: center;
+    }
+
+    /* #nav-more, */
+    .search #bnav {
+        display: flex;
+    }
+
+    /* --- Bottom nav --- */
+    #bnav {
+        position: fixed;
+        background-color: var(--bg);
+        border-top: var(--border);
+        width: 100%;
+        bottom: 0;
+        left: 0;
+    }
+
+    #bnav button {
+        width: 20%;
+    }
+
+    /* ----- Main ----- */
+    #side,
+    #main {
+        padding: 2.5rem 0 !important;
+    }
+}

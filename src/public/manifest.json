@@ -78,7 +78,7 @@
         "params": {
             "title": "title",
             "text": "text",
-            "url": "https://url",
+            "url": "http://[::1]",
             "files": [
                 {
                     "name": "image",

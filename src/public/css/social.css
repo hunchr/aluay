@@ -1,25 +1,43 @@
 /* ----- Profile ----- */
-.end,
-.post,
-.profile {
+/* .end, */
+.post {
     flex-direction: column;
-    align-items: center;
-    color: var(--gray);
-    border-bottom: var(--border);
+    /* align-items: center;
+    color: var(--gray); */
     width: 100%;
     padding: .375rem 0;
 }
 
+.post:not(:last-of-type) {
+    border-bottom: var(--border);
+}
+
+.post > * {
+    width: 100%;
+}
+
+/* Icons */
+.post .i {
+    font-size: 16px;
+    width: 1rem;
+    min-width: 1rem;
+}
+
+.post span {
+    color: var(--gray);
+}
+
 /* Description */
-.post p,
+/* .post p,
 .profile p {
     text-align: justify;
     color: var(--fg);
+    width: 100%;
     margin: .25rem 0 .125rem 0;
-}
+} */
 
 /* --- Top --- */
-.profile-t,
+/* .profile-t,
 .profile-t div div {
     align-items: center;
 }
@@ -28,7 +46,7 @@
     flex-direction: column;
     overflow: hidden;
     margin: 0 .25rem;
-}
+} */
 
 /* Profile picture */
 .profile img {
@@ -36,58 +54,57 @@
 }
 
 /* Username */
-.profile-t span,
+/* .profile-t span,
 .post-t > :first-child {
     display: block;
     white-space: pre;
     overflow: hidden;
     text-overflow: ellipsis;
-}
+} */
 
 /* Display name */
-.profile-t > div > :first-child {
+/* .profile-t > div > :first-child {
     color: var(--fg);
     font-size: 17px;
-}
+} */
 
 /* Follow button */
-.profile button,
-.post-t > :last-child {
+/* .profile button, */
+/* .post-t > :last-child { */
+.post > :last-child > :last-child {
     margin-left: auto;
 }
 
 /* More button */
-.profile button svg,
+/* .profile button svg,
 .post-t > :last-child svg {
     margin: 0;
-}
+} */
 
 /* --- Icons --- */
-.post svg,
+/* .post svg,
 .profile svg {
     width: .875rem;
     min-width: .875rem;
     margin: 0 .1875rem 0 0;
-    /* margin: .0625rem .1875rem 0 0; */
-}
+} */
 
-.profile-t svg {
+/* .profile-t svg {
     fill: var(--fg);
     margin: 0 0 0 .1875rem;
-    /* margin: .125rem 0 0 .1875rem; */
-}
+} */
 
-.profile > :last-child span {
+/* .profile > :last-child span {
     margin-right: .5rem;
 }
 
 .post-t > :last-child svg,
 .profile > :last-child > :last-child svg {
     margin: 0;
-}
+} */
 
 /* ----- Posts ----- */
-.post > *,
+/* .post > *,
 .post img,
 .post video,
 .profile > * {
@@ -96,10 +113,10 @@
 
 .post p {
     margin-top: 0;
-}
+} */
 
 /* --- Media --- */
-.media,
+/* .media,
 .media-c button {
     justify-content: center;
     align-items: center;
@@ -123,10 +140,10 @@
     fill: #fff;
     width: 1.125rem;
     margin: 0;
-}
+} */
 
 /* -- Progress bar -- */
-.media-p {
+/* .media-p {
     background-color: var(--transparent);
     height: .375rem;
     bottom: 2.25rem;
@@ -136,10 +153,10 @@
     background-color: var(--rose);
     border-radius: .5rem 0 0 .5rem;
     width: 0;
-}
+} */
 
 /* -- Controls -- */
-.media-c {
+/* .media-c {
     align-items: center;
     background-color: #0004;
     height: 1.75rem;
@@ -157,10 +174,10 @@
 
 .media-c span:last-of-type {
     margin-right: auto;
-}
+} */
 
 /* -- Fullscreen -- */
-.fullscreen {
+/* .fullscreen {
     position: fixed !important;
     background-color: #000;
     width: 100%;
@@ -176,21 +193,21 @@
 .fullscreen .media-c > :last-child > :first-child,
 .media:not(.fullscreen) .media-c > :last-child > :last-child {
     display: none;
-}
+} */
 
 /* --- Buttons --- */
-.post > :last-child {
+/* .post > :last-child {
     justify-content: space-between;
-}
+} */
 
 /* Date */
-.post-t > :nth-child(3),
+/* .post-t > :nth-child(3),
 .post-t > svg:last-of-type {
     margin-right: .25rem;
-}
+} */
 
 /* --- Liked post --- */
-.liked {
+/* .liked {
     color: var(--rose);
 }
 
@@ -206,10 +223,10 @@
 .liked:hover svg,
 .liked:focus-visible svg {
     fill: var(--rose-hover);
-}
+} */
 
 /* ----- End of feed ----- */
-.end {
+/* .end {
     border: none;
     padding-bottom: calc(100vh - 4.125rem);
-}
+} */

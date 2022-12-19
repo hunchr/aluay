@@ -1,11 +1,13 @@
-const v = 2,
+const v = 1,
 urls = [
     "/manifest.json",
-    "/css/main.css",
-    "/css/social.css",
-    "/main.js",
     "/sw.js",
-    "/font/roboto-latin.woff2"
+    "/js/_main.js",
+    "/css/_main.css",
+    "/css/social.css",
+    "/img/favicon.svg",
+    "/font/roboto.woff2",
+    "/font/material-icons.woff2"
 ];
 
 self.addEventListener("install", ev => {

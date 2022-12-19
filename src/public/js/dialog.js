@@ -2,24 +2,11 @@
 /**
  * Shows a dialog.
  */
-let popupX = () => fn["dialog.o"];
-const dialog = document.createElement("dialog");
+const nav = $("nav"),
+      dialog = document.createElement("dialog"),
+      dialogElems = [],
 
-dialog.id = "dialog";
-dialog.innerHTML =
-`<div class="li">
-    <h2></h2><p></p>
-    <div>
-        <button class="a" data-f="dialog.x"></button>
-        <button class="a" data-f="dialog.o"></button>
-    </div>
-</div>`;
-
-nav.appendChild(dialog);
-
-const dialogElems = [...document.querySelectorAll("#dialog h2,#dialog p,#dialog .a")],
-
-// Show dialog for info/warnings
+// Shows dialog for info/warnings
 showDialog = msg => {
     msg = msg.split("|");
 
@@ -36,15 +23,20 @@ showDialog = msg => {
     }
 
     dialog.showModal();
-    dialogElems[3].focus(); // TODO: Replace with something better that actually works
+    dialogElems[2].focus();
 };
 
-// Dialog: Cancel/Exit
-fn["dialog.x"] = () => {
-    popupX();
-};
+dialog.innerHTML =
+`<div class="li">
+    <h2></h2><p></p>
+    <div>
+        <button class="a" data-f="dialog.x"></button>
+        <button class="a" data-f="dialog.o"></button>
+    </div>
+</div>`;
 
-// Dialog: Close/Okay
-fn["dialog.o"] = () => {
-    dialog.close();
-};
+nav.appendChild(dialog);
+dialogElems.push(...document.querySelectorAll("dialog h2,dialog p,dialog .a:last-child,dialog .a"));
+
+// Buttons: Okay/Cancel
+fn["dialog.o"] = fn["dialog.x"] = () => dialog.close();

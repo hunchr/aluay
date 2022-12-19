@@ -1,10 +1,2 @@
-# Test files
-.private
-src/.test
-index.html
-
-# User content/media
+\#*
 src/public/uc
-
-# Database password
-src/include/sql*

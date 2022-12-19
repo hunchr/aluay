@@ -1,11 +1,13 @@
 "use strict";
 /**
- * Shows the search bar or makes a search query.
+ * Shows the search bar and advanced search.
  */
+include("get", true);
+
 const search = $("nav input"),
 
 // Search
-find = () => {
+searchQuery = () => {
     const q = search.value.trim().replace(/^(https:\/\/)?aluay/, "");
 
     if (q) {
@@ -23,7 +25,7 @@ find = () => {
 }
 
 // Show/hide search bar
-fn["search.s"] = () => {
+$$("s", () => {
     if (body.classList.contains("search")) {
         body.classList.remove("search");
         return search.value = "";
@@ -31,18 +33,18 @@ fn["search.s"] = () => {
 
     body.classList.add("search");
     search.focus();
-};
+});
 
 // Advanced search
-fn["search.a"] = () => {
+$$("a", () => {
     TODO("Advanced search");
-};
+});
 
-fn[F]?.();
+exec();
 
 // Press enter to search
 search.addEventListener("keyup", ev => {
     if (ev.key === "Enter") {
-        find();
+        searchQuery();
     }
 });

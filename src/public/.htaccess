@@ -1,10 +1,7 @@
-#ServerSignature Off
 RewriteEngine On
 
-# Force HTTPS
-#RewriteCond %{HTTPS} off 
-#RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
-# Serve index
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ /index.php [L,QSA]
+RewriteRule ^api/(.*)$ controllers/model.php [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ controllers/view.php [L,QSA]

@@ -6,8 +6,8 @@ let page = $("main");
 
 const main = $("#main"),
       title = $("h1"),
-      pages = [],
-      notPrivate = location.pathname !== "/private",
+      pages = [page],
+      hideURL = !!body.dataset.hideurl,
 
 // Get page
 get = async (path, data = "", isFormData) => {
@@ -22,6 +22,8 @@ get = async (path, data = "", isFormData) => {
                 }
 
                 // Create new page
+                console.log(xhr.response);
+                
                 page.classList.add("hidden");
                 page = document.createElement("div");
                 page.innerHTML = xhr.response;
@@ -31,7 +33,7 @@ get = async (path, data = "", isFormData) => {
                 const meta = page.dataset.meta.split("|");
                 title.innerHTML = meta[2] || meta[1];
 
-                if (notPrivate) {
+                if (!hideURL) {
                     document.title = meta[1];
                     history.pushState(null, "", location.origin + meta[0]);
                 }
@@ -55,18 +57,19 @@ get = async (path, data = "", isFormData) => {
 },
 
 // Get form data
-getData = e => (
-    [...page.querySelectorAll(e)].map((e, i) => `&${i}=${e.value}`).join("").substring(1)
+getFormData = () => (
+    [...page.querySelectorAll("[name]")].map(e => `${e.name}=${e.value}&`).join("")
 );
 
-// Get file
+// ----- Get file -----
 fn["get"] = () => {
     get(self.dataset.n);
 };
 
-// Get all pages
-pages.push(...document.querySelectorAll("main"));
+fn["get.i"] = () => {
+    get(self.firstElementChild.innerText);
+};
 
-if (lastIncludedFile === "get") {
-    fn["get"]();
+if (lastIncludedFunc === "get") {
+    exec();
 }
