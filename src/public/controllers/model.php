@@ -13,17 +13,18 @@ if (preg_match_all($regex, $uri, $q)) {
 }
 
 // Send JSON
-function send($http, $msg) {
+function send($http, $reason = false) {
     global $json;
 
-    $json['message'] = $msg;
+    if ($reason) {
+        $json['reason'] = $reason;
+    }
     $json['status'] = $http;
 
-    exit(json_encode($json));
+    exit(json_encode($json, JSON_NUMERIC_CHECK));
 };
 
 // Get model
 $uri = '../../models'.$uri.'.php';
-file_exists($uri) ? require $uri : send(404, 'Not Found');
-send(200, 'OK');
+file_exists($uri) ? require $uri : send(404, 'not_found');
 ?>

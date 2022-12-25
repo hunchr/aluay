@@ -1,232 +1,137 @@
 /* ----- Profile ----- */
-/* .end, */
 .post {
     flex-direction: column;
-    /* align-items: center;
-    color: var(--gray); */
     width: 100%;
     padding: .375rem 0;
 }
 
-.post:not(:last-of-type) {
+.post:not(:last-child) {
     border-bottom: var(--border);
 }
 
-.post > * {
+.post > *,
+.media > * {
     width: 100%;
+}
+
+.post-t,
+.post > :last-child,
+.profile .overflow :last-child {
+    color: var(--gray);
 }
 
 /* Icons */
 .post .i {
-    font-size: 16px;
+    font-size: 17px;
     width: 1rem;
     min-width: 1rem;
 }
 
-.post span {
-    color: var(--gray);
-}
-
-/* Description */
-/* .post p,
-.profile p {
-    text-align: justify;
-    color: var(--fg);
-    width: 100%;
-    margin: .25rem 0 .125rem 0;
-} */
-
 /* --- Top --- */
-/* .profile-t,
-.profile-t div div {
+.profile-t {
     align-items: center;
 }
-
-.profile-t > div {
-    flex-direction: column;
-    overflow: hidden;
-    margin: 0 .25rem;
-} */
 
 /* Profile picture */
 .profile img {
-    height: 2.75rem;
+    height: 2.5rem;
 }
 
-/* Username */
-/* .profile-t span,
-.post-t > :first-child {
-    display: block;
-    white-space: pre;
-    overflow: hidden;
-    text-overflow: ellipsis;
-} */
-
-/* Display name */
-/* .profile-t > div > :first-child {
-    color: var(--fg);
-    font-size: 17px;
-} */
-
-/* Follow button */
-/* .profile button, */
-/* .post-t > :last-child { */
-.post > :last-child > :last-child {
-    margin-left: auto;
+/* Name container */
+.profile .overflow {
+    flex-direction: column;
+    margin: 0 .25rem;
 }
 
-/* More button */
-/* .profile button svg,
-.post-t > :last-child svg {
-    margin: 0;
-} */
-
-/* --- Icons --- */
-/* .post svg,
-.profile svg {
-    width: .875rem;
-    min-width: .875rem;
-    margin: 0 .1875rem 0 0;
-} */
-
-/* .profile-t svg {
-    fill: var(--fg);
-    margin: 0 0 0 .1875rem;
-} */
-
-/* .profile > :last-child span {
-    margin-right: .5rem;
+/* Name */
+.profile .overflow div {
+    font-weight: 600;
 }
-
-.post-t > :last-child svg,
-.profile > :last-child > :last-child svg {
-    margin: 0;
-} */
 
 /* ----- Posts ----- */
-/* .post > *,
-.post img,
-.post video,
-.profile > * {
-    width: 100%;
+/* Description */
+.post p {
+    margin: .25rem 0;
 }
 
-.post p {
-    margin-top: 0;
-} */
+/* --- Buttons --- */
+.post > div:last-child {
+    justify-content: space-between;
+}
+
+.post button:hover,
+.profile .overflow .i,
+.post button:focus-visible {
+    color: var(--fg);
+}
+
+/* Icons */
+.post .i {
+    margin-right: .0625rem;
+}
+
+/* --- Liked post --- */
+.liked,
+.liked .i {
+    color: var(--primary);
+}
+
+.liked:hover,
+.liked:hover .i,
+.liked:focus-visible,
+.liked:focus-visible .i {
+    color: var(--primary-hover) !important;
+}
 
 /* --- Media --- */
-/* .media,
-.media-c button {
-    justify-content: center;
-    align-items: center;
-}
-
 .media {
     position: relative;
-    color: #fff;
-    margin: 0 0 .125rem 0;
+    margin-bottom: .1875rem;
 }
 
 .media-p,
 .media-c {
     position: absolute;
-    border-radius: var(--radius);
-    width: calc(100% - .5rem);
-    left: .25rem;
 }
 
-.media svg {
-    fill: #fff;
-    width: 1.125rem;
-    margin: 0;
-} */
-
-/* -- Progress bar -- */
-/* .media-p {
-    background-color: var(--transparent);
+/* -- Video progress bar -- */
+.media-p {
+    background-color: #0006;
     height: .375rem;
-    bottom: 2.25rem;
+    bottom: 1.75rem;
 }
 
 .media-p div {
-    background-color: var(--rose);
-    border-radius: .5rem 0 0 .5rem;
-    width: 0;
-} */
+    background-color: var(--primary);
+    width: 50%;
+}
 
-/* -- Controls -- */
-/* .media-c {
+/* - Video/image controlls -- */
+.media-c {
     align-items: center;
     background-color: #0004;
     height: 1.75rem;
-    bottom: .25rem;
+    bottom: 0;
 }
 
-.media-c button {
+.media-c .i {
+    color: var(--fg);
+    font-size: 24px;
     width: 1.75rem;
-    height: 100%;
+    min-width: 1.75rem;
 }
-
-.media-c span {
-    margin-left: .25rem;
-}
-
-.media-c span:last-of-type {
-    margin-right: auto;
-} */
 
 /* -- Fullscreen -- */
-/* .fullscreen {
-    position: fixed !important;
+.fullscreen {
+    position: fixed;
     background-color: #000;
     width: 100%;
     height: 100%;
     top: 0;
+    left: 0;
     z-index: 3;
 }
 
 .fullscreen video {
     border-radius: 0;
 }
-
-.fullscreen .media-c > :last-child > :first-child,
-.media:not(.fullscreen) .media-c > :last-child > :last-child {
-    display: none;
-} */
-
-/* --- Buttons --- */
-/* .post > :last-child {
-    justify-content: space-between;
-} */
-
-/* Date */
-/* .post-t > :nth-child(3),
-.post-t > svg:last-of-type {
-    margin-right: .25rem;
-} */
-
-/* --- Liked post --- */
-/* .liked {
-    color: var(--rose);
-}
-
-.liked:hover,
-.liked:focus-visible {
-    color: var(--rose-hover);
-}
-
-.liked svg {
-    fill: var(--rose);
-}
-
-.liked:hover svg,
-.liked:focus-visible svg {
-    fill: var(--rose-hover);
-} */
-
-/* ----- End of feed ----- */
-/* .end {
-    border: none;
-    padding-bottom: calc(100vh - 4.125rem);
-} */

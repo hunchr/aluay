@@ -26,7 +26,6 @@
     --font-size: 16px;
     --border: .0625rem solid var(--hover);
     --main-width: 37.5rem;
-    /* --main-width: 34.75rem; */
     --menu-width: 12.5rem;
 }
 
@@ -70,11 +69,14 @@ p {
     text-align: justify;
 }
 
+img,
+video,
 button > * {
     pointer-events: none;
 }
 
-img {
+img,
+video {
     border-radius: .5rem;
 }
 
@@ -107,7 +109,9 @@ img {
 /* --- Buttons --- */
 h1,
 h2,
+img,
 span,
+video,
 button:not(.href) {
     -webkit-user-select: none;
     user-select: none;
@@ -187,7 +191,8 @@ button img {
 
 /* --- Text --- */
 h1,
-button span:not(.i) {
+button span:not(.i),
+.overflow span:not(.i) {
     display: block;
     flex-grow: 1;
     white-space: pre;
@@ -242,6 +247,10 @@ dialog,
     align-items: center;
 }
 
+.overflow {
+    overflow: hidden;
+}
+
 .lower {
     text-transform: lowercase;
 }
@@ -253,6 +262,11 @@ dialog,
 
 .space > * {
     margin: .125rem 0;
+}
+
+/* Buttons on the right */
+.right {
+    margin-left: auto;
 }
 
 /* ----- Nav ----- */

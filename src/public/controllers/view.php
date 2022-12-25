@@ -15,6 +15,13 @@ if (preg_match_all($regex, $uri, $q)) {
     $q = $q[0];
 }
 
+// Receive model data
+function send($http, $reason = false) {
+    global $json;
+    $json['reason'] = $reason;
+    $json['status'] = $http;
+};
+
 // Login required
 function login_req() {
     global $uid;

@@ -8,7 +8,7 @@ if (isset($_POST['uname'], $_POST['pwd'])) {
 
     // 5 strikes rule // TODO: Implement better rule with SQL logging and ip ban
     if ($_SESSION['strikes'] >= 5) {
-        send(429, 'dos');
+        return send(429, 'dos');
     }
 
     $name = strtolower($_POST['uname']);
@@ -16,7 +16,7 @@ if (isset($_POST['uname'], $_POST['pwd'])) {
 
     // Validate inputs
     if (!preg_match('/^[a-z][a-z0-9-]{0,18}[a-z0-9]$/', $name)) {
-        send(403, 'uname');
+        return send(403, 'uname');
     }
     if (!(
         preg_match('/[^a-z0-9]/i', $pwd) &&
@@ -25,27 +25,27 @@ if (isset($_POST['uname'], $_POST['pwd'])) {
         preg_match('/[a-z]/', $pwd) &&
         strlen($pwd) >= 8)
     ) {
-        send(403, 'pwd');
+        return send(403, 'pwd');
     }
 
     require '../../models/@include/#sql.php';
     
     // Get user data
-    $data = query(
+    [$data, $num_rows] = query(
         'SELECT id, uname, password, language, display
         FROM users
-        WHERE uname = "'.$name.'";',
-        true,
-        function() {
-            send(403, 'uname');
-        }
-    )[0];
+        WHERE uname = "'.$name.'";'
+    );
+
+    if ($num_rows === 0) {
+        return send(403, 'uname');
+    }
 
     require '../../models/@include/#pwd.php';
     
     // Compare passwords
     if (!pwd($pwd, $data['password'])) {
-        send(403, 'pwd');
+        return send(403, 'pwd');
     }
 
     // Generate auth token
@@ -60,12 +60,12 @@ if (isset($_POST['uname'], $_POST['pwd'])) {
     query(
         'INSERT INTO auth
         VALUES ('.$uid.',"'.pwd($token, false).'","'.$time.'");',
-        false,
-        false
+        2
     );
 
     // Set cookie to remember user (expires after 2 years)
     setrawcookie('auth', $token, time() + 6.307e7, "/");
     unset($_SESSION['strikes']);
+    send(200);
 }
 ?>

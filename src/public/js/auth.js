@@ -11,7 +11,7 @@ const submitForm = (name, path, callback) => {
         get("api/" + path, getFormData()).then(res => {
             res = JSON.parse(res);
             res.status === 200 ? callback() : showDialog(
-                page.querySelector(`[name="${res.message}"]`).dataset.err
+                page.querySelector(`[name="${res.reason}"]`).dataset.err
             );
         });
     });

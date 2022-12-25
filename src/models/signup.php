@@ -8,7 +8,7 @@ if (isset($_POST['verify'], $_SESSION['signup'])) {
 
     // Check if code is valid
     if ($data[0] !== $_POST['verify']) {
-        send(403, 'verify');
+        return send(403, 'verify');
     }
     
     require '../../models/@include/#sql.php';
@@ -20,9 +20,8 @@ if (isset($_POST['verify'], $_SESSION['signup'])) {
         VALUES ("'.$data[1].'");
         INSERT INTO users (id, uname, email, password, language)
         VALUES (LAST_INSERT_ID(),"'.$data[1].'","'.$data[2].'","'.pwd($data[3], false).'", "'.$lang.'");',
-        false,
-        null
-    )[0];
+        1
+    );
 
     // Create directory
     mkdir($uid, 0666, true);
@@ -39,13 +38,13 @@ if (isset($_POST['uname'], $_POST['mail'], $_POST['pwd'])) {
 
     // Validate inputs // TODO: Check if username contains forbidden words
     if ($pwd !== $_POST['pwd_conf']) {
-        send(403, 'pwd_conf');
+        return send(403, 'pwd_conf');
     }
     if (!preg_match('/^[a-z][a-z0-9-]{0,18}[a-z0-9]$/', $name)) {
-        send(403, 'uname');
+        return send(403, 'uname');
     }
     if (!preg_match('/^[\w!#$%&\'*+\/=?^`{|}~-]+(\.[\w!#$%&\'*+\/=?^`{|}~-]+)*@([a-z0-9-]+\.)+[a-z]{2,24}$/', $mail)) {
-        send(403, 'mail');
+        return send(403, 'mail');
     }
     if (!(
         preg_match('/[^a-z0-9]/i', $pwd) &&
@@ -54,17 +53,16 @@ if (isset($_POST['uname'], $_POST['mail'], $_POST['pwd'])) {
         preg_match('/[a-z]/', $pwd) &&
         strlen($pwd) > 7)
     ) {
-        send(403, 'pwd');
+        return send(403, 'pwd');
     }
     
     require '../../models/@include/#sql.php';
 
     // Check if username is available
-    query(
+    if (query(
         'SELECT uname
         FROM users
         WHERE uname = "'.$name.'";',
-        false,
         function() {
             global $name;
             global $mail;
@@ -75,10 +73,12 @@ if (isset($_POST['uname'], $_POST['mail'], $_POST['pwd'])) {
             $_SESSION['signup'] = [$pin, $name, $mail, $pwd];
 
             // TODO: Send verification email with pin
-            send(200, 'OK');
-        }
-    );
-            
-    send(403, 'uname');
+        },
+        0
+    ) === 0) {
+        return send(403, 'uname');
+    }
+
+    send(200);
 }
 ?>
